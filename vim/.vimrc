@@ -1,4 +1,4 @@
-" Default ~/.vimrc for vagrant user on Arch Linux.
+"  Default ~/.vimrc for vagrant user on Arch Linux.
 
 " Vundle
 " {{{
@@ -13,7 +13,7 @@ Plugin 'vim-airline/vim-airline'
 " Color schemes
 Plugin 'tomasr/molokai'
 Plugin 'chriskempson/base16-vim'
-" Plugin 'dracula/vim', { 'name': 'dracula' }
+Plugin 'dracula/vim', { 'name': 'dracula' }
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -29,7 +29,7 @@ set laststatus=2
 " Colors
 " {{{
 set t_Co=256
-" colorscheme dracula 
+colorscheme dracula
 syntax enable                   "syntax highlighting
 " }}}
 
