@@ -2,4 +2,6 @@ vim/.vim
 vim/.viminfo
 xmonad/.xmonad/xmonad-*
 xmonad/.xmonad/xmonad.o
+xmonad/.xmonad/xmonad.errors
+xmonad/.xmonad/xmonad.hi
 xmonad/.xmonad/xmonad.state

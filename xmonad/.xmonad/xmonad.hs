@@ -221,6 +221,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "Pavucontrol"    --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
@@ -262,10 +263,10 @@ myStartupHook = do
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = do 
+main = do
     h <- spawnPipe "xmobar"
     xmonad $ docks defaults {
-        logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn h } 
+        logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn h }
     }
 
 -- A structure containing your configuration settings, overriding
