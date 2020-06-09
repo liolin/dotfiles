@@ -1,4 +1,4 @@
-vim/.vim/bundle/
+vim/.vim
 xmonad/.xmonad/xmonad-*
 xmonad/.xmonad/xmonad.o
 xmonad/.xmonad/xmonad.state
