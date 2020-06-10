@@ -1,0 +1,35 @@
+IMAPAccount olivier.lischer@liolin.ch 
+
+# Mail to connecnt
+Host imap.mail.hostpoint.ch 
+User olivier.lischer@liolin.ch 
+# to changePassCmd "security find-generic-password -s NoMAD -w"
+
+# Use SSL
+SSLType IMAPS
+SSLVersion TLSv1.2
+AuthMechs PLAIN
+# Increase timeout to avoid o365 IMAP hiccups
+Timeout 120
+PipelineDepth 50
+
+IMAPStore olivier.lischer@liolin.ch-remote
+Account olivier.lischer@liolin.ch 
+
+MaildirStore olivier.lischer@liolin.ch-local
+# Note the trailing slash on the Path statement!
+Path ~/.mail/olivier.lischer@liolin.ch/
+Inbox ~/.mail/olivier.lischer@liolin.ch/Inbox
+SubFolders Legacy
+
+Channel olivier.lischer@liolin.ch
+Master :olivier.lischer@liolin.ch-remote:
+Slave :olivier.lischer@liolin.ch-local:
+
+#Include everything
+Patterns *
+
+# Sync changes (creations/deletions) with the server
+Create Both
+Expunge Both
+Sync All
