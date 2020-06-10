@@ -54,3 +54,53 @@
 ;; Set the opacity
 (set-frame-parameter (selected-frame) 'alpha '(85 . 60))
 (add-to-list 'default-frame-alist '(alpha . (85 . 60)))
+
+
+(after! mu4e
+  (setq! mu4e-maildir (expand-file-name "~/.mail/olivier.lischer@liolin.ch") ; the rest of the mu4e folders are RELATIVE to this one
+         mu4e-get-mail-command "mbsync -a"
+         mu4e-index-update-in-background t
+         mu4e-compose-signature-auto-include t
+         mu4e-use-fancy-chars t
+         mu4e-view-show-addresses t
+         mu4e-view-show-images t
+         mu4e-compose-format-flowed t
+         ;mu4e-compose-in-new-frame t
+         mu4e-change-filenames-when-moving t ;; http://pragmaticemacs.com/emacs/fixing-duplicate-uid-errors-when-using-mbsync-and-mu4e/
+         mu4e-maildir-shortcuts
+         '( ("/Inbox" . ?i)
+            ("/Archive" . ?a)
+            ("/Drafts" . ?d)
+            ("/Trash" . ?t)
+            ("/Sent" . ?s))
+
+         ;; Message Formatting and sending
+         message-send-mail-function 'smtpmail-send-it
+         message-signature-file "~/.mailsignature"
+         message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
+         message-citation-line-function 'message-insert-formatted-citation-line
+         message-kill-buffer-on-exit t
+
+         ;; Org mu4e
+         org-mu4e-convert-to-html t)
+  (add-to-list 'mu4e-bookmarks
+               '( :name "HSR"
+                  :query "from:hsr.ch"
+                  :key ?h)))
+
+(set-email-account! "olivier.lischer@liolin.ch"
+                    '((user-mail-address            . "olivier.lischer@liolin.ch")
+                      (user-full-name               . "Olivier Lischer")
+                      (smtpmail-smtp-server         . "asmtp.mail.hostpoint.ch")
+                      (smtpmail-default-smtp-server . "asmtp.mail.hostpoint.ch")
+                      (smtpmail-smtp-service        . 587)
+                      (smtpmail-stream-type         . starttls)
+                      (smtpmail-debug-info          . t)
+                      (mu4e-drafts-folder           . "/Drafts")
+                      (mu4e-refile-folder           . "/Archive")
+                      (mu4e-sent-folder             . "/Sent")
+                      (mu4e-trash-folder            . "/Trash")
+                      (mu4e-update-interval         . 300)
+                      ;(mu4e-sent-messages-behavior . 'delete)
+                      )
+                    nil)

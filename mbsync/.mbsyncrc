@@ -1,35 +1,32 @@
-IMAPAccount olivier.lischer@liolin.ch 
-
-# Mail to connecnt
-Host imap.mail.hostpoint.ch 
-User olivier.lischer@liolin.ch 
-# to changePassCmd "security find-generic-password -s NoMAD -w"
-
+IMAPAccount olivier.lischer@liolin.ch
+# Address to connect to
+Host imap.mail.hostpoint.ch
+User olivier.lischer@liolin.ch
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+#
 # Use SSL
 SSLType IMAPS
-SSLVersion TLSv1.2
-AuthMechs PLAIN
-# Increase timeout to avoid o365 IMAP hiccups
-Timeout 120
-PipelineDepth 50
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
 
 IMAPStore olivier.lischer@liolin.ch-remote
-Account olivier.lischer@liolin.ch 
+Account olivier.lischer@liolin.ch
 
 MaildirStore olivier.lischer@liolin.ch-local
-# Note the trailing slash on the Path statement!
+Subfolders Verbatim
+# The trailing "/" is important
 Path ~/.mail/olivier.lischer@liolin.ch/
 Inbox ~/.mail/olivier.lischer@liolin.ch/Inbox
-SubFolders Legacy
 
 Channel olivier.lischer@liolin.ch
 Master :olivier.lischer@liolin.ch-remote:
 Slave :olivier.lischer@liolin.ch-local:
-
-#Include everything
-Patterns *
-
-# Sync changes (creations/deletions) with the server
+# Exclude everything under the internal [Gmail] folder, except the interesting folders
+Patterns * 
+# Automatically create missing mailboxes, both locally and on the server
 Create Both
-Expunge Both
-Sync All
+# Save the synchronization state files in the relevant directory
+SyncState *

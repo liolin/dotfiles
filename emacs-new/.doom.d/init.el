@@ -14,6 +14,8 @@
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+;; Doom needs to know from where to load mu4e
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu/mu4e/")
 (doom! :input
        ;;chinese
        ;;japanese

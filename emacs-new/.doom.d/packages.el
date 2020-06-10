@@ -55,8 +55,6 @@
 (package! cargo)
 (package! flycheck-rust)
 
-(package! eglot)
-
 (package! yaml-mode)
 
 (package! dracula-theme)
