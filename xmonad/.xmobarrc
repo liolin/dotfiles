@@ -34,7 +34,7 @@ Config {
                                    , "-l", "lightblue"
                                    , "-n", "#bbc2cf"
                                    , "-h", "#aa4450"] 50
-
+                    , Run Alsa "alsa" "Master" []             
                     -- battery monitor
                     , Run BatteryP       [ "BAT0" ]
                                          [ "--template" , "<fc=#B1DE76><fn=1></fn></fc> <acstatus>"
@@ -57,5 +57,5 @@ Config {
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell_20.xpm/> %StdinReader% }{ %kbx% | %cpu% | %coretemp% | %memory% | %battery% | %dynnetwork% | %date%  |" -- #69DFFA
+       , template = "<icon=haskell_20.xpm/> %StdinReader% }{ %alsa:default:Master% | %cpu% | %coretemp% | %memory% | %battery% | %date%  |" -- #69DFFA
        }
