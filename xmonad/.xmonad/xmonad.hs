@@ -9,6 +9,7 @@
 
 import XMonad
 import XMonad.Util.Run
+import XMonad.Util.SpawnOnce
 import XMonad.Layout.Spacing
 import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
@@ -22,7 +23,14 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "alacritty"
+myTerminal :: [Char]
+myTerminal = "alacritty"
+
+myBrowser :: [Char]
+myBrowser = "firefox"
+
+myEditor :: [Char]
+myEditor = "emacs"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -34,14 +42,16 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2
+myBorderWidth :: Dimension
+myBorderWidth = 2
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
-myModMask       = mod4Mask
+myModMask :: KeyMask
+myModMask = mod4Mask
 
 -- The default number of workspaces (virtual screens) and their names.
 -- By default we use numeric strings, but any string may be used as a
@@ -52,16 +62,20 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
+myWorkspaces :: [[Char]]
 myWorkspaces    = ["term","doom","web" ] ++ map show [4..9]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
+myNormalBorderColor :: [Char]
+myFocusedBorderColor :: [Char]
 myNormalBorderColor  = "#282a36"
 myFocusedBorderColor = "#50fa7b"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
+myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
@@ -137,7 +151,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
     -- Run filemanager
-    , ((0                 , xK_F1    ), spawn "pcmanfm")
+    , ((0                 , xK_F11    ), spawn "pcmanfm")
+
+    -- Toggle Mute
+    , ((0                 , xK_F1     ), spawn "pactl set-sink-mute 0 toggle")
+    , ((0                 , xK_F2     ), spawn "pactl set-sink-volume 0 -5%")
+    , ((0                 , xK_F3     ), spawn "pactl set-sink-volume 0 +5%")
+    -- Toggle Mute Mic
+    , ((0                 , xK_F4     ), spawn "amixer set Capture toggle")
     ]
     ++
 
@@ -192,7 +213,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = smartSpacing 5 $ Tall nmaster delta ratio
+     tiled   = spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $ Tall nmaster delta ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -218,6 +239,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
+myManageHook :: Query (Endo WindowSet)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
@@ -234,6 +256,7 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
+myEventHook :: Event -> X All
 myEventHook = mempty
 
 ------------------------------------------------------------------------
@@ -242,6 +265,7 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
+myLogHook :: X ()
 myLogHook = return ()
 
 ------------------------------------------------------------------------
@@ -252,17 +276,21 @@ myLogHook = return ()
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
+myStartupHook :: X ()
 myStartupHook = do
-    spawn "compton --config ~/.config/compton.conf"
-    spawn "nitrogen --restore"
-    spawn "setxkbmap -layout ch,us -option grp:alt_space_toggle"
-    spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --tint 0x282c34 --height 21"
-    spawn "nm-applet"
+    spawnOnce "compton --config ~/.config/compton.conf"
+    spawnOnce "nitrogen --restore"
+    spawnOnce "setxkbmap -layout ch,us -option grp:alt_space_toggle"
+    spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --tint 0x282c34 --height 21"
+    spawnOnce "nm-applet"
+    spawnOnce myBrowser
+    spawnOnce myEditor
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+main :: IO ()
 main = do
     h <- spawnPipe "xmobar"
     xmonad $ docks defaults {
