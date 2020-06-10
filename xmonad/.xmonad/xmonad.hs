@@ -137,7 +137,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
     -- Run filemanager
-    , ((0                 , xK_F1    ), spawn "nautilus")
+    , ((0                 , xK_F1    ), spawn "pcmanfm")
     ]
     ++
 
