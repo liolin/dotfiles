@@ -30,7 +30,7 @@ myBrowser :: [Char]
 myBrowser = "firefox"
 
 myEditor :: [Char]
-myEditor = "emacs"
+myEditor = "emacsclient"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -284,7 +284,6 @@ myStartupHook = do
     spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --tint 0x282c34 --height 21"
     spawnOnce "nm-applet"
     spawnOnce myBrowser
-    spawnOnce myEditor
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
