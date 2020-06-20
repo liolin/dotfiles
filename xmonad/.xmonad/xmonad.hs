@@ -154,9 +154,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0                 , xK_F11    ), spawn "pcmanfm")
 
     -- Toggle Mute
-    -- , ((0                 , xK_F1     ), spawn "pactl set-sink-mute 0 toggle")
-    -- , ((0                 , xK_F2     ), spawn "pactl set-sink-volume 0 -5%")
-    -- , ((0                 , xK_F3     ), spawn "pactl set-sink-volume 0 +5%")
+    , ((0                 , 0x1008FF12), spawn "audioctl -m")
+    , ((0                 , 0x1008FF11), spawn "audioctl -l")
+    , ((0                 , 0x1008FF13), spawn "audioctl -r")
     -- -- Toggle Mute Mic
     -- , ((0                 , xK_F4     ), spawn "amixer set Capture toggle")
     ]
