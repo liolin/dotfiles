@@ -104,3 +104,18 @@
                       ;(mu4e-sent-messages-behavior . 'delete)
                       )
                     nil)
+
+(after! racer
+  (setq racer-rust-src-path "/home/liolin/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
+
+;; (use-package! display-line-numbers-mode
+;;   :config
+;;   (setq display-line-numbers-type 'relative))
+
+(after! dired
+  ;; Image previews in dired
+  (global-set-key (kbd "C-x i") 'peep-dired)
+  (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file
+    (kbd "k") 'peep-dired-prev-file)
+  (add-hook 'peep-dired-hook 'evil-normalize-keymaps)
+  (setq peep-dired-ignored-extensions '("mkv" "iso" "mp4" "MP4")))

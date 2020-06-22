@@ -56,5 +56,5 @@
 (package! flycheck-rust)
 
 (package! yaml-mode)
-
 (package! dracula-theme)
+(package! peep-dired)
