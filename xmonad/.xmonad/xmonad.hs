@@ -10,10 +10,12 @@
 import XMonad
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import XMonad.Util.EZConfig
 import XMonad.Layout.Spacing
 import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Actions.WithAll (sinkAll, killAll)
 import Data.Monoid
 import System.Exit
 
@@ -75,110 +77,57 @@ myFocusedBorderColor = "#50fa7b"
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys :: [(String, X ())]
+myKeys =
+        [
+    -- Xmonad
+          ("M-C-r", spawn "xmonad --recompile && xmonad --restart")      -- Recompiles xmonad
+        , ("M-S-r", spawn "xmonad --restart")                            -- Restarts xmonad
+        , ("M-S-q", io exitSuccess)                                      -- Quits xmonad
+        , ("M-<Return>", spawn (myTerminal))
 
-    -- launch a terminal
-    [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
+    -- Window
+        , ("M-S-c", kill)
+        , ("M-S-a", killAll)                         -- Kill all windows on current workspace
 
-    -- launch dmenu
-    , ((modm,               xK_p     ), spawn "rofi -show drun")
+    -- Layout
+        , ("M-<Space>", sendMessage NextLayout)     -- Switch to next layout
+        , ("M-n", refresh)                          -- Resize viewed windows to the correct size
+        , ("M-<Tab>", windows W.focusDown)          -- Move focus to the next window
+        , ("M-j", windows W.focusDown)              -- Move focus to the next window
+        , ("M-k", windows W.focusUp  )              -- Move focus to the previous window
+        , ("M-m", windows W.focusMaster  )          -- Move focus to the master window
+        , ("M-S-<Return>", windows W.swapMaster)    -- Swap the focused window and the master window
+        , ("M-S-j", windows W.swapDown  )           -- Swap the focused window with the next window
+        , ("M-S-k", windows W.swapUp    )           -- Swap the focused window with the previous window
+        , ("M-h", sendMessage Shrink)               -- Shrink the master area
+        , ("M-l", sendMessage Expand)               -- Expand the master area
+        , ("M-t", withFocused $ windows . W.sink)   -- Push window back into tiling
+        , ("M-,", sendMessage (IncMasterN 1))       -- Increment the number of windows in the master area
+        , ("M-.", sendMessage (IncMasterN (-1)))    -- Deincrement the number of windows in the master area
 
-    -- close focused window
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    -- Menus
+        , ("M-p", spawn "rofi -show drun")
+        , ("M-S-p", spawn "/usr/bin/env bash ~/.xmonad/rofi_power") -- Run power menu
+    -- Emacs
+        , ("C-e e", spawn "emacsclient -c -a ''")                           -- start emacs
+        , ("C-e b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
+        , ("C-e d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
+        , ("C-e m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
+        , ("C-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
 
-     -- Rotate through the available layout algorithms
-    , ((modm,               xK_space ), sendMessage NextLayout)
+    -- Applications
+        , ("<F12>", spawn "pcmanfm") -- Run filemanager
 
-    --  Reset the layouts on the current workspace to default
-    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-
-    -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
-
-    -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
-
-    -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
-
-    -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
-
-    -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
-
-    -- Swap the focused window and the master window
-    , ((modm .|. shiftMask, xK_Return), windows W.swapMaster)
-
-    -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
-
-    -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
-
-    -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
-
-    -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
-
-    -- Push window back into tiling
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
-
-    -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
-
-    -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
-
-    -- Toggle the status bar gap
-    -- Use this binding with avoidStruts from Hooks.ManageDocks.
-    -- See also the statusBar function from Hooks.DynamicLog.
-    --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
-
-    -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
-
-    -- Run power menu
-    , ((modm .|. shiftMask, xK_p     ), spawn "/usr/bin/env bash ~/.xmonad/rofi_power")
-
-    -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-
-    -- Run xmessage with a summary of the default keybindings (useful for beginners)
-    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
-
-    -- Run filemanager
-    , ((0                 , xK_F11    ), spawn "pcmanfm")
-
-    -- Toggle Mute
-    , ((0                 , 0x1008FF12), spawn "audioctl -m")
-    , ((0                 , 0x1008FF11), spawn "audioctl -l")
-    , ((0                 , 0x1008FF13), spawn "audioctl -r")
-    -- -- Toggle Mute Mic
-    -- , ((0                 , xK_F4     ), spawn "amixer set Capture toggle")
-    ]
-    ++
-
-    --
-    -- mod-[1..9], Switch to workspace N
-    -- mod-shift-[1..9], Move client to workspace N
-    --
-    [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
-
-    --
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --
-    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
+    -- Multimedia Keys
+        , ("<XF86AudioMute>", spawn "audioctl -m")                  -- Toggle mute
+        , ("<XF86AudioLowerVolume>", spawn "audioctl -l")           -- Lower Volume
+        , ("<XF86AudioRaiseVolume>", spawn "audioctl -r")           -- Raise Volume
+        , ("<XF86AudioMicMute>", spawn "amixer set Capture toggle") -- Toggle microphone
+        , ("<XF86AudioPlay>", spawn "cmus-remote --pause")          -- Toggle pause
+        , ("<XF86AudioPrev>", spawn "cmus-remote --prev")           -- Skip backwards in playlist
+        , ("<XF86AudioNext>", spawn "cmus-remote --next")           -- Skip forwards in playlist
+        ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -294,7 +243,7 @@ main = do
     h <- spawnPipe "xmobar"
     xmonad $ docks defaults {
         logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn h }
-    }
+    } `additionalKeysP` myKeys 
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -314,7 +263,6 @@ defaults = def {
         focusedBorderColor = myFocusedBorderColor,
 
       -- key bindings
-        keys               = myKeys,
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
