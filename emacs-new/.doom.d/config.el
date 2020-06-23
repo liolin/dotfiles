@@ -101,7 +101,7 @@
                       (mu4e-sent-folder             . "/Sent")
                       (mu4e-trash-folder            . "/Trash")
                       (mu4e-update-interval         . 300)
-                      ;(mu4e-sent-messages-behavior . 'delete)
+                      (mu4e-sent-messages-behavior  . sent)
                       )
                     nil)
 
