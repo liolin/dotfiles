@@ -65,7 +65,7 @@ myModMask = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces :: [[Char]]
-myWorkspaces    = ["term","doom","web" ] ++ map show [4..9]
+myWorkspaces    = ["term","doom","web", "music"] ++ map show [5..9]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -232,7 +232,6 @@ myStartupHook = do
     spawnOnce "setxkbmap -layout ch,us -option grp:alt_space_toggle"
     spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --tint 0x282c34 --height 21"
     spawnOnce "nm-applet"
-    spawnOnce myBrowser
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 

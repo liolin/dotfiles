@@ -52,9 +52,10 @@ Config {
                                          ] 50
 
                     -- , Run Com            "/usr/local/bin/xkblayout-state" ["print \"%s-%e\""] "kbx" 600
+                    , Run Com "/home/liolin/.xmonad/cmus" [] "cmus" 300
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell_20.xpm/> %StdinReader% }{ %alsa:default:Master% | %cpu% | %memory% | %battery% | %date%  |" -- #69DFFA
+       , template = "<icon=haskell_20.xpm/> %StdinReader% }{ %cmus% | %cpu% | %memory% | %battery% | %date%  |" -- #69DFFA
        }
