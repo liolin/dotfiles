@@ -3,7 +3,8 @@
 
 
 lock() {
-    blurlock
+    #blurlock
+    /usr/bin/betterlockscreen
 }
 
 case "$1" in

@@ -2,7 +2,8 @@
 # Search through open programs and switch to their tag
 
 lock() {
-    blurlock
+    #blurlock
+    /usr/bin/betterlockscreen --lock
 }
 
 options="lock\nlogout\nswitch_user\nsuspend\nhibernate\nreboot\npoweroff"
