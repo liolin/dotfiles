@@ -26,7 +26,7 @@ case "$action" in
         ;;
     suspend)
         if [ $(cat /proc/1/comm) = "systemd" ]; then
-            lock && systemctl suspend
+            betterlockscreen --suspend
         else
             lock && dbus-send --system --dest=org.freedesktop.ConsoleKit --type=method_call --print-reply --reply-timeout=2000 /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Suspend boolean:true
         fi
