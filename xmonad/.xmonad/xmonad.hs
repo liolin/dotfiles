@@ -227,12 +227,8 @@ myLogHook = return ()
 -- By default, do nothing.
 myStartupHook :: X ()
 myStartupHook = do
-    spawnOnce "compton --config ~/.config/compton.conf"
-    spawnOnce "nitrogen --restore"
-    spawnOnce "setxkbmap -layout ch,us -option grp:alt_space_toggle"
-    spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --tint 0x282c34 --height 21"
-    spawnOnce "nm-applet"
-------------------------------------------------------------------------
+  spawnOnce "/usr/bin/sh ~/.xmonad/autostart.sh"
+  ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
