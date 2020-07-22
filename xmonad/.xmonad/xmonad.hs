@@ -22,6 +22,10 @@ import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+import qualified DBus as D
+import qualified DBus.Client as D
+import qualified Codec.Binary.UTF8.String as UTF8
+
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
@@ -214,8 +218,31 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook :: X ()
-myLogHook = return ()
+bg1       = "#3c3836"
+bg2       = "#504945"
+red       = "#fb4934"
+myLogHook :: D.Client -> PP
+myLogHook dbus = def
+    { ppOutput = dbusOutput dbus
+    , ppCurrent = wrap ("%{B" ++ bg2 ++ "} ") " %{B-}"
+    , ppVisible = wrap ("%{B" ++ bg1 ++ "} ") " %{B-}"
+    , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
+    , ppHidden = wrap " " " "
+    , ppWsSep = ""
+    , ppSep = " : "
+    , ppTitle = shorten 40
+    }
+   
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = do
+    let signal = (D.signal objectPath interfaceName memberName) {
+            D.signalBody = [D.toVariant $ UTF8.decodeString str]
+        }
+    D.emit dbus signal
+  where
+    objectPath = D.objectPath_ "/org/xmonad/Log"
+    interfaceName = D.interfaceName_ "org.xmonad.Log"
+    memberName = D.memberName_ "Update"
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -228,6 +255,7 @@ myLogHook = return ()
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "/usr/bin/sh ~/.xmonad/autostart.sh"
+  spawnOnce "/usr/bin/sh ~/.config/polybar/launch.sh"
   ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
@@ -235,9 +263,15 @@ myStartupHook = do
 --
 main :: IO ()
 main = do
-    h <- spawnPipe "xmobar"
-    xmonad $ docks defaults {
-        logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn h }
+  dbus <- D.connectSession
+  -- Request access to the DBus name
+  D.requestName dbus (D.busName_ "org.xmonad.Log")
+    [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+
+  --h <- spawnPipe "xmobar"
+  xmonad $ docks defaults {
+    -- logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn h }
+    logHook = dynamicLogWithPP (myLogHook dbus)
     } `additionalKeysP` myKeys 
 
 -- A structure containing your configuration settings, overriding
@@ -264,7 +298,7 @@ defaults = def {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook,
+        --logHook            = myLogHook,
         startupHook        = myStartupHook
     }
 
