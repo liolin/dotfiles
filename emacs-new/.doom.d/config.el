@@ -119,3 +119,8 @@
     (kbd "k") 'peep-dired-prev-file)
   (add-hook 'peep-dired-hook 'evil-normalize-keymaps)
   (setq peep-dired-ignored-extensions '("mkv" "iso" "mp4" "MP4")))
+
+(after! rustic
+  ;; disable -Z flag in clippy
+  (setq rustic-flycheck-clippy-params "--message-format=json")
+  )
