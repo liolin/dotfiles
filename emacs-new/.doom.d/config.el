@@ -105,9 +105,13 @@
                       )
                     nil)
 
-(after! racer
-  (setq racer-rust-src-path "/home/liolin/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
+;; (after! racer
+;;   (setq racer-rust-src-path "/home/liolin/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
 
+(after! rustic
+  (setq rustic-flycheck-clippy-params "--message-format=json"))
+
+(setq rustic-lsp-server 'rust-analyzer)
 ;; (use-package! display-line-numbers-mode
 ;;   :config
 ;;   (setq display-line-numbers-type 'relative))
