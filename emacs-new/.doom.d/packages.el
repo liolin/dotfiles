@@ -58,3 +58,4 @@
 (package! yaml-mode)
 (package! dracula-theme)
 (package! peep-dired)
+(package! doct)
