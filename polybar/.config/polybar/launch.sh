@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CONFIG_FILE="${HOME}/dot/etc/polybar/config"
+CONFIG_FILE="${HOME}/.config/polybar/config"
 
 # Terminate already running bar instances
 killall -q polybar
@@ -9,6 +9,6 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch bar1 and bar2
-~/dot/src/polybar/build/bin/polybar -c $CONFIG_FILE example
+polybar -c $CONFIG_FILE example
 
 echo "Bars launched..."
