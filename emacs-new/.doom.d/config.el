@@ -303,3 +303,15 @@
           (insert (concat "\n* Backlinks\n") links)))))
 
   (add-hook 'org-export-before-processing-hook 'my/org-export-preprocessor)
+
+(after! ox-publish
+(setq org-publish-project-alist
+      '(
+        ("homepage" :base-directory "/keybase/private/liolin/org/roam"
+         :base-extension "org"
+         :recursive nil
+         :publishing-directory "~/public_html/"
+         :publishing-function org-html-publish-to-html
+         )
+        )
+      ))
