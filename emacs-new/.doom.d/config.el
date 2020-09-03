@@ -52,8 +52,8 @@
 ;; they are implemented.
 
 ;; Set the opacity
-(set-frame-parameter (selected-frame) 'alpha '(85 . 60))
-(add-to-list 'default-frame-alist '(alpha . (85 . 60)))
+(set-frame-parameter (selected-frame) 'alpha '(95 . 60))
+(add-to-list 'default-frame-alist '(alpha . (95 . 60)))
 
 
 (after! mu4e
@@ -105,16 +105,16 @@
                       )
                     nil)
 
-;; ;; (after! racer
-;; ;;   (setq racer-rust-src-path "/home/liolin/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
+(after! projectile
+  (add-to-list 'projectile-globally-ignored-directories "target"))
+;; (use-package! display-line-numbers-mode
+;;   :config
+;;   (setq display-line-numbers-type 'relative))
 
 (after! rustic
   (setq rustic-flycheck-clippy-params "--message-format=json")
   (setq rustic-lsp-server 'rust-analyzer)
   (setq lsp-rust-server 'rust-analyzer))
-;; (use-package! display-line-numbers-mode
-;;   :config
-;;   (setq display-line-numbers-type 'relative))
 
 (after! dired
   ;; Image previews in dired
@@ -132,7 +132,16 @@
   ;<<prettify-capture>>
   (add-transient-hook! 'org-capture-select-template
     (setq org-capture-templates
-          (doct `((,(format "%s\tPersonal todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+          (doct `((,(format "%s\tOrg Roam" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "d"
+                   :type plain
+                   :template ("- tags :: %?"
+                              "- source :: ")
+                   :function (lambda () (org-roam--capture-get-point))
+                   :head "#+title: ${title}\n"
+                   :unnarrowed t
+                   )
+                  (,(format "%s\tPersonal todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
                    :keys "t"
                    :file +org-capture-todo-file
                    :prepend t
