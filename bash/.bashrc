@@ -22,6 +22,10 @@ if [ -d "$HOME/.rbenv/bin" ] ; then
     PATH="$HOME/.rbenv/bin:$PATH"
 fi
 
+if [ -d "$HOME/.dotnet/tools" ] ; then
+    PATH="$HOME/.dotnet/tools:$PATH"
+fi
+
 export PATH
 
 # If not running interactively, don't do anything
@@ -157,3 +161,6 @@ eval "$(rbenv init -)"
 ## siji
 xset +fp /home/liolin/.fonts
 xset fp rehash
+
+
+DOTNET_CLI_TELEMETRY_OPTOUT=1
