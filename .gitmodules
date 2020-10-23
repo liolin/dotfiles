@@ -1,0 +1,6 @@
+[submodule "nebula-sddm-theme"]
+	path = nebula-sddm-theme
+	url = https://github.com/fawix/nebula-sddm-theme
+[submodule "sddm/nebula-sddm-theme"]
+	path = sddm/nebula-sddm-theme
+	url = https://github.com/fawix/nebula-sddm-theme

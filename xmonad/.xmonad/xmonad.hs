@@ -119,6 +119,7 @@ myKeys =
         , ("C-e d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
         , ("C-e m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
         , ("C-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
+        , ("C-e a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
 
     -- Applications
         , ("<F12>", spawn "pcmanfm") -- Run filemanager
