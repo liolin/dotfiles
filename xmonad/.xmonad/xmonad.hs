@@ -123,15 +123,19 @@ myKeys =
 
     -- Applications
         , ("<F12>", spawn "pcmanfm") -- Run filemanager
+        , ("M-s", spawn "sleep 0.2; scrot -s %Y-%m-%d_%H%M.png")
 
     -- Multimedia Keys
-        , ("<XF86AudioMute>", spawn "audioctl -m")                  -- Toggle mute
-        , ("<XF86AudioLowerVolume>", spawn "audioctl -l")           -- Lower Volume
-        , ("<XF86AudioRaiseVolume>", spawn "audioctl -r")           -- Raise Volume
+        , ("<XF86AudioMute>", spawn "pamixer --toggle-mute")        -- Toggle mute
+        , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 5")  -- Lower Volume
+        , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 5")  -- Raise Volume
         , ("<XF86AudioMicMute>", spawn "amixer set Capture toggle") -- Toggle microphone
         , ("<XF86AudioPlay>", spawn "cmus-remote --pause")          -- Toggle pause
         , ("<XF86AudioPrev>", spawn "cmus-remote --prev")           -- Skip backwards in playlist
         , ("<XF86AudioNext>", spawn "cmus-remote --next")           -- Skip forwards in playlist
+
+        , ("<XF86MonBrightnessUp>", spawn "xbacklight + 5%")
+        , ("<XF86MonBrightnessDown>", spawn "xbacklight - 5%")
         ]
 
 ------------------------------------------------------------------------
@@ -256,7 +260,6 @@ dbusOutput dbus str = do
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "/usr/bin/sh ~/.xmonad/autostart.sh"
-  spawnOnce "/usr/bin/sh ~/.config/polybar/launch.sh"
   ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 

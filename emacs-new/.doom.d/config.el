@@ -26,13 +26,13 @@
 (setq doom-theme 'dracula)
 
 ;; If you intend to use org, it is recommended you change this!
-(setq org-directory "/keybase/private/liolin/org/")
+(setq org-directory "~/Nextcloud/org/")
 (setq org-agenda-files
-      '("/keybase/private/liolin/org/Agenda/GTD.org"
-        "/keybase/private/liolin/org/Agenda/Events.org"))
+      '("~/Nextcloud/org/Agenda/GTD.org"
+        "~/Nextcloud/org/Agenda/Events.org"))
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -107,9 +107,6 @@
 
 (after! projectile
   (add-to-list 'projectile-globally-ignored-directories "target"))
-;; (use-package! display-line-numbers-mode
-;;   :config
-;;   (setq display-line-numbers-type 'relative))
 
 (after! rustic
   (setq rustic-flycheck-clippy-params "--message-format=json")
@@ -312,3 +309,16 @@
           (insert (concat "\n* Backlinks\n") links)))))
 
   (add-hook 'org-export-before-processing-hook 'my/org-export-preprocessor)
+
+(after! org-roam-server
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
