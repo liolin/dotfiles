@@ -59,3 +59,4 @@
 (package! dracula-theme)
 (package! peep-dired)
 (package! doct)
+(package! org-roam-server)

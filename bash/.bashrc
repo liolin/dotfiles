@@ -28,6 +28,14 @@ fi
 
 export PATH
 
+if [ -d "/var/lib/flatpak/exports/share/applications" ] ; then
+    XDG_DATA_DIRS="/var/lib/flatpak/exports/share/applications:$XDG_DATA_DIRS"
+fi
+
+if [ -d "$HOME/.local/share/flatpak/exports/share/applications" ] ; then
+    XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share/applications:$XDG_DATA_DIRS"
+fi
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
