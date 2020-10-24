@@ -123,7 +123,8 @@
 
 
 (after! org
-  (setq +org-capture-todo-file "Agenda/GTD.org"))
+  (setq +org-capture-todo-file "Agenda/GTD.org")
+  (setq +org-capture-contacts-file (concat org-directory "contacts.org")))
 
 (after! org-capture
   ;<<prettify-capture>>
@@ -137,6 +138,29 @@
                    :function (lambda () (org-roam--capture-get-point))
                    :head "#+title: ${title}\n"
                    :unnarrowed t
+                   )
+                  (,(format "%s\tNew Contact" (all-the-icons-material "contacts" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "c"
+                   :file +org-capture-contacts-file
+                   :type entry
+                   :children ((,(format "%s\tArmy" (all-the-icons-material "add" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "a"
+                               :headline "Army"
+                               :template ("* %?"
+                                          ":PROPERTIES:"
+                                          ":END"))
+                             (,(format "%s\tWork" (all-the-icons-material "work" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "f"
+                                :headline "Work"
+                               :template ("* %?"
+                                          ":PROPERTIES:"
+                                          ":END"))
+                             (,(format "%s\tFamily" (all-the-icons-material "group" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "f"
+                               :headline "Family"
+                               :template ("* %?"
+                                          ":PROPERTIES:"
+                                          ":END")))
                    )
                   (,(format "%s\tPersonal todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
                    :keys "t"
