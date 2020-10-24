@@ -143,14 +143,39 @@
                    :keys "c"
                    :file +org-capture-contacts-file
                    :type entry
+                   :jump-to-captured t
                    :children ((,(format "%s\tArmy" (all-the-icons-material "add" :face 'all-the-icons-green :v-adjust 0.01))
                                :keys "a"
                                :headline "Army"
                                :template ("* %?"
                                           ":PROPERTIES:"
                                           ":END"))
+                             (,(format "%s\tFriends" (all-the-icons-material "work" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "r"
+                               :headline "Friends"
+                               :template ("* %?"
+                                          ":PROPERTIES:"
+                                          ":END"))
+                             (,(format "%s\tothers" (all-the-icons-material "work" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "o"
+                               :headline "Others"
+                               :template ("* %?"
+                                          ":PROPERTIES:"
+                                          ":END"))
+                             (,(format "%s\tSchool" (all-the-icons-material "work" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "s"
+                               :headline "School"
+                               :template ("* %?"
+                                          ":PROPERTIES:"
+                                          ":END"))
+                             (,(format "%s\tcompany" (all-the-icons-material "work" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "c"
+                               :headline "Company"
+                               :template ("* %?"
+                                          ":PROPERTIES:"
+                                          ":END"))
                              (,(format "%s\tWork" (all-the-icons-material "work" :face 'all-the-icons-green :v-adjust 0.01))
-                               :keys "f"
+                               :keys "w"
                                 :headline "Work"
                                :template ("* %?"
                                           ":PROPERTIES:"
