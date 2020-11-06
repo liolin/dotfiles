@@ -63,7 +63,7 @@ font-5 = Material Icons:style=Regular
 
 modules-left = xmonad
 ;modules-center = 
-modules-right = filesystem pulseaudio xkeyboard wlan eth battery temperature date
+modules-right = filesystem pulseaudio xkeyboard backlight wlan eth battery temperature date
 
 tray-position = right
 tray-padding = 2
@@ -76,6 +76,22 @@ type = custom/script
 exec = xmonad-log
 
 tail = true
+
+
+
+[module/backlight]
+type = internal/backlight
+format = <label> <bar>
+label =  %percentage%%
+
+; Only applies if <bar> is used
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
+card = intel_backlight
+;enable-scroll = true
 
 [module/xwindow]
 type = internal/xwindow
@@ -250,7 +266,7 @@ label = %date% %time%
 type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
 
 label-muted = 
