@@ -69,7 +69,7 @@ myModMask = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces :: [[Char]]
-myWorkspaces    = ["term","doom","web", "music"] ++ map show [5..9]
+myWorkspaces    = ["1: term", "2: doom", "3: web", "4: keepass", "5: music", "6: chat", "7: mail", "8: intelij", "9: office"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -114,16 +114,15 @@ myKeys =
         , ("M-p", spawn "rofi -show drun")
         , ("M-S-p", spawn "/usr/bin/env bash ~/.xmonad/rofi_power") -- Run power menu
     -- Emacs
-        , ("C-e e", spawn "emacsclient -c -a ''")                           -- start emacs
-        , ("C-e b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
-        , ("C-e d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
-        , ("C-e m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
-        , ("C-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
-        , ("C-e a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
+        , ("M-e e", spawn "emacsclient -c -a ''")                           -- start emacs
+        , ("M-e b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
+        , ("M-e d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
+        , ("M-e m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
+        , ("M-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
+        , ("M-e a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
 
     -- Applications
         , ("<F12>", spawn "pcmanfm") -- Run filemanager
-        , ("M-s", spawn "sleep 0.2; scrot -s %Y-%m-%d_%H%M.png")
 
     -- Multimedia Keys
         , ("<XF86AudioMute>", spawn "pamixer --toggle-mute")        -- Toggle mute
@@ -136,6 +135,10 @@ myKeys =
 
         , ("<XF86MonBrightnessUp>", spawn "xbacklight + 5%")
         , ("<XF86MonBrightnessDown>", spawn "xbacklight - 5%")
+
+        , ("<XF86WLAN>", spawn "nmcli radio wifi on")               -- Skip forwards in playlist
+
+        , ("<Print>", spawn "sleep 0.2; scrot -s Images/scrot/%Y-%m-%d_%H%M.png")
         ]
 
 ------------------------------------------------------------------------
