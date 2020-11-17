@@ -56,55 +56,6 @@
 (add-to-list 'default-frame-alist '(alpha . (95 . 60)))
 
 
-;; (after! mu4e
-;;   (setq! mu4e-maildir (expand-file-name "~/.mail/olivier.lischer@liolin.ch") ; the rest of the mu4e folders are RELATIVE to this one
-;;          mu4e-get-mail-command "mbsync -a"
-;;          mu4e-index-update-in-background t
-;;          mu4e-compose-signature-auto-include t
-;;          mu4e-use-fancy-chars t
-;;          mu4e-view-show-addresses t
-;;          mu4e-view-show-images t
-;;          mu4e-compose-format-flowed t
-;;          ;mu4e-compose-in-new-frame t
-;;          mu4e-change-filenames-when-moving t ;; http://pragmaticemacs.com/emacs/fixing-duplicate-uid-errors-when-using-mbsync-and-mu4e/
-;;          mu4e-maildir-shortcuts
-;;          '( ("/Inbox" . ?i)
-;;             ("/Archive" . ?a)
-;;             ("/Drafts" . ?d)
-;;             ("/Trash" . ?t)
-;;             ("/Sent" . ?s))
-
-;;          ;; Message Formatting and sending
-;;          message-send-mail-function 'smtpmail-send-it
-;;          message-signature-file "~/.mailsignature"
-;;          message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
-;;          message-citation-line-function 'message-insert-formatted-citation-line
-;;          message-kill-buffer-on-exit t
-
-;;          ;; Org mu4e
-;;          org-mu4e-convert-to-html t)
-;;   (add-to-list 'mu4e-bookmarks
-;;                '( :name "HSR"
-;;                   :query "from:hsr.ch"
-;;                   :key ?h)))
-
-;; (set-email-account! "olivier.lischer@liolin.ch"
-;;                     '((user-mail-address            . "olivier.lischer@liolin.ch")
-;;                       (user-full-name               . "Olivier Lischer")
-;;                       (smtpmail-smtp-server         . "asmtp.mail.hostpoint.ch")
-;;                       (smtpmail-default-smtp-server . "asmtp.mail.hostpoint.ch")
-;;                       (smtpmail-smtp-service        . 587)
-;;                       (smtpmail-stream-type         . starttls)
-;;                       (smtpmail-debug-info          . t)
-;;                       (mu4e-drafts-folder           . "/Drafts")
-;;                       (mu4e-refile-folder           . "/Archive")
-;;                       (mu4e-sent-folder             . "/Sent")
-;;                       (mu4e-trash-folder            . "/Trash")
-;;                       (mu4e-update-interval         . 300)
-;;                       (mu4e-sent-messages-behavior  . sent)
-;;                       )
-;;                     nil)
-
 (after! projectile
   (add-to-list 'projectile-globally-ignored-directories "target"))
 
@@ -136,7 +87,7 @@
                    :template ("- tags :: %?"
                               "- source :: ")
                    :function (lambda () (org-roam--capture-get-point))
-                   :head "#+title: ${title}\n"
+                   :head "#+TITLE: ${title}\n#+SETUPFILE: ~/Nextcloud/org/config/setup.conf\n"
                    :unnarrowed t
                    )
                   (,(format "%s\tNew Contact" (all-the-icons-material "contacts" :face 'all-the-icons-green :v-adjust 0.01))
@@ -195,6 +146,15 @@
                    :type entry
                    :template ("* TODO %?"
                               "%i %a")
+                   )
+                  (,(format "%s\tBookmark" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "b"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Bookmark"
+                   :type entry
+                   :template ("* %? :%{i-type}:\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
+                   :i-type "web"
                    )
                   (,(format "%s\tPersonal note" (all-the-icons-faicon "sticky-note-o" :face 'all-the-icons-green :v-adjust 0.01))
                    :keys "n"
@@ -371,3 +331,23 @@
         org-roam-server-network-label-truncate t
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
+
+(defun my/org-publish (a b c)
+  (setq org-export-with-toc t)
+  (org-html-publish-to-html a b c))
+
+(after! ox-publish
+  (setq org-publish-project-alist
+        '(("roam-static"
+           :base-directory "~/Nextcloud/org/roam/static"
+           :base-extension "js\\|css\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+           :publishing-directory "~/Nextcloud/org/publish/roam/static"
+           :recursive t
+           :publishing-function org-publish-attachment)
+          ("roam-notes"
+           :base-directory "~/Nextcloud/org/roam/"
+           :publishing-directory "~/Nextcloud/org/publish/roam/"
+           ;;:completion-function to shell script to load to server
+           :publishing-function org-html-publish-to-html)
+          ("roam"
+           :components ("roam-static" "roam-notes")))))
