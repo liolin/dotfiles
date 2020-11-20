@@ -9,4 +9,4 @@ Target = xmobar
 [Action]
 Description = Recompile xmonad after new haskell-packages are installed
 When = PostTransaction
-Exec = xmonad --recompile
+Exec = /usr/bin/xmonad --recompile
