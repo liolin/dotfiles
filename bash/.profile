@@ -9,18 +9,3 @@
 #umask 022
 
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/dot/etc/bash/bashrc" ]; then
-	source "$HOME/dot/etc/bash/bashrc"
-    fi
-fi
-
-# if running TMUX
-if [ ! -z ${TMUX+x} ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/dot/etc/bash/bashrc" ]; then
-	source "$HOME/dot/etc/bash/bashrc"
-    fi
-fi
