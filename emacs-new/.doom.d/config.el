@@ -351,3 +351,10 @@
            :publishing-function org-html-publish-to-html)
           ("roam"
            :components ("roam-static" "roam-notes")))))
+(after! message
+  (setq message-kill-buffer-on-exit t)
+  ;; change the directory to store the sent mail
+  (setq message-directory "~/.mail/"))
+
+(after! org-journal
+  (setq org-journal-dir "~/Nextcloud/org/journal/"))

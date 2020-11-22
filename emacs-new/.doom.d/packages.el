@@ -60,3 +60,4 @@
 (package! peep-dired)
 (package! doct)
 (package! org-roam-server)
+(package! org-journal)
