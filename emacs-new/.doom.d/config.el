@@ -25,7 +25,8 @@
 (setq org-directory "~/Nextcloud/org/")
 (setq org-agenda-files
       '("~/Nextcloud/org/Agenda/GTD.org"
-        "~/Nextcloud/org/Agenda/Events.org"))
+        "~/Nextcloud/org/Agenda/Events.org"
+        "~/Nextcloud/org/contacts.org"))
 (setq display-line-numbers-type 'relative)
 
 
