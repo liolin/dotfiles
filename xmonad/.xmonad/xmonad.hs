@@ -117,7 +117,7 @@ myKeys =
         , ("M-e e", spawn "emacsclient -c -a ''")                           -- start emacs
         , ("M-e b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
         , ("M-e d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
-        , ("M-e m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
+        , ("M-e m", spawn "emacsclient -c -a '' --eval '(notmuch)'")        -- notmuch emacs email client
         , ("M-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
         , ("M-e a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
 
