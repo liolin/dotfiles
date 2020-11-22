@@ -57,7 +57,6 @@
   (setq +org-capture-contacts-file (concat org-directory "contacts.org")))
 
 (after! org-capture
-  ;<<prettify-capture>>
   (add-transient-hook! 'org-capture-select-template
     (setq org-capture-templates
           (doct `((,(format "%s\tOrg Roam" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
@@ -336,6 +335,7 @@
   (setq message-directory "~/.mail/"))
 
 (after! org-journal
-  (setq org-journal-dir "~/Nextcloud/org/journal/"))
-
-
+  (setq org-journal-dir "~/Nextcloud/org/journal/")
+  (map! :leader
+      :desc "New journal entry"
+      "j" #'org-journal-new-entry))
