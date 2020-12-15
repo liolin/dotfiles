@@ -163,6 +163,9 @@ export VISUAL="emacsclient -t -a emacs"         # $VISUAL opens in GUI mode
 ## rbenv
 eval "$(rbenv init -)"
 
+## sharship
+eval "$(starship init bash)"
+
 ## fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -172,3 +175,5 @@ xset fp rehash
 
 
 DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+
