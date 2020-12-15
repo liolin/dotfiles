@@ -126,15 +126,6 @@
                    :template ("* TODO %?"
                               "%i %a")
                    )
-                  (,(format "%s\tBookmark" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
-                   :keys "b"
-                   :file +org-capture-todo-file
-                   :prepend t
-                   :headline "Bookmark"
-                   :type entry
-                   :template ("* %? :%{i-type}:\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
-                   :i-type "web"
-                   )
                   (,(format "%s\tPersonal note" (all-the-icons-faicon "sticky-note-o" :face 'all-the-icons-green :v-adjust 0.01))
                    :keys "n"
                    :file +org-capture-todo-file
@@ -200,6 +191,17 @@
                                :desc ""
                                :i-type "idea"
                                )))
+
+                  (,(format "%s\tBookmark" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "b"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Bookmark"
+                   :type entry
+                   :template ("* %{desc}%? :%{i-type}:\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
+                   :desc "%(org-cliplink-capture)"
+                   :i-type "web"
+                   )
                   (,(format "%s\tTasks" (all-the-icons-octicon "inbox" :face 'all-the-icons-yellow :v-adjust 0.01))
                    :keys "k"
                    :file +org-capture-todo-file
@@ -336,7 +338,22 @@
   (setq message-directory "~/.mail/"))
 
 (after! org-journal
-  (setq org-journal-dir "~/Nextcloud/org/journal/")
-  (map! :leader
-      :desc "New journal entry"
-      "j" #'org-journal-new-entry))
+  (setq org-journal-dir "~/Nextcloud/org/journal/"))
+
+;; (map! :leader
+;;       :desc "New journal entry"
+;;       "j" #'org-journal-new-entry)
+
+;; (map! :map notmuch-search-mode-map
+;;       "r" #'my/search-read)
+
+;; (defun my/search-read ()
+;;   "Toggle read tag"
+;;   (interactive)
+;;   (if (member "unread" (notmuch-search-get-tags))
+;;       (notmuch-search-add-tag (list "-unread"))
+;;     (notmuch-search-add-tag (list "+unread"))))
+
+(setq c-basic-offset 4)
+(after! swiper
+  (map! "C-s" #'swiper))
