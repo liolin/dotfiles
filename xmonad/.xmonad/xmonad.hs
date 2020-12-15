@@ -138,7 +138,7 @@ myKeys =
 
         , ("<XF86WLAN>", spawn "nmcli radio wifi on")               -- Skip forwards in playlist
 
-        , ("<Print>", spawn "sleep 0.2; scrot -s Images/scrot/%Y-%m-%d_%H%M.png")
+        , ("<Print>", spawn "sleep 0.2; /home/liolin/bin/screenshot")
         ]
 
 ------------------------------------------------------------------------
