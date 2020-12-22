@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+packages=$(checkupdates)
+state=$?
+numberOfPackages=$(echo ${packages} | wc -l)
+
+if [ $state -eq 1 ]; then
+    notify-send --urgency=critical "Updates" "Un unknow cause of failure ocurred in checkupdates"
+elif [ $state -eq 0 ]; then
+    notify-send --urgency=low "Updates" "Updates are available. ${numberOfPackages} Package(s)"
+else
+    notify-send "test" "test"
+fi
