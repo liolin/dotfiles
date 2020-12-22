@@ -1,8 +1,0 @@
-#!/bin/bash
-
-artist=$(cmus-remote -Q | awk '$2 ~ "artist" {print$0}' | cut -d' ' -f3-)
-song=$(cmus-remote -Q | awk '$2 ~ "title" {print$0}' | cut -d' ' -f3-)
-echo $artist - $song > /tmp/cmus.stat
-#sleep 2
-cat /tmp/cmus.stat
-rm /tmp/cmus.stat
