@@ -354,6 +354,5 @@
 ;;       (notmuch-search-add-tag (list "-unread"))
 ;;     (notmuch-search-add-tag (list "+unread"))))
 
-(setq c-basic-offset 4)
 (after! swiper
   (map! "C-s" #'swiper))
