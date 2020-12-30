@@ -8,6 +8,4 @@ if [ $state -eq 1 ]; then
 elif [ $state -eq 0 ]; then
     numberOfPackages=$(checkupdates | wc -l)
     notify-send --urgency=low "Updates" "Updates are available. ${numberOfPackages} Package(s)"
-else
-    notify-send "test" "test"
 fi
