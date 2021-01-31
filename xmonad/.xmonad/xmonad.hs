@@ -129,14 +129,14 @@ myKeys =
         , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 5")  -- Lower Volume
         , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 5")  -- Raise Volume
         , ("<XF86AudioMicMute>", spawn "amixer set Capture toggle") -- Toggle microphone
-        , ("<XF86AudioPlay>", spawn "cmus-remote --pause")          -- Toggle pause
-        , ("<XF86AudioPrev>", spawn "cmus-remote --prev")           -- Skip backwards in playlist
-        , ("<XF86AudioNext>", spawn "cmus-remote --next")           -- Skip forwards in playlist
+        , ("<XF86AudioPlay>", spawn "playerctl play-pause")         -- Toggle pause
+        , ("<XF86AudioPrev>", spawn "playerctl previous")           -- Skip backwards in playlist
+        , ("<XF86AudioNext>", spawn "playerctl next")               -- Skip forwards in playlist
 
         , ("<XF86MonBrightnessUp>", spawn "xbacklight + 5%")
         , ("<XF86MonBrightnessDown>", spawn "xbacklight - 5%")
 
-        , ("<XF86WLAN>", spawn "nmcli radio wifi on")               -- Skip forwards in playlist
+        , ("<XF86WLAN>", spawn "nmcli radio wifi on")
 
         , ("<Print>", spawn "sleep 0.2; /home/liolin/bin/screenshot")
         ]
