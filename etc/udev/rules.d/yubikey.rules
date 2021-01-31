@@ -1,0 +1,2 @@
+CTION=="remove", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="1050/407*", RUN+="/usr/local/sbin/ykunlock lock"
+ACTION=="add", ENV{DEVTYPE}=="usb_device", ENV{ID_BUS}=="usb", ENV{PRODUCT}=="1050/407*", RUN+="/usr/local/sbin/ykunlock unlock"
