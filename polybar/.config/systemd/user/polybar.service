@@ -1,0 +1,12 @@
+[Unit]
+Description=Polybar Panel
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/polybar --config=/home/liolin/.config/polybar/config example
+ExecStop=/usr/bin/killall polybar
+Restart=on-failure
+RestartSec=3s
+
+[Install]
+WantedBy=default.target

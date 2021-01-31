@@ -9,5 +9,3 @@ nm-applet &
 playerctld daemon
 xmodmap ~/.config/xmodmap/xmodmap.conf
 /bin/sh ~/bin/update-notify
-
-bash ~/.config/polybar/launch.sh &
