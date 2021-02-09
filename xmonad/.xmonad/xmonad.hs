@@ -122,7 +122,8 @@ myKeys =
         , ("M-e a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
 
     -- Applications
-        , ("<F12>", spawn "pcmanfm") -- Run filemanager
+        , ("<F12>", spawn "pcmanfm")                          -- Run filemanager
+        , ("M-S-b", spawn "bash /home/liolin/bin/bar-toggle") -- Toggle the status bar (polybar)
 
     -- Multimedia Keys
         , ("<XF86AudioMute>", spawn "pamixer --toggle-mute")        -- Toggle mute

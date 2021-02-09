@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+SERVICE=polybar.service
+
+function start() {
+    systemctl --user start $SERVICE
+}
+
+function stop() {
+    systemctl --user stop $SERVICE
+}
+
+systemctl -q --user is-active $SERVICE && stop || start
