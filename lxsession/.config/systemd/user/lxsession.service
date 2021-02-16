@@ -1,0 +1,11 @@
+[Unit]
+Description=lxsession - polkit
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/lxpolkit &
+ExecStop=/usr/bin/killall lxpolkit
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
