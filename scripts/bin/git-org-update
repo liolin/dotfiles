@@ -3,4 +3,4 @@
 git pull
 git add .
 git commit -m "Files were modified on host $(hostnamectl --static)"
-git pussh origin master
+git push origin master
