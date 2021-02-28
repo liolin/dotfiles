@@ -206,6 +206,8 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "Pavucontrol"    --> doFloat
+    , className =? "KeePassXC"      --> doShift "4: keepass"
+    , className =? "Keybase"        --> doShift "6: chat"
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
@@ -264,6 +266,8 @@ dbusOutput dbus str = do
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "/usr/bin/sh ~/.xmonad/autostart.sh"
+  spawnOnce "/usr/bin/keybase-gui"
+  spawnOnce "/usr/bin/keepassxc"
   ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
