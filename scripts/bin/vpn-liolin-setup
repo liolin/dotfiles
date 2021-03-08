@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+## connect to the vpn
+nmcli connection up liolin
+
+## setup the routing for the server in the network at home
+ip route add 192.168.1.176/32 via 10.8.0.5
+ip route add 192.168.1.177/32 via 10.8.0.5
+
+## mount the shares
+systemctl start home-liolin-shares-ds.mount
