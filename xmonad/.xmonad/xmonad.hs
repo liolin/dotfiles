@@ -15,6 +15,7 @@ import XMonad.Layout.Spacing
 import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
 import XMonad.Actions.WithAll (sinkAll, killAll)
 import Data.Monoid
 import System.Exit
@@ -120,6 +121,7 @@ myKeys =
         , ("M-e m", spawn "emacsclient -c -a '' --eval '(notmuch)'")        -- notmuch emacs email client
         , ("M-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
         , ("M-e a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
+        , ("M-e c", spawn "emacsclient -c -a '' --eval '(org-capture)'")    -- open org-capture
 
     -- Applications
         , ("<F12>", spawn "pcmanfm")                          -- Run filemanager
@@ -265,6 +267,7 @@ dbusOutput dbus str = do
 -- By default, do nothing.
 myStartupHook :: X ()
 myStartupHook = do
+  setWMName "LG3D"
   spawnOnce "/usr/bin/sh ~/.xmonad/autostart.sh"
   spawnOnce "/usr/bin/keybase-gui"
   spawnOnce "/usr/bin/keepassxc"
