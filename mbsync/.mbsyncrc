@@ -22,14 +22,12 @@ Path ~/.mail/olivier.lischer@liolin.ch/
 Inbox ~/.mail/olivier.lischer@liolin.ch/Inbox
 
 Channel olivier.lischer@liolin.ch
-Master :olivier.lischer@liolin.ch-remote:
-Slave :olivier.lischer@liolin.ch-local:
-# Exclude everything under the internal [Gmail] folder, except the interesting folders
+Far :olivier.lischer@liolin.ch-remote:
+Near :olivier.lischer@liolin.ch-local:
 Patterns * 
-# Automatically create missing mailboxes, both locally and on the server
 Create Both
-# Save the synchronization state files in the relevant directory
 SyncState *
+Expunge Both
 
 # IMAPAccount gmail
 # # Address to connect to
