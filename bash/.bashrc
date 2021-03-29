@@ -26,6 +26,10 @@ if [ -d "$HOME/.dotnet/tools" ] ; then
     PATH="$HOME/.dotnet/tools:$PATH"
 fi
 
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
 export PATH
 
 if [ -d "/var/lib/flatpak/exports/share/applications" ] ; then
