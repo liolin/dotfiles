@@ -14,7 +14,6 @@ writeLog "[START notmuch update - $(date +%Y-%m-%d:%H:%M:%S)]"
 state=$?
 
 if [ $state -ne 0 ]; then
-    notify-send --urgency=critical "notmuch" "Could not update mails because of missing key card"
     writeLog "Could not update mails because of missing key card"
     exit $state
 fi
