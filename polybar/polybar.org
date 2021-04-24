@@ -3,7 +3,7 @@
 #+BABEL: :cache yes :tangle yes :noweb yes
 
 
-* General
+* Description
 * Configuration
 ** Colors
 #+begin_src conf
@@ -42,9 +42,9 @@ margin-top = 5
 margin-bottom = 5
 #+end_src
 ** Bars
-*** Example (default)
+*** default
 #+begin_src conf
-[bar/example]
+[bar/default]
 width = 100%
 height = 27
 radius = 6.0
@@ -317,4 +317,36 @@ label-warn-foreground = ${colors.secondary}
 ramp-0 = θ
 ramp-1 = θ
 ramp-foreground = ${colors.foreground-alt}
+#+end_src
+
+* Launch script
+#+begin_src sh :shebang #!/usr/bin/env bash :tangle .config/polybar/launch.sh :mkdirp yes
+  CONFIG_FILE="${HOME}/.config/polybar/config"
+
+  # Terminate already running bar instances
+  killall -q polybar
+
+  # Wait until the processes have been shut down
+  while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+  # Launch bar1 and bar2
+  polybar -c $CONFIG_FILE example
+
+  echo "Bars launched..."
+#+end_src
+
+* Systemd 
+#+begin_src conf :tangle .config/systemd/user/polybar.service :mkdirp yes
+  [Unit]
+  Description=Polybar Panel
+		    
+  [Service]
+  Type=simple
+  ExecStart=/usr/bin/polybar --config=/home/liolin/.config/polybar/config default
+  ExecStop=/usr/bin/killall polybar
+  Restart=on-failure
+  RestartSec=3s
+
+  [Install]
+  WantedBy=default.target
 #+end_src
