@@ -1,6 +1,6 @@
 [user]
 	name = Olivier Lischer
 	email = olivier.lischer@liolin.ch
-    signingKey = AC0895E4BA48F5B5
+    signingKey = C165B44337F5C026
 [pull]
 	rebase = false
