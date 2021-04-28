@@ -88,7 +88,7 @@ cursor-scroll = ns-resize
 #+begin_src conf
 [module/xmonad]
 type = custom/script
-exec = /home/liolin/.local/bin/xmonad-log
+exec = /home/liolin/bin/xmonad-log
 tail = true
 #+end_src
 
