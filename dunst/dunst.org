@@ -103,10 +103,11 @@
 ** Shortcuts
 The mod1 key is the alt key on the left side of the space bar.
 #+begin_src conf
-    close = mod1+k
-    close_all = mod1+shift+k
-    history = mod1+shift+h
-    context = mod1+shift+o
+  [shortcuts]
+  close = mod1+k
+  close_all = mod1+shift+k
+  history = mod1+shift+h
+  context = mod1+shift+o
 #+end_src
 
 ** Urgency style
