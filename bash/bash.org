@@ -1,0 +1,64 @@
+#+TITLE: Alacritty configuration
+#+PROPERTY: header-args:sh :tangle .bashrc :mkdirp yes :noweb yes
+#+BABEL: :cache yes :tangle yes :noweb yes
+
+* Description
+* Configuration
+** Guards
+Run the bashrc only if the shell is interactive
+#+begin_src sh
+  [[ $- != *i* ]] && return
+#+end_src
+** env variables
+#+begin_src sh
+  PATH="$HOME/.cargo/bin:$PATH"
+  PATH="$HOME/.rbenv/bin:$PATH"
+  PATH="$HOME/.dotnet/tools:$PATH"
+  PATH="$HOME/bin:$PATH"
+
+  if [ -d "/var/lib/flatpak/exports/share/applications" ] ; then
+      XDG_DATA_DIRS="/var/lib/flatpak/exports/share/applications:$XDG_DATA_DIRS"
+  fi
+
+  if [ -d "$HOME/.local/share/flatpak/exports/share/applications" ] ; then
+      XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share/applications:$XDG_DATA_DIRS"
+  fi
+
+  export PATH
+  export XDG_DATA_DIRS
+  export ALTERNATE_EDITOR=""
+  export EDITOR="emacsclient -t"                  # $EDITOR opens in terminal
+  export VISUAL="emacsclient -t -a emacs"         # $VISUAL opens in GUI mode
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+#+end_src
+
+** alias
+#+begin_src sh
+  alias ls='exa'
+  alias ll='exa -la'   # show long listing of all except ".."
+  alias l='exa -la --ignore-glob=.?*'   # show long listing but no hidden dotfiles except "."
+  alias rm='rm -I'
+  alias mv='mv -i'
+  alias cp='cp -i'
+  alias mount-share='systemctl start home-liolin-shares-ds.mount'
+#+end_src
+
+** SSH-PGP integration
+#+begin_src sh
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+#+end_src
+** rbenv
+#+begin_src sh
+eval "$(rbenv init -)"
+#+end_src
+** starship
+#+begin_src sh
+eval "$(starship init bash)"
+#+end_src
+** fzf
+#+begin_src sh
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
+#+end_src
