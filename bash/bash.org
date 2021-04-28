@@ -1,4 +1,4 @@
-#+TITLE: Alacritty configuration
+#+TITLE: Bash configuration
 #+PROPERTY: header-args:sh :tangle .bashrc :mkdirp yes :noweb yes
 #+BABEL: :cache yes :tangle yes :noweb yes
 
