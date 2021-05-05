@@ -112,9 +112,9 @@ myKeys =
         , ("M-.", sendMessage (IncMasterN (-1)))    -- Deincrement the number of windows in the master area
 
     -- Menus
-        , ("M-p", spawn "rofi -show drun")
-        , ("M-S-p", spawn "/usr/bin/env bash ~/.xmonad/rofi_power") -- Run power menu
-        , ("M-s", spawn "/usr/bin/passmenu -i")
+        , ("M-p s", spawn "rofi -show drun")
+        , ("M-p e", spawn "/usr/bin/env bash ~/.xmonad/rofi_power") -- Run power menu
+        , ("M-p p", spawn "/usr/bin/passmenu -i")
     -- Emacs
         , ("M-e e", spawn "emacsclient -c -a ''")                           -- start emacs
         , ("M-e b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
