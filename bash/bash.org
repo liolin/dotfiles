@@ -62,3 +62,7 @@ eval "$(starship init bash)"
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
 #+end_src
+** fm6000
+#+begin_src sh
+  fm6000 -r
+#+end_src
