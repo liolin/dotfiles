@@ -57,8 +57,7 @@ Channel olivier.lischer.blon@gmail.com
 Far :olivier.lischer.blon@gmail.com-remote:
 Near :olivier.lischer.blon@gmail.com-local:
 Patterns *
-# Automatically create missing mailboxes, both locally and on the server
 Create Both
-# Save the synchronization state files in the relevant directory
 SyncState *
+Expunge Both
 CopyArrivalDate yes
