@@ -27,7 +27,6 @@ Near :olivier.lischer@liolin.ch-local:
 Patterns * 
 Create Both
 SyncState *
-Expunge Both
 CopyArrivalDate yes
 
 
@@ -59,5 +58,4 @@ Near :olivier.lischer.blon@gmail.com-local:
 Patterns *
 Create Both
 SyncState *
-Expunge Both
 CopyArrivalDate yes
