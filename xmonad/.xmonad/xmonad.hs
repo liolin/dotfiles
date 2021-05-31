@@ -137,8 +137,8 @@ myKeys =
         , ("<XF86AudioPrev>", spawn "playerctl previous")           -- Skip backwards in playlist
         , ("<XF86AudioNext>", spawn "playerctl next")               -- Skip forwards in playlist
 
-        , ("<XF86MonBrightnessUp>", spawn "xbacklight + 5%")
-        , ("<XF86MonBrightnessDown>", spawn "xbacklight - 5%")
+        , ("<XF86MonBrightnessUp>", spawn "brightnessctl 5%+")
+        , ("<XF86MonBrightnessDown>", spawn "brightnessctl 5%-")
 
         , ("<XF86WLAN>", spawn "nmcli radio wifi on")
 
