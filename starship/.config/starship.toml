@@ -1,0 +1,4 @@
+[hostname]
+ssh_only = false
+format = "on [$hostname](bold blue) "
+disabled = false
