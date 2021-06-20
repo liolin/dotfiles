@@ -1,5 +1,5 @@
 #!/bin/sh
-stack ghc -- \
+$HOME/.ghcup/bin/stack ghc -- \
   --make xmonad.hs \
   -i \
   -ilib \
