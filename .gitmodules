@@ -4,3 +4,24 @@
 [submodule "sddm/nebula-sddm-theme"]
 	path = sddm/nebula-sddm-theme
 	url = https://github.com/fawix/nebula-sddm-theme
+[submodule "xmonad/.xmonad/xmonad"]
+	path = xmonad/.xmonad/xmonad
+	url = https://github.com/xmonad/xmonad
+[submodule "xmonad/.xmonad/xmonad-contrib"]
+	path = xmonad/.xmonad/xmonad-contrib
+	url = https://github.com/xmonad/xmonad-contrib
+[submodule "xmonad/.xmonad/haskell-dbus"]
+	path = xmonad/.xmonad/haskell-dbus
+	url = https://github.com/rblaze/haskell-dbus
+[submodule "xmonad/xmonad-git"]
+	path = xmonad/xmonad-git
+	url = https://github.com/xmonad/xmonad
+[submodule "xmonad/xmonad-contrib-git"]
+	path = xmonad/xmonad-contrib-git
+	url = https://github.com/xmonad/xmonad-contrib
+[submodule "xmonad/.xmonad/xmonad-git"]
+	path = xmonad/.xmonad/xmonad-git
+	url = https://github.com/xmonad/xmonad
+[submodule "xmonad/.xmonad/xmonad-contrib-git"]
+	path = xmonad/.xmonad/xmonad-contrib-git
+	url = https://github.com/xmonad/xmonad-contrib
