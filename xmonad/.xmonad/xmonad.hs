@@ -1,11 +1,6 @@
 --
 -- xmonad example config file.
 --
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
 
 import XMonad
 import XMonad.Util.Run
@@ -34,7 +29,7 @@ myTerminal :: [Char]
 myTerminal = "alacritty"
 
 myBrowser :: [Char]
-myBrowser = "firefox"
+myBrowser = "brave"
 
 myEditor :: [Char]
 myEditor = "emacsclient"
@@ -64,10 +59,6 @@ myModMask = mod4Mask
 -- By default we use numeric strings, but any string may be used as a
 -- workspace name. The number of workspaces is determined by the length
 -- of this list.
---
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces :: [[Char]]
 myWorkspaces    = ["1: term", "2: doom", "3: web", "4: keepass", "5: music", "6: chat", "7: mail", "8: intelij", "9: office"]
@@ -269,9 +260,17 @@ dbusOutput dbus str = do
 myStartupHook :: X ()
 myStartupHook = do
   setWMName "LG3D"
-  spawnOnce "/usr/bin/sh ~/.xmonad/autostart.sh"
+  spawnOnce "/usr/bin/picom --config ~/.config/picom.conf &"
+  spawnOnce "/usr/bin/nitrogen --restore &"
+  spawnOnce "/usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle &"
+  spawnOnce "/usr/bin/nm-applet &"
+  spawnOnce "/usr/bin/playerctld daemon"
+  spawnOnce "/usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf"
+  spawnOnce "/usr/bin/conky"
   spawnOnce "/usr/bin/keybase-gui"
   spawnOnce "/usr/bin/keepassxc"
+
+  spawnOnce "/bin/sh ~/bin/update-notify"
   ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
