@@ -14,7 +14,7 @@ Run the bashrc only if the shell is interactive
   PATH="$HOME/.cargo/bin:$PATH"
   PATH="$HOME/.rbenv/bin:$PATH"
   PATH="$HOME/.dotnet/tools:$PATH"
-  PATH="$HOME/bin:$PATH"
+  PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
   if [ -d "/var/lib/flatpak/exports/share/applications" ] ; then
       XDG_DATA_DIRS="/var/lib/flatpak/exports/share/applications:$XDG_DATA_DIRS"
@@ -52,6 +52,10 @@ gpgconf --launch gpg-agent
 ** rbenv
 #+begin_src sh
 eval "$(rbenv init -)"
+#+end_src
+** ghcup
+#+begin_src sh 
+[ -f "/home/liolin/.ghcup/env" ] && source "/home/liolin/.ghcup/env"
 #+end_src
 ** starship
 #+begin_src sh
