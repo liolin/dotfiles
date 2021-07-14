@@ -43,6 +43,13 @@ Run the bashrc only if the shell is interactive
   alias cp='cp -i'
   alias mount-share='systemctl start home-liolin-shares-ds.mount'
 #+end_src
+*** git alias
+#+begin_src sh
+  alias gp='git push'
+  alias gpu='git pull'
+  alias gc='git commit'
+  alias ga='git add'
+#+end_src
 
 ** SSH-PGP integration
 #+begin_src sh
