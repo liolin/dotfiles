@@ -61,7 +61,7 @@ myModMask = mod4Mask
 -- of this list.
 --
 myWorkspaces :: [[Char]]
-myWorkspaces    = ["1: term", "2: doom", "3: web", "4: keepass", "5: music", "6: chat", "7: mail", "8: intelij", "9: office"]
+myWorkspaces    = ["1: term", "2: editor", "3: web", "4: keepass", "5: music", "6: chat", "7: mail", "8: intelij", "9: office"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -200,7 +200,6 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "Pavucontrol"    --> doFloat
-    , className =? "KeePassXC"      --> doShift "4: keepass"
     , className =? "Keybase"        --> doShift "6: chat"
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
@@ -268,9 +267,8 @@ myStartupHook = do
   spawnOnce "/usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf"
   spawnOnce "/usr/bin/conky"
   spawnOnce "/usr/bin/keybase-gui"
-  spawnOnce "/usr/bin/keepassxc"
 
-  spawnOnce "/bin/sh ~/bin/update-notify"
+  spawnOnce "/bin/sh ~/bin/update-notify &"
   ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
