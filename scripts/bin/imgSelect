@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+dir="$1"
+/usr/bin/sxiv -o -q -r * | /usr/bin/tr '\n' '\0' | /usr/bin/xargs -I{} -0 cp {} "$dir"
