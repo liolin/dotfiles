@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
 
-picom --config ~/.config/picom.conf &
-nitrogen --restore &
-setxkbmap -layout ch,us -option grp:alt_space_toggle &
-nm-applet &
-playerctld daemon
-xmodmap ~/.config/xmodmap/xmodmap.conf
+/usr/bin/nm-applet &
+/usr/bin/picom --daemon --config ~/.config/picom.conf
+/usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle
+/usr/bin/playerctld daemon
+/usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
+/usr/bin/conky
+/usr/bin/nitrogen --restore
 /bin/sh ~/bin/update-notify
+/usr/bin/keybase-gui

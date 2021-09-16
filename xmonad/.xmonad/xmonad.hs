@@ -61,7 +61,7 @@ myModMask = mod4Mask
 -- of this list.
 --
 myWorkspaces :: [[Char]]
-myWorkspaces    = ["1: term", "2: editor", "3: web", "4: keepass", "5: music", "6: chat", "7: mail", "8: intelij", "9: office"]
+myWorkspaces    = ["1: term", "2: editor", "3: web", "4: xxx", "5: music", "6: chat", "7: mail", "8: xxx", "9: office", "10: game"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -107,13 +107,13 @@ myKeys =
         , ("M-p e", spawn "/usr/bin/env bash ~/.xmonad/rofi_power") -- Run power menu
         , ("M-p p", spawn "/usr/bin/passmenu -i")
     -- Emacs
-        , ("M-e e", spawn "emacsclient -c -a ''")                           -- start emacs
-        , ("M-e b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
-        , ("M-e d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
-        , ("M-e m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
-        , ("M-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
-        , ("M-e a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
-        , ("M-e c", spawn "emacsclient -c -a '' --eval '(org-capture)'")    -- open org-capture
+        , ("M-d e", spawn "emacsclient -c -a ''")                           -- start emacs
+        , ("M-d b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
+        , ("M-d d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
+        , ("M-d m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
+        , ("M-d s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
+        , ("M-d a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
+        , ("M-d c", spawn "emacsclient -c -a '' --eval '(org-capture)'")    -- open org-capture
 
     -- Applications
         , ("<F12>", spawn "pcmanfm")                          -- Run filemanager
@@ -259,16 +259,7 @@ dbusOutput dbus str = do
 myStartupHook :: X ()
 myStartupHook = do
   setWMName "LG3D"
-  spawnOnce "/usr/bin/picom --config ~/.config/picom.conf &"
-  spawnOnce "/usr/bin/nitrogen --restore &"
-  spawnOnce "/usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle &"
-  spawnOnce "/usr/bin/nm-applet &"
-  spawnOnce "/usr/bin/playerctld daemon"
-  spawnOnce "/usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf"
-  spawnOnce "/usr/bin/conky"
-  spawnOnce "/usr/bin/keybase-gui"
-
-  spawnOnce "/bin/sh ~/bin/update-notify &"
+  spawn "/bin/bash /home/liolin/test.sh"
   ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
