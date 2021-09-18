@@ -259,7 +259,7 @@ dbusOutput dbus str = do
 myStartupHook :: X ()
 myStartupHook = do
   setWMName "LG3D"
-  spawn "/bin/bash /home/liolin/test.sh"
+  spawn "/bin/bash /home/liolin/.xmonad/autostart.sh"
   ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
