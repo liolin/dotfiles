@@ -336,7 +336,8 @@ screens = [
                         background = colors[5],
                         padding = 0
                         ),
-                widget.Volume(
+                widget.PulseVolume(
+                        update_interval = 0.1,
                         foreground = colors[2],
                         background = colors[5],
                         padding = 5
