@@ -8,6 +8,7 @@ xmonad/.xmonad/xmonad.state
 .uuid
 .stack-work
 stack.yaml.lock
+__pycache__
 
 # New dirs with org files
 polybar/.config

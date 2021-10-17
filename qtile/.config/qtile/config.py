@@ -88,19 +88,22 @@ keys = [
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
 
-    Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
-    Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    ## Switch Focus between screens
+    Key([mod], "w", lazy.to_screen(0)),
+    Key([mod], "e", lazy.to_screen(1)),
+    
+    ## Engergy Keys
     Key([mod], "r", lazy.spawn("rofi -show drun"),
         desc="Spawn a command using a prompt widget"),
 
+    ## Shutdown Qtile
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod, "shift"], "p", lazy.spawn("cinnamon-screensaver-command --lock && systemctl suspend",
-                                        desc="Lock screen using cinnamon screensaver")),
+    Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
 
     ## Menus
     KeyChord([mod], "p", [
         Key([], "e",
-            lazy.spawn("/usr/bin/env bash ~/.dmscripts/rofi_power")),
+            lazy.spawn("/home/liolin/.dmscripts/rofi_power")),
         Key([], "p",
             lazy.spawn("/usr/bin/passmenu -i"))
     ]),
@@ -385,6 +388,7 @@ screens = [
                         ),
                 widget.Battery(
                         background = colors[4],
+                        notify_below = 10,
                         format = "{char} {percent:2.0%} {hour:d}:{min:02d}"
                         ),
                 widget.Sep(
