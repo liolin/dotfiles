@@ -1,3 +1,11 @@
+#+TITLE: Bash configuration
+#+PROPERTY: header-args:conf :tangle .mbsyncrc :mkdirp yes :noweb yes
+#+BABEL: :cache yes :tangle yes :noweb yes
+
+* Description
+* Configuration
+** olivier.lischer@liolin.ch
+#+begin_src conf
 IMAPAccount olivier.lischer@liolin.ch
 # Address to connect to
 Host imap.mail.hostpoint.ch
@@ -30,7 +38,10 @@ Create Both
 SyncState *
 Expunge Both
 CopyArrivalDate yes
+#+end_src
 
+** notes@liolin.ch
+#+begin_src conf
 IMAPAccount notes@liolin.ch
 # Address to connect to
 Host imap.mail.hostpoint.ch
@@ -60,7 +71,10 @@ Create Both
 SyncState *
 Expunge Both
 CopyArrivalDate yes
+#+end_src
 
+** olivier.lischer.blong@gmail.com
+#+begin_src conf
 IMAPAccount olivier.lischer.blon@gmail.com
 # Address to connect to
 Host imap.gmail.com
@@ -91,3 +105,4 @@ Create Both
 Expunge Both
 SyncState *
 CopyArrivalDate yes
+#+end_src
