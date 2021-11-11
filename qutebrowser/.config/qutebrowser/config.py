@@ -137,6 +137,7 @@ config.set('content.javascript.enabled', True, 'chrome://*/*')
 # Enable JavaScript.
 # Type: Bool
 config.set('content.javascript.enabled', True, 'qute://*/*')
+config.set('auto_save.session', True)
 
 # List of user stylesheet filenames to use.
 # Type: List of File, or File
