@@ -171,11 +171,11 @@ layout_theme = {"border_width": 2,
                 }
 layouts = [
     layout.MonadTall(**layout_theme),
+    layout.MonadWide(**layout_theme),
     layout.Max(**layout_theme),
     # Try more layouts by unleashing below layouts.
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
