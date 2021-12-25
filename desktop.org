@@ -1,0 +1,61 @@
+#+TITLE: Dekstop Configuration of liolin
+#+PROPERTY: header-args :mkdirp yes
+#+PROPERTY: header-args:sh :tangle-mode (identity #o555)
+
+
+
+tangle-mode:
+- controls the permissions for the file
+- #0555 = r+x
+- [[https://orgmode.org/manual/Extracting-Source-Code.html][Extracting Source Code (The Org Manual)]]
+
+
+* Bash
+** Guard
+#+begin_src sh :tangle ~/.bashrc
+  [[ $- != *i* ]] && return
+#+end_src
+
+** Alias
+#+begin_src sh :tangle ~/.bashrc
+  alias ls='exa'
+  alias ll='exa -la'   # show long listing of all except ".."
+  alias l='exa -la --ignore-glob=.?*'   # show long listing but no hidden dotfiles except "."
+  alias rm='rm -I'
+  alias mv='mv -i'
+  alias cp='cp -i'
+  alias mount-share='systemctl start home-liolin-shares-ds.mount'
+  alias batstat='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
+  alias syncost='rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/10_HSR/01_Unterrichtsunterlagen/03_Semester/'
+  alias syncmail='rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/99_mailArchive/'
+  alias gp='git push'
+  alias gpu='git pull'
+  alias gc='git commit'
+  alias ga='git add'
+#+end_src
+
+
+** starship
+#+begin_src sh :tangle ~/.bashrc
+  eval "$(starship init bash)"
+#+end_src
+
+** includes
+#+begin_src sh :tangle ~/.bashrc
+  source /usr/share/fzf/key-bindings.bash
+  source /usr/share/fzf/completion.bash
+  [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ] && source /opt/miniconda3/etc/profile.d/conda.sh
+#+end_src
+
+** SSH
+#+begin_src sh :tangle ~/.bashrc
+  export GPG_TTY="$(tty)"
+  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+  gpgconf --launch gpg-agent
+#+end_src
+
+** fm6000
+#+begin_src sh :tangle ~/.bashrc
+  fm6000 -r
+#+end_src
