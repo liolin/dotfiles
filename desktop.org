@@ -10,7 +10,40 @@ tangle-mode:
 - [[https://orgmode.org/manual/Extracting-Source-Code.html][Extracting Source Code (The Org Manual)]]
 
 
+* ENV Variables
+The following are the env variables which are valid over all shells. 
+They are included over =noweb= in the =profile= files for the specific shells.
+
+#+NAME: ENV-VARS
+#+begin_src sh :tangle no
+  PATH="$HOME/.cargo/bin:$PATH"
+  PATH="$HOME/.dotnet/tools:$PATH"
+  PATH="$HOME/.local/bin:$PATH"
+
+  if [ -d "/var/lib/flatpak/exports/share/applications" ] ; then
+      XDG_DATA_DIRS="/var/lib/flatpak/exports/share/applications:$XDG_DATA_DIRS"
+  fi
+
+  if [ -d "$HOME/.local/share/flatpak/exports/share/applications" ] ; then
+      XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share/applications:$XDG_DATA_DIRS"
+  fi
+
+  export PATH
+  export XDG_DATA_DIRS
+  export ALTERNATE_EDITOR=""
+  export EDITOR="emacsclient -t"                  # $EDITOR opens in terminal
+  export VISUAL="emacsclient -t -a emacs"         # $VISUAL opens in GUI mode
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1
+  export LEDGER_FILE=~/finance/2021.journal
+  export LANG=en_US.UTF-8
+#+end_src
+
 * Bash
+** bash_profile
+#+begin_src sh :tangle ~/.bash_profile :noweb yes
+  <<ENV-VARS>>
+  [[ -f ~/.bashrc ]] && . ~/.bashrc
+#+end_src
 ** Guard
 #+begin_src sh :tangle ~/.bashrc
   [[ $- != *i* ]] && return
