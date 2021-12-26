@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-cd /home/liolin/org
-git pull
-git status -s | awk '{print $2}' | xargs git add
-git commit -m "Files were modified on host $(hostnamectl --static)"
-git push origin master

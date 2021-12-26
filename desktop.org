@@ -181,70 +181,70 @@ fzf
 
 * cmus
 #+begin_src python :tangle no
-#!/usr/bin/env python
+  #!/usr/bin/env python
 
-import sys
-import gi
+  import sys
+  import gi
 
-cacheDir = "/home/liolin/.cache/cmus-notify/cover"
+  cacheDir = "/home/liolin/.cache/cmus-notify/cover"
 
-def parseCmusArgs():
-    length = len(sys.argv)
-    args = {};
-    for i in range(1, length-1, 2):
-        args[sys.argv[i]] = sys.argv[i+1]
+  def parseCmusArgs():
+      length = len(sys.argv)
+      args = {};
+      for i in range(1, length-1, 2):
+	  args[sys.argv[i]] = sys.argv[i+1]
 
-    return args
-
-
-def calculateDuration():
-    pass
-
-def extractImage(inputFile, artist, album, title):
-    import ffmpeg
-    import os
-
-    outputFile = "%s/%s-%s-%s.png" % (cacheDir, artist, album, title);
-    if not os.path.isfile(outputFile):
-        stream = ffmpeg.input(inputFile)
-        stream = ffmpeg.output(stream, outputFile)
-        ffmpeg.run(stream)
-    return outputFile
+      return args
 
 
-def sendNotification(title, outputString = '', cover='/home/liolin/.cache/cmus-notify/cover/default.png'):
-    gi.require_version('Notify', '0.7')
-    from gi.repository import Notify, GdkPixbuf
-    Notify.init("cmus")
-    cmusNotification = Notify.Notification.new(title, outputString)
-    image = GdkPixbuf.Pixbuf.new_from_file(cover)
-    cmusNotification.set_image_from_pixbuf(image)
-    cmusNotification.show()
-    Notify.uninit()
+  def calculateDuration():
+      pass
 
-def main():
-    args = parseCmusArgs()
+  def extractImage(inputFile, artist, album, title):
+      import ffmpeg
+      import os
 
-    title = ""
-    message = ""
+      outputFile = "%s/%s-%s-%s.png" % (cacheDir, artist, album, title);
+      if not os.path.isfile(outputFile):
+	  stream = ffmpeg.input(inputFile)
+	  stream = ffmpeg.output(stream, outputFile)
+	  ffmpeg.run(stream)
+      return outputFile
 
-    if "file" in args:
-        cover = extractImage(args["file"], args["artist"], args["album"], args["title"])
-        title = "[%s]" % args["status"]
-        message = "%s\n%s - %s" % (args["title"], args["artist"], args["album"])
 
-    elif "url" in args:
-        title = "[%s]" % args["status"]
-        message = "%s - %s" % (args["url"], args["title"])
+  def sendNotification(title, outputString = '', cover='/home/liolin/.cache/cmus-notify/cover/default.png'):
+      gi.require_version('Notify', '0.7')
+      from gi.repository import Notify, GdkPixbuf
+      Notify.init("cmus")
+      cmusNotification = Notify.Notification.new(title, outputString)
+      image = GdkPixbuf.Pixbuf.new_from_file(cover)
+      cmusNotification.set_image_from_pixbuf(image)
+      cmusNotification.show()
+      Notify.uninit()
 
-    else:
-        title = "[%s]" % args["status"]
-        message = ""
+  def main():
+      args = parseCmusArgs()
 
-    sendNotification(title, message, cover)
+      title = ""
+      message = ""
 
-if __name__ == "__main__":
-    main()
+      if "file" in args:
+	  cover = extractImage(args["file"], args["artist"], args["album"], args["title"])
+	  title = "[%s]" % args["status"]
+	  message = "%s\n%s - %s" % (args["title"], args["artist"], args["album"])
+
+      elif "url" in args:
+	  title = "[%s]" % args["status"]
+	  message = "%s - %s" % (args["url"], args["title"])
+
+      else:
+	  title = "[%s]" % args["status"]
+	  message = ""
+
+      sendNotification(title, message, cover)
+
+  if __name__ == "__main__":
+      main()
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -254,125 +254,125 @@ cmus
 
 * Conky
 #+begin_src conf :tangle ~/.config/conky/conky.conf
---[[
-#=====================================================================================
-#                               XMonad Conky
-#======================================================================================
-]]
+  --[[
+  #=====================================================================================
+  #                               XMonad Conky
+  #======================================================================================
+  ]]
 
-conky.config = {
-	--Various settings
-	background = true,			-- forked to background
-	cpu_avg_samples = 2,			-- The number of samples to average for CPU monitoring.
-	diskio_avg_samples = 10,		-- The number of samples to average for disk I/O monitoring.
-	double_buffer = true,			-- Use the Xdbe extension? (eliminates flicker)
-	if_up_strictness = 'address',		-- how strict if testing interface is up - up, link or address
-	net_avg_samples = 2,			-- The number of samples to average for net data
-	no_buffers = true,			-- Subtract (file system) buffers from used memory?
-	temperature_unit = 'celsius',		-- fahrenheit or celsius
-	text_buffer_size = 2048,		-- size of buffer for display of content of large variables - default 256
-	update_interval = 1,			-- update interval
-	--imlib_cache_size = 0,                 -- disable image cache to get a new spotify cover per song
+  conky.config = {
+  --Various settings
+  background = true,			-- forked to background
+  cpu_avg_samples = 2,			-- The number of samples to average for CPU monitoring.
+  diskio_avg_samples = 10,		-- The number of samples to average for disk I/O monitoring.
+  double_buffer = true,			-- Use the Xdbe extension? (eliminates flicker)
+  if_up_strictness = 'address',		-- how strict if testing interface is up - up, link or address
+  net_avg_samples = 2,			-- The number of samples to average for net data
+  no_buffers = true,			-- Subtract (file system) buffers from used memory?
+  temperature_unit = 'celsius',		-- fahrenheit or celsius
+  text_buffer_size = 2048,		-- size of buffer for display of content of large variables - default 256
+  update_interval = 1,			-- update interval
+  --imlib_cache_size = 0,                 -- disable image cache to get a new spotify cover per song
 
-	alignment = 'bottom_right',	        -- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
-	gap_x = 50,				-- pixels between right or left border
-	gap_y = 50,				-- pixels between bottom or left border
+  alignment = 'bottom_right',	        -- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
+  gap_x = 50,				-- pixels between right or left border
+  gap_y = 50,				-- pixels between bottom or left border
 
-	-- Size
-    	minimum_height = 200,			-- minimum height of window
-	minimum_width = 260,			-- minimum height of window
-	maximum_width = 260,			-- maximum height of window
+  -- Size
+  minimum_height = 200,			-- minimum height of window
+  minimum_width = 260,			-- minimum height of window
+  maximum_width = 260,			-- maximum height of window
 
-	--Graphical
-	border_inner_margin = 5, 		-- margin between border and text
-	border_outer_margin = 5, 		-- margin between border and edge of window
-	border_width = 0, 			-- border width in pixels
-	default_bar_width = 260,		-- default is 0 - full width
-	default_bar_height = 10,		-- default is 6
-	default_gauge_height = 25,		-- default is 25
-	default_gauge_width =40,		-- default is 40
-	default_graph_height = 40,		-- default is 25
-	default_graph_width = 153,		-- default is 0 - full width
-	default_shade_color = '#000000',	-- default shading colour
-	default_outline_color = '#000000',	-- default outline colour
-	draw_borders = false,			-- draw borders around text
-	draw_graph_borders = true,		-- draw borders around graphs
-	draw_shades = false,			-- draw shades
-	draw_outline = false,			-- draw outline
-	stippled_borders = 0,			-- dashing the border
+  --Graphical
+  border_inner_margin = 5, 		-- margin between border and text
+  border_outer_margin = 5, 		-- margin between border and edge of window
+  border_width = 0, 			-- border width in pixels
+  default_bar_width = 260,		-- default is 0 - full width
+  default_bar_height = 10,		-- default is 6
+  default_gauge_height = 25,		-- default is 25
+  default_gauge_width =40,		-- default is 40
+  default_graph_height = 40,		-- default is 25
+  default_graph_width = 153,		-- default is 0 - full width
+  default_shade_color = '#000000',	-- default shading colour
+  default_outline_color = '#000000',	-- default outline colour
+  draw_borders = false,			-- draw borders around text
+  draw_graph_borders = true,		-- draw borders around graphs
+  draw_shades = false,			-- draw shades
+  draw_outline = false,			-- draw outline
+  stippled_borders = 0,			-- dashing the border
 
-	--Textual
-	format_human_readable = true,		-- KiB, MiB rather then number of bytes
-	font = 'Source Code Pro:bold:size=10',  -- font for complete conky unless in code defined
-	max_text_width = 0,			-- 0 will make sure line does not get broken if width too smal
-	max_user_text = 16384,			-- max text in conky default 16384
-	override_utf8_locale = true,		-- force UTF8 requires xft
-	short_units = true,			-- shorten units from KiB to k
-	top_name_width = 21,			-- width for $top name value default 15
-	top_name_verbose = false,		-- If true, top name shows the full command line of  each  process - Default value is false.
-	uppercase = false,			-- uppercase or not
-	use_spacer = 'none',			-- adds spaces around certain objects to align - default none
-	use_xft = true,				-- xft font - anti-aliased font
-	xftalpha = 1,				-- alpha of the xft font - between 0-1
+  --Textual
+  format_human_readable = true,		-- KiB, MiB rather then number of bytes
+  font = 'Source Code Pro:bold:size=10',  -- font for complete conky unless in code defined
+  max_text_width = 0,			-- 0 will make sure line does not get broken if width too smal
+  max_user_text = 16384,			-- max text in conky default 16384
+  override_utf8_locale = true,		-- force UTF8 requires xft
+  short_units = true,			-- shorten units from KiB to k
+  top_name_width = 21,			-- width for $top name value default 15
+  top_name_verbose = false,		-- If true, top name shows the full command line of  each  process - Default value is false.
+  uppercase = false,			-- uppercase or not
+  use_spacer = 'none',			-- adds spaces around certain objects to align - default none
+  use_xft = true,				-- xft font - anti-aliased font
+  xftalpha = 1,				-- alpha of the xft font - between 0-1
 
-	--Windows
-	own_window = true,			-- create your own window to draw
-	own_window_argb_value = 255,		-- real transparency - composite manager required 0-255
-	own_window_argb_visual = true,		-- use ARGB - composite manager required
-	own_window_class = 'Conky',		-- manually set the WM_CLASS name for use with xprop
-	own_window_colour = '#282c34',		-- set colour if own_window_transparent no
-	own_window_transparent = false,		-- if own_window_argb_visual is true sets background opacity 0%
-	own_window_title = 'xmonad_conky',	-- set the name manually; default conky "hostname"
-	own_window_type = 'override',		-- if own_window true options are: normal/override/dock/desktop/panel
-	own_window_hints = 'undecorated,below,above,sticky,skip_taskbar,skip_pager',	-- if own_window true - just hints - own_window_type sets it
+  --Windows
+  own_window = true,			-- create your own window to draw
+  own_window_argb_value = 255,		-- real transparency - composite manager required 0-255
+  own_window_argb_visual = true,		-- use ARGB - composite manager required
+  own_window_class = 'Conky',		-- manually set the WM_CLASS name for use with xprop
+  own_window_colour = '#282c34',		-- set colour if own_window_transparent no
+  own_window_transparent = false,		-- if own_window_argb_visual is true sets background opacity 0%
+  own_window_title = 'xmonad_conky',	-- set the name manually; default conky "hostname"
+  own_window_type = 'override',		-- if own_window true options are: normal/override/dock/desktop/panel
+  own_window_hints = 'undecorated,below,above,sticky,skip_taskbar,skip_pager',	-- if own_window true - just hints - own_window_type sets it
 
-	--Colors
-	color0 = '#c678dd',
-	color1 = '#bbc2cf',
-	color2 = '#51afef',
-	color3 = '#98be65',
-};
+  --Colors
+  color0 = '#c678dd',
+  color1 = '#bbc2cf',
+  color2 = '#51afef',
+  color3 = '#98be65',
+  };
 
-conky.text = [[
-${alignc}${color0}${font Ubuntu:size=30}${time %H:%M}${font}
-${voffset 6}${alignc}${color0}${font Ubuntu:size=14}${time %b %d, %Y}${font}${color}
-${alignc}${color0}${font Ubuntu:size=11}${nodename}${font}${color}
-${voffset 18}${goto 12}${color3}CPU${goto 50}$cpu%
-${color2}${goto 12}${cpubar 8,254}
-${voffset 5}${goto 12}$font${color1}${top name 1}$alignr$color${top cpu 1}%
-${goto 12}${color1}${top name 2}$alignr$color${top cpu 2}%
-${goto 12}${color1}${top name 3}$alignr$color${top cpu 3}%
-${voffset 14}${goto 12}${color3}RAM${goto 50}$mem/$memmax
-${color2}${goto 12}${membar 8,254}${color}
-${goto 12}${voffset 5}${color1}${top_mem name 1}$alignr$color${top_mem mem_res 1}
-${goto 12}${color1}${top_mem name 2}$alignr$color${top_mem mem_res 2}
-${goto 12}${color1}${top_mem name 3}$alignr$color${top_mem mem_res 3}
-${voffset 18}${color1}${alignc}XMONAD KEYBINDINGS${color}
-${color1}${hr}${color}
-${color1}[S]+[RET]${alignr}${color2}opens terminal${color}
-${color1}[S]+[SHIFT]+c${alignr}${color2}close window${color}
-${color1}[S]+jk${alignr}${color2}move win focus${color}
-${color1}[S]+[SHIFT]+hjkl${alignr}${color2}move window${color}
-${color1}[S]+[0-9]${alignr}${color2}switch workspace${color}
-${color1}[S]+[SHIFT]+[0-9]${alignr}${color2}send window${color}
-${color1}[S]+h/l${alignr}${color2}shrink/expand${color}
-${color1}${hr}${color}
-${color1}[S]+d, e${alignr}${color2}launch emacs${color}
-${color1}[S]+d, b${alignr}${color2}ibuffer${color}
-${color1}[S]+d, d${alignr}${color2}dired${color}
-${color1}[S]+d, m${alignr}${color2}mu4e${color}
-${color1}[S]+d, s${alignr}${color2}eshell${color}
-${color1}[S]+d, a${alignr}${color2}agenda${color}
-${color1}[S]+d, c${alignr}${color2}capture${color}
-${color1}${hr}${color}
-${color1}[S]+p, s${alignr}${color2}app launcher${color}
-${color1}[S]+p, e${alignr}${color2}power menu${color}
-${color1}[S]+p, p${alignr}${color2}pass${color}
-${color1}${hr}${color}
-${color1}[S]+[CTRL]+r${alignr}${color2}recompile xmonad${color}
-${color1}[S]+[SHIFT]+r${alignr}${color2}restart xmonad${color}
-${color1}[S]+[SHIFT]+q${alignr}${color2}quit xmonad${color}
-]];
+  conky.text = [[
+  ${alignc}${color0}${font Ubuntu:size=30}${time %H:%M}${font}
+  ${voffset 6}${alignc}${color0}${font Ubuntu:size=14}${time %b %d, %Y}${font}${color}
+  ${alignc}${color0}${font Ubuntu:size=11}${nodename}${font}${color}
+  ${voffset 18}${goto 12}${color3}CPU${goto 50}$cpu%
+  ${color2}${goto 12}${cpubar 8,254}
+  ${voffset 5}${goto 12}$font${color1}${top name 1}$alignr$color${top cpu 1}%
+  ${goto 12}${color1}${top name 2}$alignr$color${top cpu 2}%
+  ${goto 12}${color1}${top name 3}$alignr$color${top cpu 3}%
+  ${voffset 14}${goto 12}${color3}RAM${goto 50}$mem/$memmax
+  ${color2}${goto 12}${membar 8,254}${color}
+  ${goto 12}${voffset 5}${color1}${top_mem name 1}$alignr$color${top_mem mem_res 1}
+  ${goto 12}${color1}${top_mem name 2}$alignr$color${top_mem mem_res 2}
+  ${goto 12}${color1}${top_mem name 3}$alignr$color${top_mem mem_res 3}
+  ${voffset 18}${color1}${alignc}XMONAD KEYBINDINGS${color}
+  ${color1}${hr}${color}
+  ${color1}[S]+[RET]${alignr}${color2}opens terminal${color}
+  ${color1}[S]+[SHIFT]+c${alignr}${color2}close window${color}
+  ${color1}[S]+jk${alignr}${color2}move win focus${color}
+  ${color1}[S]+[SHIFT]+hjkl${alignr}${color2}move window${color}
+  ${color1}[S]+[0-9]${alignr}${color2}switch workspace${color}
+  ${color1}[S]+[SHIFT]+[0-9]${alignr}${color2}send window${color}
+  ${color1}[S]+h/l${alignr}${color2}shrink/expand${color}
+  ${color1}${hr}${color}
+  ${color1}[S]+d, e${alignr}${color2}launch emacs${color}
+  ${color1}[S]+d, b${alignr}${color2}ibuffer${color}
+  ${color1}[S]+d, d${alignr}${color2}dired${color}
+  ${color1}[S]+d, m${alignr}${color2}mu4e${color}
+  ${color1}[S]+d, s${alignr}${color2}eshell${color}
+  ${color1}[S]+d, a${alignr}${color2}agenda${color}
+  ${color1}[S]+d, c${alignr}${color2}capture${color}
+  ${color1}${hr}${color}
+  ${color1}[S]+p, s${alignr}${color2}app launcher${color}
+  ${color1}[S]+p, e${alignr}${color2}power menu${color}
+  ${color1}[S]+p, p${alignr}${color2}pass${color}
+  ${color1}${hr}${color}
+  ${color1}[S]+[CTRL]+r${alignr}${color2}recompile xmonad${color}
+  ${color1}[S]+[SHIFT]+r${alignr}${color2}restart xmonad${color}
+  ${color1}[S]+[SHIFT]+q${alignr}${color2}quit xmonad${color}
+  ]];
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -495,21 +495,21 @@ The mod1 key is the alt key on the left side of the space bar.
 
 ** Urgency style
 #+begin_src conf :tangle ~/.config/dunst/dunstrc
-[urgency_low]
-    background = "#222222"
-    foreground = "#888888"
-    timeout = 10
+  [urgency_low]
+  background = "#222222"
+  foreground = "#888888"
+  timeout = 10
 
-[urgency_normal]
-    background = "#282a36"
-    foreground = "#ffffff"
-    timeout = 10
+  [urgency_normal]
+  background = "#282a36"
+  foreground = "#ffffff"
+  timeout = 10
 
-[urgency_critical]
-    background = "#900000"
-    foreground = "#ffffff"
-    frame_color = "#ff0000"
-    timeout = 0
+  [urgency_critical]
+  background = "#900000"
+  foreground = "#ffffff"
+  frame_color = "#ff0000"
+  timeout = 0
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -523,18 +523,22 @@ See [[file:system.org][system.org]]
 See font directory.
 
 Installation of the fonts
-#+begin_src sh :tangle no
-  cp fonts/* ~/.fonts/
+#+begin_src sh :tangle no :dir ~/.dotfiles
+  mkdir ~/.fonts
+  cp -r resources/fonts/.fonts/* ~/.fonts/
 #+end_src
+
+#+RESULTS:
+
 * Git
 #+begin_src conf :tangle ~/.gitconfig
-[user]
-name = Olivier Lischer
-email = olivier.lischer@liolin.ch
-signingKey = C165B44337F5C026
-username = liolin
-[pull]
-rebase = false
+  [user]
+  name = Olivier Lischer
+  email = olivier.lischer@liolin.ch
+  signingKey = C165B44337F5C026
+  username = liolin
+  [pull]
+  rebase = false
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -546,495 +550,495 @@ git
 ** TODO gpg-agent-info
 ** gpg.conf
 #+begin_src conf :tangle ~/.gnupg/gpg.conf
-# https://github.com/drduh/config/blob/master/gpg.conf
-# https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html
-# https://www.gnupg.org/documentation/manuals/gnupg/GPG-Esoteric-Options.html
-# Use AES256, 192, or 128 as cipher
-personal-cipher-preferences AES256 AES192 AES
-# Use SHA512, 384, or 256 as digest
-personal-digest-preferences SHA512 SHA384 SHA256
-# Use ZLIB, BZIP2, ZIP, or no compression
-personal-compress-preferences ZLIB BZIP2 ZIP Uncompressed
-# Default preferences for new keys
-default-preference-list SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
-# SHA512 as digest to sign keys
-cert-digest-algo SHA512
-# SHA512 as digest for symmetric ops
-s2k-digest-algo SHA512
-# AES256 as cipher for symmetric ops
-s2k-cipher-algo AES256
-# UTF-8 support for compatibility
-charset utf-8
-# Show Unix timestamps
-fixed-list-mode
-# No comments in signature
-no-comments
-# No version in signature
-no-emit-version
-# Disable banner
-no-greeting
-# Long hexidecimal key format
-keyid-format 0xlong
-# Display UID validity
-list-options show-uid-validity
-verify-options show-uid-validity
-# Display all keys and their fingerprints
-with-fingerprint
-# Display key origins and updates
-#with-key-origin
-# Cross-certify subkeys are present and valid
-require-cross-certification
-# Disable caching of passphrase for symmetrical ops
-no-symkey-cache
-# Enable smartcard
-use-agent
-# Disable recipient key ID in messages
-throw-keyids
-# Default/trusted key ID to use (helpful with throw-keyids)
-#default-key 0xFF3E7D88647EBCDB
-#trusted-key 0xFF3E7D88647EBCDB
-# Keyserver URL
-#keyserver hkps://keys.openpgp.org
-#keyserver hkps://keyserver.ubuntu.com:443
-#keyserver hkps://hkps.pool.sks-keyservers.net
-#keyserver hkps://pgp.ocf.berkeley.edu
-# Proxy to use for keyservers
-#keyserver-options http-proxy=socks5-hostname://127.0.0.1:9050
-# Verbose output
-#verbose
+  # https://github.com/drduh/config/blob/master/gpg.conf
+  # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html
+  # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Esoteric-Options.html
+  # Use AES256, 192, or 128 as cipher
+  personal-cipher-preferences AES256 AES192 AES
+  # Use SHA512, 384, or 256 as digest
+  personal-digest-preferences SHA512 SHA384 SHA256
+  # Use ZLIB, BZIP2, ZIP, or no compression
+  personal-compress-preferences ZLIB BZIP2 ZIP Uncompressed
+  # Default preferences for new keys
+  default-preference-list SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
+  # SHA512 as digest to sign keys
+  cert-digest-algo SHA512
+  # SHA512 as digest for symmetric ops
+  s2k-digest-algo SHA512
+  # AES256 as cipher for symmetric ops
+  s2k-cipher-algo AES256
+  # UTF-8 support for compatibility
+  charset utf-8
+  # Show Unix timestamps
+  fixed-list-mode
+  # No comments in signature
+  no-comments
+  # No version in signature
+  no-emit-version
+  # Disable banner
+  no-greeting
+  # Long hexidecimal key format
+  keyid-format 0xlong
+  # Display UID validity
+  list-options show-uid-validity
+  verify-options show-uid-validity
+  # Display all keys and their fingerprints
+  with-fingerprint
+  # Display key origins and updates
+  #with-key-origin
+  # Cross-certify subkeys are present and valid
+  require-cross-certification
+  # Disable caching of passphrase for symmetrical ops
+  no-symkey-cache
+  # Enable smartcard
+  use-agent
+  # Disable recipient key ID in messages
+  throw-keyids
+  # Default/trusted key ID to use (helpful with throw-keyids)
+  #default-key 0xFF3E7D88647EBCDB
+  #trusted-key 0xFF3E7D88647EBCDB
+  # Keyserver URL
+  #keyserver hkps://keys.openpgp.org
+  #keyserver hkps://keyserver.ubuntu.com:443
+  #keyserver hkps://hkps.pool.sks-keyservers.net
+  #keyserver hkps://pgp.ocf.berkeley.edu
+  # Proxy to use for keyservers
+  #keyserver-options http-proxy=socks5-hostname://127.0.0.1:9050
+  # Verbose output
+  #verbose
 #+end_src
 ** gpg-agent.conf
 #+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
-## Set timeout for passphrase unlock to 8 hours
-default-cache-ttl 28800
-max-cache-ttl 28800
+  ## Set timeout for passphrase unlock to 8 hours
+  default-cache-ttl 28800
+  max-cache-ttl 28800
 
-## Set timeout for SSH key unlock
-enable-ssh-support
-default-cache-ttl-ssh 28800
-max-cache-ttl-ssh 28800
+  ## Set timeout for SSH key unlock
+  enable-ssh-support
+  default-cache-ttl-ssh 28800
+  max-cache-ttl-ssh 28800
 #+end_src
 
 ** sshcontrol
 #+begin_src conf :tangle ~/.gnupg/sshcontrol
-# List of allowed ssh keys.  Only keys present in this file are used
-# in the SSH protocol.  The ssh-add tool may add new entries to this
-# file to enable them; you may also add them manually.  Comment
-# lines, like this one, as well as empty lines are ignored.  Lines do
-# have a certain length limit but this is not serious limitation as
-# the format of the entries is fixed and checked by gpg-agent. A
-# non-comment line starts with optional white spaces, followed by the
-# keygrip of the key given as 40 hex digits, optionally followed by a
-# caching TTL in seconds, and another optional field for arbitrary
-# flags.   Prepend the keygrip with an '!' mark to disable it.
-90783C7BE49932998FB01359A3958092318E442A
-!48ED9915566EAD80A32C2DAE3C6A23629ADC0BB4
+  # List of allowed ssh keys.  Only keys present in this file are used
+  # in the SSH protocol.  The ssh-add tool may add new entries to this
+  # file to enable them; you may also add them manually.  Comment
+  # lines, like this one, as well as empty lines are ignored.  Lines do
+  # have a certain length limit but this is not serious limitation as
+  # the format of the entries is fixed and checked by gpg-agent. A
+  # non-comment line starts with optional white spaces, followed by the
+  # keygrip of the key given as 40 hex digits, optionally followed by a
+  # caching TTL in seconds, and another optional field for arbitrary
+  # flags.   Prepend the keygrip with an '!' mark to disable it.
+  90783C7BE49932998FB01359A3958092318E442A
+  !48ED9915566EAD80A32C2DAE3C6A23629ADC0BB4
 #+end_src
 
 * i3
 This is currenlty not tanggeld to a file (=~/.config/i3/config=).
 #+begin_src conf :tangle no
-# i3 config file (v4)
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
-# Set mod key (Mod1=<Alt>, Mod4=<Super>)
-set $mod Mod4
-
-# set default desktop layout (default is tiling)
-# workspace_layout tabbed <stacking|tabbed>
-
-# Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 1
-new_float normal
-
-# Hide borders
-hide_edge_borders none
-
-# change borders
-bindsym $mod+u border none
-bindsym $mod+y border pixel 1
-bindsym $mod+n border normal
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font xft:Noto Sans 10
-
-# Use Mouse+$mod to drag floating windows
-floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec terminal
-
-# kill focused window
-bindsym $mod+Shift+q kill
-
-# start program launcher
-bindsym $mod+d exec --no-startup-id dmenu_recency
-
-# launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
-
-################################################################################################
-## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
-################################################################################################
-
-exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-#exec --no-startup-id pulseaudio
-#exec --no-startup-id pa-applet
-#bindsym $mod+Ctrl+m exec pavucontrol
-
-################################################################################################
-
-# Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
-
-# Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec palemoon
-bindsym $mod+F3 exec pcmanfm
-# bindsym $mod+F3 exec ranger
-bindsym $mod+Shift+F3 exec gksu pcmanfm
-bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-
-# focus_follows_mouse no
-
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-#bindsym $mod+odiaeresis focus right
-bindsym $mod+semicolon focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-#bindsym $mod+Shift+odiaeresis move right
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# workspace back and forth (with/without active container)
-workspace_auto_back_and_forth yes
-bindsym $mod+b workspace back_and_forth
-bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
-
-# split orientation
-bindsym $mod+h split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
-bindsym $mod+q split toggle
-
-# toggle fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# toggle sticky
-bindsym $mod+Shift+s sticky toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
-
-#navigate workspaces next / previous
-bindsym $mod+Ctrl+Right workspace next
-bindsym $mod+Ctrl+Left workspace prev
-
-# Workspace names
-# to display names or symbols instead of plain workspace numbers you can use
-# something like: set $ws1 1:mail
-#                 set $ws2 2:
-set $ws1 1
-set $ws2 2
-set $ws3 3
-set $ws4 4
-set $ws5 5
-set $ws6 6
-set $ws7 7
-set $ws8 8
-
-# switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-
-# Move focused container to workspace
-bindsym $mod+Ctrl+1 move container to workspace $ws1
-bindsym $mod+Ctrl+2 move container to workspace $ws2
-bindsym $mod+Ctrl+3 move container to workspace $ws3
-bindsym $mod+Ctrl+4 move container to workspace $ws4
-bindsym $mod+Ctrl+5 move container to workspace $ws5
-bindsym $mod+Ctrl+6 move container to workspace $ws6
-bindsym $mod+Ctrl+7 move container to workspace $ws7
-bindsym $mod+Ctrl+8 move container to workspace $ws8
-
-# Move to workspace with focused container
-bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
-
-# Open applications on specific workspaces
-# assign [class="Thunderbird"] $ws1
-# assign [class="Pale moon"] $ws2
-# assign [class="Pcmanfm"] $ws3
-# assign [class="Skype"] $ws5
-
-# Open specific applications in floating mode
-for_window [title="alsamixer"] floating enable border pixel 1
-for_window [class="Calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
-for_window [title="File Transfer*"] floating enable
-for_window [class="Galculator"] floating enable border pixel 1
-for_window [class="GParted"] floating enable border normal
-for_window [title="i3_help"] floating enable sticky enable border normal
-for_window [class="Lightdm-gtk-greeter-settings"] floating enable
-for_window [class="Lxappearance"] floating enable sticky enable border normal
-for_window [class="Manjaro-hello"] floating enable
-for_window [class="Manjaro Settings Manager"] floating enable border normal
-for_window [title="MuseScore: Play Panel"] floating enable
-for_window [class="Nitrogen"] floating enable sticky enable border normal
-for_window [class="Oblogout"] fullscreen enable
-for_window [class="octopi"] floating enable
-for_window [title="About Pale Moon"] floating enable
-for_window [class="Pamac-manager"] floating enable
-for_window [class="Pavucontrol"] floating enable
-for_window [class="qt5ct"] floating enable sticky enable border normal
-for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
-for_window [class="Simple-scan"] floating enable border normal
-for_window [class="(?i)System-config-printer.py"] floating enable border normal
-for_window [class="Skype"] floating enable border normal
-for_window [class="Thus"] floating enable border normal
-for_window [class="Timeset-gui"] floating enable border normal
-for_window [class="(?i)virtualbox"] floating enable border normal
-for_window [class="Xfburn"] floating enable
-
-# switch to workspace with urgent window automatically
-for_window [urgent=latest] focus
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-# Set shut down, restart and locking features
-bindsym $mod+0 mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-# Resize window (you can also use the mouse for that)
-bindsym $mod+r mode "resize"
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym odiaeresis resize grow width 5 px or 5 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # exit resize mode: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-# Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
-
-# Autostart applications
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
-exec --no-startup-id manjaro-hello
-exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
-# exec --no-startup-id blueman
-# exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
-# exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 10 -locker blurlock
-exec_always --no-startup-id fix_xcursor
-
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-	status_command i3status
-	position bottom
-
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
-
-	bindsym button4 nop
-	bindsym button5 nop
-	font xft:Noto Sans 10.5
-	strip_workspace_numbers yes
-
-	colors {
-#       background $transparent
-        background #2B2C2B
-        statusline #F9FAF9
-        separator  #454947
-
-#                                  border  backgr. text
-        focused_workspace  #F9FAF9 #16A085 #2B2C2B
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #595B5B #353836 #EEE8D5
-        urgent_workspace   #16A085 #FDF6E3 #E5201D
-    }
-}
-
-# hide/unhide i3status bar
-bindsym $mod+m bar mode toggle
-
-# Theme colors
-# class                 border  backgr. text    indic.  child_border
-client.focused          #808280 #808280 #80FFF9 #FDF6E3
-client.focused_inactive #434745 #434745 #16A085 #454948
-client.unfocused        #434745 #434745 #16A085 #454948
-client.urgent           #CB4B16 #FDF6E3 #16A085 #268BD2
-client.placeholder      #000000 #0c0c0c #ffffff #000000 #0c0c0c
-
-client.background       #2B2C2B
-
-#############################
-### settings for i3-gaps: ###
-#############################
-
-# Set inner/outer gaps
-gaps inner 10
-gaps outer -4
-
-# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
-# gaps inner|outer current|all set|plus|minus <px>
-# gaps inner all set 10
-# gaps outer all plus 5
-
-# Smart gaps (gaps used if only more than one container on the workspace)
-smart_gaps on
-
-# Smart borders (draw borders around container only if it is not the only container on this workspace) 
-# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
-smart_borders on
-
-# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $mod+Shift+g mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
+  # i3 config file (v4)
+  # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+  # Set mod key (Mod1=<Alt>, Mod4=<Super>)
+  set $mod Mod4
+
+  # set default desktop layout (default is tiling)
+  # workspace_layout tabbed <stacking|tabbed>
+
+  # Configure border style <normal|1pixel|pixel xx|none|pixel>
+  new_window pixel 1
+  new_float normal
+
+  # Hide borders
+  hide_edge_borders none
+
+  # change borders
+  bindsym $mod+u border none
+  bindsym $mod+y border pixel 1
+  bindsym $mod+n border normal
+
+  # Font for window titles. Will also be used by the bar unless a different font
+  # is used in the bar {} block below.
+  font xft:Noto Sans 10
+
+  # Use Mouse+$mod to drag floating windows
+  floating_modifier $mod
+
+  # start a terminal
+  bindsym $mod+Return exec terminal
+
+  # kill focused window
+  bindsym $mod+Shift+q kill
+
+  # start program launcher
+  bindsym $mod+d exec --no-startup-id dmenu_recency
+
+  # launch categorized menu
+  bindsym $mod+z exec --no-startup-id morc_menu
+
+  ################################################################################################
+  ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
+  ################################################################################################
+
+  exec --no-startup-id volumeicon
+  bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+  #exec --no-startup-id pulseaudio
+  #exec --no-startup-id pa-applet
+  #bindsym $mod+Ctrl+m exec pavucontrol
+
+  ################################################################################################
+
+  # Screen brightness controls
+  # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+  # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+
+  # Start Applications
+  bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
+  bindsym $mod+F2 exec palemoon
+  bindsym $mod+F3 exec pcmanfm
+  # bindsym $mod+F3 exec ranger
+  bindsym $mod+Shift+F3 exec gksu pcmanfm
+  bindsym $mod+F5 exec terminal -e 'mocp'
+  bindsym $mod+t exec --no-startup-id pkill compton
+  bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+  bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+  bindsym Print exec --no-startup-id i3-scrot
+  bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+  bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
+  bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
+  bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+
+  # focus_follows_mouse no
+
+  # change focus
+  bindsym $mod+j focus left
+  bindsym $mod+k focus down
+  bindsym $mod+l focus up
+  #bindsym $mod+odiaeresis focus right
+  bindsym $mod+semicolon focus right
+
+  # alternatively, you can use the cursor keys:
+  bindsym $mod+Left focus left
+  bindsym $mod+Down focus down
+  bindsym $mod+Up focus up
+  bindsym $mod+Right focus right
+
+  # move focused window
+  bindsym $mod+Shift+j move left
+  bindsym $mod+Shift+k move down
+  bindsym $mod+Shift+l move up
+  #bindsym $mod+Shift+odiaeresis move right
+  bindsym $mod+Shift+semicolon move right
+
+  # alternatively, you can use the cursor keys:
+  bindsym $mod+Shift+Left move left
+  bindsym $mod+Shift+Down move down
+  bindsym $mod+Shift+Up move up
+  bindsym $mod+Shift+Right move right
+
+  # workspace back and forth (with/without active container)
+  workspace_auto_back_and_forth yes
+  bindsym $mod+b workspace back_and_forth
+  bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+  # split orientation
+  bindsym $mod+h split h;exec notify-send 'tile horizontally'
+  bindsym $mod+v split v;exec notify-send 'tile vertically'
+  bindsym $mod+q split toggle
+
+  # toggle fullscreen mode for the focused container
+  bindsym $mod+f fullscreen toggle
+
+  # change container layout (stacked, tabbed, toggle split)
+  bindsym $mod+s layout stacking
+  bindsym $mod+w layout tabbed
+  bindsym $mod+e layout toggle split
+
+  # toggle tiling / floating
+  bindsym $mod+Shift+space floating toggle
+
+  # change focus between tiling / floating windows
+  bindsym $mod+space focus mode_toggle
+
+  # toggle sticky
+  bindsym $mod+Shift+s sticky toggle
+
+  # focus the parent container
+  bindsym $mod+a focus parent
+
+  # move the currently focused window to the scratchpad
+  bindsym $mod+Shift+minus move scratchpad
+
+  # Show the next scratchpad window or hide the focused scratchpad window.
+  # If there are multiple scratchpad windows, this command cycles through them.
+  bindsym $mod+minus scratchpad show
+
+  #navigate workspaces next / previous
+  bindsym $mod+Ctrl+Right workspace next
+  bindsym $mod+Ctrl+Left workspace prev
+
+  # Workspace names
+  # to display names or symbols instead of plain workspace numbers you can use
+  # something like: set $ws1 1:mail
+  #                 set $ws2 2:
+  set $ws1 1
+  set $ws2 2
+  set $ws3 3
+  set $ws4 4
+  set $ws5 5
+  set $ws6 6
+  set $ws7 7
+  set $ws8 8
+
+  # switch to workspace
+  bindsym $mod+1 workspace $ws1
+  bindsym $mod+2 workspace $ws2
+  bindsym $mod+3 workspace $ws3
+  bindsym $mod+4 workspace $ws4
+  bindsym $mod+5 workspace $ws5
+  bindsym $mod+6 workspace $ws6
+  bindsym $mod+7 workspace $ws7
+  bindsym $mod+8 workspace $ws8
+
+  # Move focused container to workspace
+  bindsym $mod+Ctrl+1 move container to workspace $ws1
+  bindsym $mod+Ctrl+2 move container to workspace $ws2
+  bindsym $mod+Ctrl+3 move container to workspace $ws3
+  bindsym $mod+Ctrl+4 move container to workspace $ws4
+  bindsym $mod+Ctrl+5 move container to workspace $ws5
+  bindsym $mod+Ctrl+6 move container to workspace $ws6
+  bindsym $mod+Ctrl+7 move container to workspace $ws7
+  bindsym $mod+Ctrl+8 move container to workspace $ws8
+
+  # Move to workspace with focused container
+  bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+  bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+  bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+  bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+  bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+  bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+  bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+  bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+
+  # Open applications on specific workspaces
+  # assign [class="Thunderbird"] $ws1
+  # assign [class="Pale moon"] $ws2
+  # assign [class="Pcmanfm"] $ws3
+  # assign [class="Skype"] $ws5
+
+  # Open specific applications in floating mode
+  for_window [title="alsamixer"] floating enable border pixel 1
+  for_window [class="Calamares"] floating enable border normal
+  for_window [class="Clipgrab"] floating enable
+  for_window [title="File Transfer*"] floating enable
+  for_window [class="Galculator"] floating enable border pixel 1
+  for_window [class="GParted"] floating enable border normal
+  for_window [title="i3_help"] floating enable sticky enable border normal
+  for_window [class="Lightdm-gtk-greeter-settings"] floating enable
+  for_window [class="Lxappearance"] floating enable sticky enable border normal
+  for_window [class="Manjaro-hello"] floating enable
+  for_window [class="Manjaro Settings Manager"] floating enable border normal
+  for_window [title="MuseScore: Play Panel"] floating enable
+  for_window [class="Nitrogen"] floating enable sticky enable border normal
+  for_window [class="Oblogout"] fullscreen enable
+  for_window [class="octopi"] floating enable
+  for_window [title="About Pale Moon"] floating enable
+  for_window [class="Pamac-manager"] floating enable
+  for_window [class="Pavucontrol"] floating enable
+  for_window [class="qt5ct"] floating enable sticky enable border normal
+  for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
+  for_window [class="Simple-scan"] floating enable border normal
+  for_window [class="(?i)System-config-printer.py"] floating enable border normal
+  for_window [class="Skype"] floating enable border normal
+  for_window [class="Thus"] floating enable border normal
+  for_window [class="Timeset-gui"] floating enable border normal
+  for_window [class="(?i)virtualbox"] floating enable border normal
+  for_window [class="Xfburn"] floating enable
+
+  # switch to workspace with urgent window automatically
+  for_window [urgent=latest] focus
+
+  # reload the configuration file
+  bindsym $mod+Shift+c reload
+
+  # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+  bindsym $mod+Shift+r restart
+
+  # exit i3 (logs you out of your X session)
+  bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+  # Set shut down, restart and locking features
+  bindsym $mod+0 mode "$mode_system"
+  set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+  mode "$mode_system" {
+  bindsym l exec --no-startup-id i3exit lock, mode "default"
+  bindsym s exec --no-startup-id i3exit suspend, mode "default"
+  bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+  bindsym e exec --no-startup-id i3exit logout, mode "default"
+  bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+  bindsym r exec --no-startup-id i3exit reboot, mode "default"
+  bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+  # exit system mode: "Enter" or "Escape"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  }
+
+  # Resize window (you can also use the mouse for that)
+  bindsym $mod+r mode "resize"
+  mode "resize" {
+  # These bindings trigger as soon as you enter the resize mode
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym j resize shrink width 5 px or 5 ppt
+  bindsym k resize grow height 5 px or 5 ppt
+  bindsym l resize shrink height 5 px or 5 ppt
+  bindsym odiaeresis resize grow width 5 px or 5 ppt
+
+  # same bindings, but for the arrow keys
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
+
+  # exit resize mode: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  }
+
+  # Lock screen
+  bindsym $mod+9 exec --no-startup-id blurlock
+
+  # Autostart applications
+  exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+  exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+  exec --no-startup-id manjaro-hello
+  exec --no-startup-id nm-applet
+  exec --no-startup-id xfce4-power-manager
+  exec --no-startup-id pamac-tray
+  exec --no-startup-id clipit
+  # exec --no-startup-id blueman
+  # exec_always --no-startup-id sbxkb
+  exec --no-startup-id start_conky_maia
+  # exec --no-startup-id start_conky_green
+  exec --no-startup-id xautolock -time 10 -locker blurlock
+  exec_always --no-startup-id fix_xcursor
+
+  # Start i3bar to display a workspace bar (plus the system information i3status if available)
+  bar {
+  status_command i3status
+  position bottom
+
+  ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+  #	tray_output primary
+  #	tray_output eDP1
+
+  bindsym button4 nop
+  bindsym button5 nop
+  font xft:Noto Sans 10.5
+  strip_workspace_numbers yes
+
+  colors {
+  #       background $transparent
+  background #2B2C2B
+  statusline #F9FAF9
+  separator  #454947
+
+  #                                  border  backgr. text
+  focused_workspace  #F9FAF9 #16A085 #2B2C2B
+  active_workspace   #595B5B #353836 #FDF6E3
+  inactive_workspace #595B5B #353836 #EEE8D5
+  urgent_workspace   #16A085 #FDF6E3 #E5201D
+  }
+  }
+
+  # hide/unhide i3status bar
+  bindsym $mod+m bar mode toggle
+
+  # Theme colors
+  # class                 border  backgr. text    indic.  child_border
+  client.focused          #808280 #808280 #80FFF9 #FDF6E3
+  client.focused_inactive #434745 #434745 #16A085 #454948
+  client.unfocused        #434745 #434745 #16A085 #454948
+  client.urgent           #CB4B16 #FDF6E3 #16A085 #268BD2
+  client.placeholder      #000000 #0c0c0c #ffffff #000000 #0c0c0c
+
+  client.background       #2B2C2B
+
+  #############################
+  ### settings for i3-gaps: ###
+  #############################
+
+  # Set inner/outer gaps
+  gaps inner 10
+  gaps outer -4
+
+  # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+  # gaps inner|outer current|all set|plus|minus <px>
+  # gaps inner all set 10
+  # gaps outer all plus 5
+
+  # Smart gaps (gaps used if only more than one container on the workspace)
+  smart_gaps on
+
+  # Smart borders (draw borders around container only if it is not the only container on this workspace) 
+  # on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+  smart_borders on
+
+  # Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+  set $mode_gaps Gaps: (o) outer, (i) inner
+  set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+  set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+  bindsym $mod+Shift+g mode "$mode_gaps"
+
+  mode "$mode_gaps" {
+  bindsym o      mode "$mode_gaps_outer"
+  bindsym i      mode "$mode_gaps_inner"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  }
+  mode "$mode_gaps_inner" {
+  bindsym plus  gaps inner current plus 5
+  bindsym minus gaps inner current minus 5
+  bindsym 0     gaps inner current set 0
+
+  bindsym Shift+plus  gaps inner all plus 5
+  bindsym Shift+minus gaps inner all minus 5
+  bindsym Shift+0     gaps inner all set 0
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  }
+  mode "$mode_gaps_outer" {
+  bindsym plus  gaps outer current plus 5
+  bindsym minus gaps outer current minus 5
+  bindsym 0     gaps outer current set 0
+
+  bindsym Shift+plus  gaps outer all plus 5
+  bindsym Shift+minus gaps outer all minus 5
+  bindsym Shift+0     gaps outer all set 0
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  }
 #+end_src
 * lxsession
 #+begin_src conf :tangle ~/.config/systemd/user/lxsession.service
-[Unit]
-Description=lxsession - polkit
+  [Unit]
+  Description=lxsession - polkit
 
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/lxpolkit &
-ExecStop=/usr/bin/killall lxpolkit
-Restart=on-failure
+  [Service]
+  Type=oneshot
+  ExecStart=/usr/bin/lxpolkit &
+  ExecStop=/usr/bin/killall lxpolkit
+  Restart=on-failure
 
-[Install]
-WantedBy=default.target
+  [Install]
+  WantedBy=default.target
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -1045,114 +1049,114 @@ lxsession
 
 * mailsignature
 #+begin_src conf :tangle ~/.signature
-Olivier Lischer
-Ersalinstrasse 3
-7411 Sils im Domleschg
-olivier.lischer@liolin.ch
-keybase.io: liolin
+  Olivier Lischer
+  Ersalinstrasse 3
+  7411 Sils im Domleschg
+  olivier.lischer@liolin.ch
+  keybase.io: liolin
 #+end_src
 
 * mbsync
 ** olivier.lischer@liolin.ch
 #+begin_src conf :tangle ~/.mbsyncrc
-IMAPAccount olivier.lischer@liolin.ch
-# Address to connect to
-Host imap.mail.hostpoint.ch
-User olivier.lischer@liolin.ch
-# To store the password in an encrypted file use PassCmd instead of Pass
-PassCmd "pass show Privat/Communication/Mail/olivier.lischer@liolin.ch | head -n1"
-#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
-#
-# Use SSL
-SSLType IMAPS
-# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
-CertificateFile /etc/ssl/certs/ca-certificates.crt
-#CertificateFile ~/.cert/imap.gmail.com.pem
-#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+  IMAPAccount olivier.lischer@liolin.ch
+  # Address to connect to
+  Host imap.mail.hostpoint.ch
+  User olivier.lischer@liolin.ch
+  # To store the password in an encrypted file use PassCmd instead of Pass
+  PassCmd "pass show Privat/Communication/Mail/olivier.lischer@liolin.ch | head -n1"
+  #PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+  #
+  # Use SSL
+  SSLType IMAPS
+  # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
+  #CertificateFile ~/.cert/imap.gmail.com.pem
+  #CertificateFile ~/.cert/Equifax_Secure_CA.pem
 
-IMAPStore olivier.lischer@liolin.ch-remote
-Account olivier.lischer@liolin.ch
+  IMAPStore olivier.lischer@liolin.ch-remote
+  Account olivier.lischer@liolin.ch
 
-MaildirStore olivier.lischer@liolin.ch-local
-Subfolders Verbatim
-# The trailing "/" is important
-Path ~/.mail/liolin/
-Inbox ~/.mail/liolin/Inbox
+  MaildirStore olivier.lischer@liolin.ch-local
+  Subfolders Verbatim
+  # The trailing "/" is important
+  Path ~/.mail/liolin/
+  Inbox ~/.mail/liolin/Inbox
 
-Channel olivier.lischer@liolin.ch
-Far :olivier.lischer@liolin.ch-remote:
-Near :olivier.lischer@liolin.ch-local:
-Patterns * 
-Create Both
-SyncState *
-Expunge Both
-CopyArrivalDate yes
+  Channel olivier.lischer@liolin.ch
+  Far :olivier.lischer@liolin.ch-remote:
+  Near :olivier.lischer@liolin.ch-local:
+  Patterns * 
+  Create Both
+  SyncState *
+  Expunge Both
+  CopyArrivalDate yes
 #+end_src
 ** notes@liolin.ch
 #+begin_src conf :tangle ~/.mbsyncrc
-IMAPAccount notes@liolin.ch
-# Address to connect to
-Host imap.mail.hostpoint.ch
-User notes@liolin.ch
-# To store the password in an encrypted file use PassCmd instead of Pass
-PassCmd "pass show Privat/Communication/Mail/notes@liolin.ch | head -n1"
-#
-# Use SSL
-SSLType IMAPS
-# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+  IMAPAccount notes@liolin.ch
+  # Address to connect to
+  Host imap.mail.hostpoint.ch
+  User notes@liolin.ch
+  # To store the password in an encrypted file use PassCmd instead of Pass
+  PassCmd "pass show Privat/Communication/Mail/notes@liolin.ch | head -n1"
+  #
+  # Use SSL
+  SSLType IMAPS
+  # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore notes@liolin.ch-remote
-Account notes@liolin.ch
+  IMAPStore notes@liolin.ch-remote
+  Account notes@liolin.ch
 
-MaildirStore notes@liolin.ch-local
-Subfolders Verbatim
-# The trailing "/" is important
-Path ~/.mail/notes/
-Inbox ~/.mail/notes/Inbox
+  MaildirStore notes@liolin.ch-local
+  Subfolders Verbatim
+  # The trailing "/" is important
+  Path ~/.mail/notes/
+  Inbox ~/.mail/notes/Inbox
 
-Channel notes@liolin.ch
-Far :notes@liolin.ch-remote:
-Near :notes@liolin.ch-local:
-Patterns * 
-Create Both
-SyncState *
-Expunge Both
-CopyArrivalDate yes
+  Channel notes@liolin.ch
+  Far :notes@liolin.ch-remote:
+  Near :notes@liolin.ch-local:
+  Patterns * 
+  Create Both
+  SyncState *
+  Expunge Both
+  CopyArrivalDate yes
 #+end_src
 
 ** olivier.lischer.blong@gmail.com
 #+begin_src conf :tangle ~/.mbsyncrc
-IMAPAccount olivier.lischer.blon@gmail.com
-# Address to connect to
-Host imap.gmail.com
-User olivier.lischer.blon@gmail.com
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.gmail_mailpass.gpg"
-#
-# Use SSL
-SSLType IMAPS
-# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
-CertificateFile /etc/ssl/certs/ca-certificates.crt
-#CertificateFile ~/.cert/imap.gmail.com.pem
-#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+  IMAPAccount olivier.lischer.blon@gmail.com
+  # Address to connect to
+  Host imap.gmail.com
+  User olivier.lischer.blon@gmail.com
+  PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.gmail_mailpass.gpg"
+  #
+  # Use SSL
+  SSLType IMAPS
+  # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
+  #CertificateFile ~/.cert/imap.gmail.com.pem
+  #CertificateFile ~/.cert/Equifax_Secure_CA.pem
 
-IMAPStore olivier.lischer.blon@gmail.com-remote
-Account olivier.lischer.blon@gmail.com
+  IMAPStore olivier.lischer.blon@gmail.com-remote
+  Account olivier.lischer.blon@gmail.com
 
-MaildirStore olivier.lischer.blon@gmail.com-local
-Subfolders Verbatim
-#The trailing "/" is important
-Path ~/.mail/gmail/
-Inbox ~/.mail/gmail/Inbox
+  MaildirStore olivier.lischer.blon@gmail.com-local
+  Subfolders Verbatim
+  #The trailing "/" is important
+  Path ~/.mail/gmail/
+  Inbox ~/.mail/gmail/Inbox
 
-Channel olivier.lischer.blon@gmail.com
-Far :olivier.lischer.blon@gmail.com-remote:
-Near :olivier.lischer.blon@gmail.com-local:
-Patterns *
-Create Both
-Expunge Both
-SyncState *
-CopyArrivalDate yes
+  Channel olivier.lischer.blon@gmail.com
+  Far :olivier.lischer.blon@gmail.com-remote:
+  Near :olivier.lischer.blon@gmail.com-local:
+  Patterns *
+  Create Both
+  Expunge Both
+  SyncState *
+  CopyArrivalDate yes
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -1162,115 +1166,115 @@ mbsync
 
 * picom
 #+begin_src conf :tangle ~/.config/picom.conf
-# Shadow
-shadow = true;
-# no-dnd-shadow = true;
-# no-dock-shadow = true;
-detect-rounded-corners = true;
-shadow-radius = 5;
-shadow-offset-x = 1;
-shadow-offset-y = 1;
-shadow-opacity = .3;
-shadow-ignore-shaped = false;
-shadow-exclude = [
-	"name = 'Notification'", 
-# workaround for conky until it provides window properties:
-	"override_redirect = 1 && !WM_CLASS@:s", 
-#	"class_g ?= 'Dunst'", 
-# disable shadows for hidden windows:
-	"_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
-	"_GTK_FRAME_EXTENTS@:c",
-# disables shadows on sticky windows:
-#	"_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'",
-# disables shadows on i3 frames
-	"class_g ?= 'i3-frame'"
-];
+  # Shadow
+  shadow = true;
+  # no-dnd-shadow = true;
+  # no-dock-shadow = true;
+  detect-rounded-corners = true;
+  shadow-radius = 5;
+  shadow-offset-x = 1;
+  shadow-offset-y = 1;
+  shadow-opacity = .3;
+  shadow-ignore-shaped = false;
+  shadow-exclude = [
+  "name = 'Notification'", 
+  # workaround for conky until it provides window properties:
+  "override_redirect = 1 && !WM_CLASS@:s", 
+  #	"class_g ?= 'Dunst'", 
+  # disable shadows for hidden windows:
+  "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+  "_GTK_FRAME_EXTENTS@:c",
+  # disables shadows on sticky windows:
+  #	"_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'",
+  # disables shadows on i3 frames
+  "class_g ?= 'i3-frame'"
+  ];
 
-# shadow-exclude-reg = "x10+0+0";
-# xinerama-shadow-crop = true;
+  # shadow-exclude-reg = "x10+0+0";
+  # xinerama-shadow-crop = true;
 
-#menu-opacity = 0.95;
-inactive-opacity = 0.93;
-active-opacity = 1;
-#alpha-step = 0.01;
-inactive-dim = 0.0;
-blur-background = false;
-blur-kern = "3x3box";
+  #menu-opacity = 0.95;
+  inactive-opacity = 0.93;
+  active-opacity = 1;
+  #alpha-step = 0.01;
+  inactive-dim = 0.0;
+  blur-background = false;
+  blur-kern = "3x3box";
 
-fading = false;
-fade-delta = 1;
-fade-in-step = 0.03;
-fade-out-step = 0.03;
-fade-exclude = [ ];
+  fading = false;
+  fade-delta = 1;
+  fade-in-step = 0.03;
+  fade-out-step = 0.03;
+  fade-exclude = [ ];
 
-backend = "xrender";
-mark-wmwin-focused = true;
-mark-ovredir-focused = true;
-detect-client-opacity = true;
-unredir-if-possible = true;
-refresh-rate = 0;
-vsync = true;
-dbe = false;
-#paint-on-overlay = true;
-focus-exclude = [ "class_g = 'Cairo-clock'" ];
-detect-transient = true;
-detect-client-leader = true;
-invert-color-include = [ ];
-#glx-copy-from-front = false;
-#glx-swap-method = "undefined";
-use-damage = true
+  backend = "xrender";
+  mark-wmwin-focused = true;
+  mark-ovredir-focused = true;
+  detect-client-opacity = true;
+  unredir-if-possible = true;
+  refresh-rate = 0;
+  vsync = true;
+  dbe = false;
+  #paint-on-overlay = true;
+  focus-exclude = [ "class_g = 'Cairo-clock'" ];
+  detect-transient = true;
+  detect-client-leader = true;
+  invert-color-include = [ ];
+  #glx-copy-from-front = false;
+  #glx-swap-method = "undefined";
+  use-damage = true
 
-opacity-rule = [ 
-"99:name *?= 'Call'", 
-"99:class_g = 'Chromium'", 
-"99:name *?= 'Conky'", 
-"99:class_g = 'Darktable'", 
-"50:class_g = 'Dmenu'", 
-"99:name *?= 'Event'", 
-"99:class_g = 'Firefox'", 
-"99:name *?= 'Firefox'", 
-"99:class_g = 'GIMP'", 
-"99:name *?= 'Image'",
-"99:class_g = 'Lazpaint'", 
-"99:class_g = 'Midori'", 
-"99:name *?= 'Minitube'", 
-"99:class_g = 'Mousepad'",
-"99:name *?= 'MuseScore'", 
-"90:name *?= 'Page Info'", 
-"99:name *?= 'Pale Moon'", 
-"90:name *?= 'Panel'", 
-"99:class_g = 'Pinta'", 
-"90:name *?= 'Restart'", 
-"99:name *?= 'sudo'", 
-"99:name *?= 'Screenshot'", 
-"99:class_g = 'Viewnior'", 
-"99:class_g = 'VirtualBox'", 
-"99:name *?= 'VLC'", 
-"99:name *?= 'Write'", 
-"99:class_g = 'teams-for-linux'",
-"99:class_g = 'jetbrains-idea'",
-"93:class_g = 'URxvt' && !_NET_WM_STATE@:32a",
-"0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'", 
-"96:_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'" 
-];
+  opacity-rule = [ 
+  "99:name *?= 'Call'", 
+  "99:class_g = 'Chromium'", 
+  "99:name *?= 'Conky'", 
+  "99:class_g = 'Darktable'", 
+  "50:class_g = 'Dmenu'", 
+  "99:name *?= 'Event'", 
+  "99:class_g = 'Firefox'", 
+  "99:name *?= 'Firefox'", 
+  "99:class_g = 'GIMP'", 
+  "99:name *?= 'Image'",
+  "99:class_g = 'Lazpaint'", 
+  "99:class_g = 'Midori'", 
+  "99:name *?= 'Minitube'", 
+  "99:class_g = 'Mousepad'",
+  "99:name *?= 'MuseScore'", 
+  "90:name *?= 'Page Info'", 
+  "99:name *?= 'Pale Moon'", 
+  "90:name *?= 'Panel'", 
+  "99:class_g = 'Pinta'", 
+  "90:name *?= 'Restart'", 
+  "99:name *?= 'sudo'", 
+  "99:name *?= 'Screenshot'", 
+  "99:class_g = 'Viewnior'", 
+  "99:class_g = 'VirtualBox'", 
+  "99:name *?= 'VLC'", 
+  "99:name *?= 'Write'", 
+  "99:class_g = 'teams-for-linux'",
+  "99:class_g = 'jetbrains-idea'",
+  "93:class_g = 'URxvt' && !_NET_WM_STATE@:32a",
+  "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'", 
+  "96:_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'" 
+  ];
 
-wintypes : 
-{
+  wintypes : 
+  {
   tooltip : 
   {
-    fade = true;
-    shadow = false;
-    opacity = 0.85;
-    focus = true;
+  fade = true;
+  shadow = false;
+  opacity = 0.85;
+  focus = true;
   };
   fullscreen : 
   {
-    fade = true;
-    shadow = false;
-    opacity = 1;
-    focus = true;
+  fade = true;
+  shadow = false;
+  opacity = 1;
+  focus = true;
   };
-};
+  };
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -1282,125 +1286,125 @@ picom
 ** Configuration
 *** Colors
 #+begin_src conf :tangle ~/.config/polybar/config
-[colors]
-background = #222
-background-alt = #444
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
-secondary = #e60053
+  [colors]
+  background = #222
+  background-alt = #444
+  foreground = #dfdfdf
+  foreground-alt = #555
+  primary = #ffb52a
+  secondary = #e60053
 
-underline = #97bbf7
+  underline = #97bbf7
 
-; signa colors
-alert = #f90000
-warning = #f44336
-notice = #8bc34a
-ok = #4caf50
+  ; signa colors
+  alert = #f90000
+  warning = #f44336
+  notice = #8bc34a
+  ok = #4caf50
 #+end_src
 
 *** Settings
 #+begin_src conf :tangle ~/.config/polybar/config
-[settings]
-screenchange-reload = true
+  [settings]
+  screenchange-reload = true
 #+end_src
 *** Global
 **** wm
 #+begin_src conf :tangle ~/.config/polybar/config
-[global/wm]
-margin-top = 5
-margin-bottom = 5
+  [global/wm]
+  margin-top = 5
+  margin-bottom = 5
 #+end_src
 *** Bars
 **** default
 #+begin_src conf :tangle ~/.config/polybar/config
-[bar/default]
-width = 100%
-height = 27
-radius = 6.0
-fixed-center = false
+  [bar/default]
+  width = 100%
+  height = 27
+  radius = 6.0
+  fixed-center = false
 
-background = ${colors.background}
-foreground = ${colors.foreground}
+  background = ${colors.background}
+  foreground = ${colors.foreground}
 
-line-size = 3
-line-color = #f00
+  line-size = 3
+  line-color = #f00
 
-border-size = 4
-border-color = #00000000
+  border-size = 4
+  border-color = #00000000
 
-padding-left = 0
-padding-right = 2
+  padding-left = 0
+  padding-right = 2
 
-module-margin-left = 1
-module-margin-right = 2
+  module-margin-left = 1
+  module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = Font Awesome 5 Free:pixelsize=10;3
-font-3 = Font Awesome 5 Free Solid:pixelsize=10;3
-font-4 = Font Awesome 5 Brands:pixelsize=10;3
-font-5 = Material Icons:style=Regular
+  font-0 = fixed:pixelsize=10;1
+  font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+  font-2 = Font Awesome 5 Free:pixelsize=10;3
+  font-3 = Font Awesome 5 Free Solid:pixelsize=10;3
+  font-4 = Font Awesome 5 Brands:pixelsize=10;3
+  font-5 = Material Icons:style=Regular
 
-modules-left = xmonad
-modules-right = filesystem pulseaudio xkeyboard backlight wlan eth battery temperature date
+  modules-left = xmonad
+  modules-right = filesystem pulseaudio xkeyboard backlight wlan eth battery temperature date
 
-tray-position = right
-tray-padding = 2
+  tray-position = right
+  tray-padding = 2
 
-cursor-click = pointer
-cursor-scroll = ns-resize
+  cursor-click = pointer
+  cursor-scroll = ns-resize
 #+end_src
 
 *** Modules
 **** xmonad
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/xmonad]
-type = custom/script
-exec = /home/liolin/bin/xmonad-log
-tail = true
+  [module/xmonad]
+  type = custom/script
+  exec = /home/liolin/bin/xmonad-log
+  tail = true
 #+end_src
 
 **** backlight
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/backlight]
-type = internal/backlight
-format = <label> <bar>
-label =  %percentage%%
+  [module/backlight]
+  type = internal/backlight
+  format = <label> <bar>
+  label =  %percentage%%
 
-; Only applies if <bar> is used
-bar-width = 10
-bar-indicator = |
-bar-fill = ─
-bar-empty = ─
+  ; Only applies if <bar> is used
+  bar-width = 10
+  bar-indicator = |
+  bar-fill = ─
+  bar-empty = ─
 
-card = intel_backlight
-;enable-scroll = true
+  card = intel_backlight
+  ;enable-scroll = true
 #+end_src
 **** xwindow
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
+  [module/xwindow]
+  type = internal/xwindow
+  label = %title:0:30:...%
 #+end_src
 
 **** xkeyboard
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
+  [module/xkeyboard]
+  type = internal/xkeyboard
+  blacklist-0 = num lock
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = #ffc299
+  format-prefix = " "
+  format-prefix-foreground = ${colors.foreground-alt}
+  format-prefix-underline = #ffc299
 
-label-layout = %layout%
-label-layout-underline = #ffc299
+  label-layout = %layout%
+  label-layout-underline = #ffc299
 
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = #ffc299
+  label-indicator-padding = 2
+  label-indicator-margin = 1
+  label-indicator-background = ${colors.secondary}
+  label-indicator-underline = #ffc299
 #+end_src
 
 **** TODO filesystem
@@ -1427,161 +1431,161 @@ label-indicator-underline = #ffc299
 
 **** cpu
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #ff944d
-label = %percentage:2%%
+  [module/cpu]
+  type = internal/cpu
+  interval = 2
+  format-prefix = " "
+  format-prefix-foreground = ${colors.foreground-alt}
+  format-underline = #ff944d
+  label = %percentage:2%%
 #+end_src
 
 **** memory
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/memory]
-type = internal/memory
-interval = 2
-format-prefix = "Mem "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #ffa366
-label = %percentage_used%%
+  [module/memory]
+  type = internal/memory
+  interval = 2
+  format-prefix = "Mem "
+  format-prefix-foreground = ${colors.foreground-alt}
+  format-underline = #ffa366
+  label = %percentage_used%%
 #+end_src
 
 **** wlan
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/wlan]
-type = internal/network
-interface = wlan0
-interval = 3.0
+  [module/wlan]
+  type = internal/network
+  interface = wlan0
+  interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #ff8533
+  format-connected = <ramp-signal> <label-connected>
+  format-connected-underline = #ff8533
 
-label-connected = %essid% / %local_ip%
+  label-connected = %essid% / %local_ip%
 
-format-disconnected =
+  format-disconnected =
 
-ramp-signal-0 =
-ramp-signal-1 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+  ramp-signal-0 =
+  ramp-signal-1 = 
+  ramp-signal-foreground = ${colors.foreground-alt}
 #+end_src
 
 **** eth
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/eth]
-type = internal/network
-interface = enp3s0
-interval = 3.0
+  [module/eth]
+  type = internal/network
+  interface = enp3s0
+  interval = 3.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+  format-connected-underline = #55aa55
+  format-connected-prefix = " "
+  format-connected-prefix-foreground = ${colors.foreground-alt}
+  label-connected = %local_ip%
 
-format-disconnected =
+  format-disconnected =
 #+end_src
 **** date
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/date]
-type = internal/date
-interval = 5
+  [module/date]
+  type = internal/date
+  interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
+  date =
+  date-alt = " %Y-%m-%d"
 
-time = %H:%M
-time-alt = %H:%M:%S
+  time = %H:%M
+  time-alt = %H:%M:%S
 
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+  format-prefix = 
+  format-prefix-foreground = ${colors.foreground-alt}
+  format-underline = #0a6cf5
 
-label = %date% %time%
+  label = %date% %time%
 #+end_src
 **** pulseaudio
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/pulseaudio]
-type = internal/pulseaudio
+  [module/pulseaudio]
+  type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
-label-volume =  %percentage%%
-label-volume-foreground = ${root.foreground}
+  format-volume = <label-volume> <bar-volume>
+  label-volume =  %percentage%%
+  label-volume-foreground = ${root.foreground}
 
-label-muted = 
-label-muted-foreground = #666
+  label-muted = 
+  label-muted-foreground = #666
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+  bar-volume-width = 10
+  bar-volume-foreground-0 = #55aa55
+  bar-volume-foreground-1 = #55aa55
+  bar-volume-foreground-2 = #55aa55
+  bar-volume-foreground-3 = #55aa55
+  bar-volume-foreground-4 = #55aa55
+  bar-volume-foreground-5 = #f5a70a
+  bar-volume-foreground-6 = #ff5555
+  bar-volume-gradient = false
+  bar-volume-indicator = |
+  bar-volume-indicator-font = 2
+  bar-volume-fill = ─
+  bar-volume-fill-font = 2
+  bar-volume-empty = ─
+  bar-volume-empty-font = 2
+  bar-volume-empty-foreground = ${colors.foreground-alt}
 #+end_src
 **** battery
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = AC
-full-at = 98
+  [module/battery]
+  type = internal/battery
+  battery = BAT0
+  adapter = AC
+  full-at = 98
 
-format-charging = <ramp-capacity> <label-charging>
-format-charging-underline = #ff751a
+  format-charging = <ramp-capacity> <label-charging>
+  format-charging-underline = #ff751a
 
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+  format-discharging = <ramp-capacity> <label-discharging>
+  format-discharging-underline = ${self.format-charging-underline}
 
-; format-full-prefix =
-format-full-prefix-foreground = ${colors.foreground-alt}
-; format-full-underline = ${self.format-charging-underline}
-format-full-underline = ${self.format-charging-underline}
+  ; format-full-prefix =
+  format-full-prefix-foreground = ${colors.foreground-alt}
+  ; format-full-underline = ${self.format-charging-underline}
+  format-full-underline = ${self.format-charging-underline}
 
-label-charging = %percentage%%
-label-discharging = %percentage%%
+  label-charging = %percentage%%
+  label-discharging = %percentage%%
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
+  ramp-capacity-0 = 
+  ramp-capacity-1 = 
+  ramp-capacity-2 = 
+  ramp-capacity-3 = 
 
-ramp-capacity-foreground = ${colors.foreground-alt}
-ramp-capacity-0-foreground = ${colors.alert}
-ramp-capacity-1-foreground = ${colors.warning}
-ramp-capacity-2-foreground = ${colors.notice}
-ramp-capacity-3-foreground = ${colors.ok}
+  ramp-capacity-foreground = ${colors.foreground-alt}
+  ramp-capacity-0-foreground = ${colors.alert}
+  ramp-capacity-1-foreground = ${colors.warning}
+  ramp-capacity-2-foreground = ${colors.notice}
+  ramp-capacity-3-foreground = ${colors.ok}
 #+end_src
 **** temperature
 #+begin_src conf :tangle ~/.config/polybar/config
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
+  [module/temperature]
+  type = internal/temperature
+  thermal-zone = 0
+  warn-temperature = 60
 
-format = <ramp> <label>
-format-underline = #ff6600
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
+  format = <ramp> <label>
+  format-underline = #ff6600
+  format-warn = <ramp> <label-warn>
+  format-warn-underline = ${self.format-underline}
 
-label = %temperature-c%
-label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
+  label = %temperature-c%
+  label-warn = %temperature-c%
+  label-warn-foreground = ${colors.secondary}
 
-; ramp-0 =  α
-; ramp-1 = 
-; ramp-2 = 
-ramp-0 = θ
-ramp-1 = θ
-ramp-foreground = ${colors.foreground-alt}
+  ; ramp-0 =  α
+  ; ramp-1 = 
+  ; ramp-2 = 
+  ramp-0 = θ
+  ramp-1 = θ
+  ramp-foreground = ${colors.foreground-alt}
 #+end_src
 
 ** Launch script
@@ -1604,7 +1608,7 @@ ramp-foreground = ${colors.foreground-alt}
 #+begin_src conf :tangle ~/.config/systemd/user/polybar.service
   [Unit]
   Description=Polybar Panel
-		    
+
   [Service]
   Type=simple
   ExecStart=/usr/bin/polybar --config=/home/liolin/.config/polybar/config default
@@ -1618,17 +1622,17 @@ ramp-foreground = ${colors.foreground-alt}
 
 The script for toggeling the polybar.
 #+begin_src sh :tangle ~/.local/bin/bar-toggle
-SERVICE=polybar.service
+  SERVICE=polybar.service
 
-function start() {
-    systemctl --user start $SERVICE
-}
+  function start() {
+      systemctl --user start $SERVICE
+  }
 
-function stop() {
-    systemctl --user stop $SERVICE
-}
+  function stop() {
+      systemctl --user stop $SERVICE
+  }
 
-systemctl -q --user is-active $SERVICE && stop || start
+  systemctl -q --user is-active $SERVICE && stop || start
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
@@ -1666,439 +1670,446 @@ nitrogen (feh?)
 * qtile
 ** Configuration
 #+begin_src python :tangle ~/.config/qtile/config.py
-from typing import List  # noqa: F401
+  from typing import List  # noqa: F401
 
-from libqtile import bar, layout, widget, hook
-from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
-from libqtile.lazy import lazy
+  from libqtile import bar, layout, widget, hook
+  from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
+  from libqtile.lazy import lazy
 
-import os
-import subprocess
-import socket
-
-
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser("~/.config/autostart.sh")
-    subprocess.call([home])
+  import os
+  import subprocess
+  import socket
 
 
-mod = "mod4"
-myTerm = "alacritty"
-browser = "brave"
-
-prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
-colors = [["#282c34", "#282c34"], # panel background
-        ["#3d3f4b", "#434758"], # background for current screen tab
-        ["#ffffff", "#ffffff"], # font color for group names
-        ["#ff5555", "#ff5555"], # border line color for current tab
-        ["#74438f", "#74438f"], # border line color for 'other tabs' and color for 'odd widgets'
-        ["#4f76c7", "#4f76c7"], # color for the 'even widgets'
-        ["#e1acff", "#e1acff"], # window name
-        ["#ecbbfb", "#ecbbfb"]] # backbround for inactive screens
+  @hook.subscribe.startup_once
+  def autostart():
+      home = os.path.expanduser("~/.config/autostart.sh")
+      subprocess.call([home])
 
 
-keys = [
-    # Switch between windows
-    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(),
-        desc="Move window focus to other window"),
-    Key([mod], "t", lazy.window.toggle_floating(), desc="Put the focused window to/from floating mode"),
+  mod = "mod4"
+  myTerm = "alacritty"
+  browser = "brave"
 
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
-        desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
-        desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
-        desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+  prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
+  colors = [["#282c34", "#282c34"], # panel background
+	    ["#3d3f4b", "#434758"], # background for current screen tab
+	    ["#ffffff", "#ffffff"], # font color for group names
+	    ["#ff5555", "#ff5555"], # border line color for current tab
+	    ["#74438f", "#74438f"], # border line color for 'other tabs' and color for 'odd widgets'
+	    ["#4f76c7", "#4f76c7"], # color for the 'even widgets'
+	    ["#e1acff", "#e1acff"], # window name
+	    ["#ecbbfb", "#ecbbfb"]] # backbround for inactive screens
 
-    Key([mod, "control"], "h", lazy.layout.grow_left(),
-        desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(),
-        desc="Grow window to the right"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(),
-        desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
+  keys = [
+      # Switch between windows
+      Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
+      Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
+      Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
+      Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
+      Key([mod], "space", lazy.layout.next(),
+	  desc="Move window focus to other window"),
+      Key([mod], "t", lazy.window.toggle_floating(), desc="Put the focused window to/from floating mode"),
 
-    ## Switch Focus between screens
-    Key([mod], "w", lazy.to_screen(0)),
-    Key([mod], "e", lazy.to_screen(1)),
-    
-    ## Engergy Keys
-    Key([mod], "r", lazy.spawn("rofi -show drun"),
-        desc="Spawn a command using a prompt widget"),
+      # Move windows between left/right columns or move up/down in current stack.
+      # Moving out of range in Columns layout will create new column.
+      Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
+	  desc="Move window to the left"),
+      Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
+	  desc="Move window to the right"),
+      Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
+	  desc="Move window down"),
+      Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
 
-    ## Shutdown Qtile
-    Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
+      Key([mod, "control"], "h", lazy.layout.grow_left(),
+	  desc="Grow window to the left"),
+      Key([mod, "control"], "l", lazy.layout.grow_right(),
+	  desc="Grow window to the right"),
+      Key([mod, "control"], "j", lazy.layout.grow_down(),
+	  desc="Grow window down"),
+      Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+      Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
-    ## Menus
-    KeyChord([mod], "p", [
-        Key([], "e",
-            lazy.spawn(format("{}/.local/bin/exac", os.environ.get("HOME")))),
-        Key([], "p",
-            lazy.spawn("/usr/bin/passmenu -i"))
-    ]),
+      Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+      Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
 
-    ## Multimedia Keys
-    Key([], "Print", lazy.spawn("flameshot gui")),
-    Key([], "XF86AudioMute", lazy.spawn("pamixer --toggle-mute")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("pamixer --decrease 5")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("pamixer --increase 5")),
-    Key([], "XF86AudioMicMute", lazy.spawn("amixer set Capture toggle")),
-    Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
-    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
-    Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl 5%+")),
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl 5%+")),
-    Key([], "XF86WLAN", lazy.spawn("nmcli radio wifi on")),
+      ## Switch Focus between screens
+      Key([mod], "w", lazy.to_screen(0)),
+      Key([mod], "e", lazy.to_screen(1)),
 
-    ## Start Applications
-    Key([mod], "Return", lazy.spawn(myTerm), desc="Launch terminal"),
-    Key([], "F12", lazy.spawn("nemo")),
+      ## Engergy Keys
+      Key([mod], "r", lazy.spawn("rofi -show drun"),
+	  desc="Spawn a command using a prompt widget"),
 
-    ## Emacs
-    KeyChord([mod], "d", [
-        Key([], "e",
-            lazy.spawn("emacsclient -c -a ''")),
-        Key([], "b",
-            lazy.spawn("emacsclient -c -a '' --eval '(ibuffer)'")),
-        Key([], "d",
-            lazy.spawn("emacsclient -c -a '' --eval '(dired nil)'")),
-        Key([], "m",
-            lazy.spawn("emacsclient -c -a '' --eval '(mu4e)'")),
-        Key([], "s",
-            lazy.spawn("emacsclient -c -a '' --eval '(eshell)'")),
-        Key([], "a",
-            lazy.spawn("emacsclient -c -a '' --eval '(org-agenda)'")),
-    ])
-]
+      ## Shutdown Qtile
+      Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+      Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
 
-groups = [Group("1: term"),
-        Group("2: editor"),
-        Group("3: web"),
-        Group("4: xxx"),
-        Group("5: music"),
-        Group("6: chat"),
-        Group("7: mail"),
-        Group("8: xxx"),
-        Group("9: office"),
-        Group("0: game")]
+      ## Menus
+      KeyChord([mod], "p", [
+	  Key([], "e",
+	      lazy.spawn(f"{os.environ.get('HOME')}/.local/bin/exac")),
+	  Key([], "p",
+	      lazy.spawn("/usr/bin/passmenu -i"))
+      ]),
 
-for i in groups:
-    keys.extend([
-        # mod1 + letter of group = switch to group
-        Key([mod], i.name[0], lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name)),
+      ## Multimedia Keys
+      Key([], "Print", lazy.spawn("flameshot gui")),
+      Key([], "XF86AudioMute", lazy.spawn("pamixer --toggle-mute")),
+      Key([], "XF86AudioLowerVolume", lazy.spawn("pamixer --decrease 5")),
+      Key([], "XF86AudioRaiseVolume", lazy.spawn("pamixer --increase 5")),
+      Key([], "XF86AudioMicMute", lazy.spawn("amixer set Capture toggle")),
+      Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
+      Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
+      Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
+      Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl 5%+")),
+      Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl 5%+")),
+      Key([], "XF86WLAN", lazy.spawn("nmcli radio wifi on")),
 
-        # # mod1 + shift + letter of group = move focused window to group
-        Key([mod, "shift"], i.name[0], lazy.window.togroup(i.name),
-            desc="move focused window to group {}".format(i.name)),
-    ])
+      ## Start Applications
+      Key([mod], "Return", lazy.spawn(myTerm), desc="Launch terminal"),
+      Key([], "F12", lazy.spawn("nemo")),
 
-layout_theme = {"border_width": 2,
-                "margin": 2,
-                "border_focus": "e1acff",
-                "border_normal": "1D2330"
-                }
-layouts = [
-    layout.MonadTall(**layout_theme),
-    layout.MonadWide(**layout_theme),
-    layout.Max(**layout_theme),
-    # Try more layouts by unleashing below layouts.
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
-]
+      ## Emacs
+      KeyChord([mod], "d", [
+	  Key([], "e",
+	      lazy.spawn("emacsclient -c -a ''")),
+	  Key([], "b",
+	      lazy.spawn("emacsclient -c -a '' --eval '(ibuffer)'")),
+	  Key([], "d",
+	      lazy.spawn("emacsclient -c -a '' --eval '(dired nil)'")),
+	  Key([], "m",
+	      lazy.spawn("emacsclient -c -a '' --eval '(mu4e)'")),
+	  Key([], "s",
+	      lazy.spawn("emacsclient -c -a '' --eval '(eshell)'")),
+	  Key([], "a",
+	      lazy.spawn("emacsclient -c -a '' --eval '(org-agenda)'")),
+      ])
+  ]
 
-widget_defaults = dict(
-    font='sans',
-    fontsize=12,
-    padding=3,
-)
-extension_defaults = widget_defaults.copy()
+  groups = [Group("1: term"),
+	    Group("2: editor"),
+	    Group("3: web"),
+	    Group("4: xxx"),
+	    Group("5: music"),
+	    Group("6: chat"),
+	    Group("7: mail"),
+	    Group("8: xxx"),
+	    Group("9: office"),
+	    Group("0: game")]
 
-screens = [
-    Screen(
-        bottom=bar.Bar(
-            [
-                widget.Sep(
-                    linewidth = 0,
-                    padding = 6,
-                    foreground = colors[2],
-                    background = colors[0]
-                    ),
-                widget.Image(
-                    filename = "~/.config/qtile/icons/python-white.png",
-                    scale = "False",
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)}
-                    ),
-                widget.Sep(
-                    linewidth = 0,
-                    padding = 6,
-                    foreground = colors[2],
-                    background = colors[0]
-                    ),
-                widget.GroupBox(
-                    font = "Ubuntu Bold",
-                    fontsize = 9,
-                    margin_y = 3,
-                    margin_x = 0,
-                    padding_y = 5,
-                    padding_x = 3,
-                    borderwidth = 3,
-                    active = colors[2],
-                    inactive = colors[7],
-                    rounded = False,
-                    highlight_color = colors[1],
-                    highlight_method = "line",
-                    this_current_screen_border = colors[6],
-                    this_screen_border = colors [4],
-                    other_current_screen_border = colors[6],
-                    other_screen_border = colors[4],
-                    foreground = colors[2],
-                    background = colors[0]
-                    ),
-                widget.Prompt(
-                    prompt = prompt,
-                    font = "Ubuntu Mono",
-                    padding = 10,
-                    foreground = colors[3],
-                    background = colors[1]
-                    ),
-                widget.Sep(
-                    linewidth = 0,
-                    padding = 40,
-                    foreground = colors[2],
-                    background = colors[0]
-                    ),
-                widget.WindowName(
-                        foreground = colors[6],
-                        background = colors[0],
-                        padding = 0
-                        ),
-                widget.Systray(
-                        background = colors[0],
-                        padding = 5
-                        ),
-                widget.Sep(
-                        linewidth = 0,
-                    padding = 6,
-                    foreground = colors[0],
-                    background = colors[0]
-                    ),
-                widget.TextBox(
-                    text = '',
-                    background = colors[0],
-                    foreground = colors[5],
-                    padding = 0,
-                    fontsize = 37
-                    ),
-                widget.Net(
-                    interface = "wlan0",
-                    format = '{down} ↓↑ {up}',
-                    foreground = colors[2],
-                    background = colors[5],
-                    padding = 5
-                    ),
-                widget.TextBox(
-                    text = '',
-                    background = colors[5],
-                    foreground = colors[4],
-                    padding = 0,
-                    fontsize = 37
-                    ),
-                widget.TextBox(
-                    text = " 🌡",
-                    padding = 2,
-                    foreground = colors[2],
-                    background = colors[4],
-                    fontsize = 11
-                    ),
-                widget.ThermalSensor(
-                    foreground = colors[2],
-                    background = colors[4],
-                    threshold = 90,
-                    padding = 5
-                    ),
-                widget.TextBox(
-                        text = '',
-                        background = colors[4],
-                        foreground = colors[5],
-                        padding = 0,
-                        fontsize = 37
-                        ),
-                widget.CPU(
-                    foreground = colors[2],
-                    background = colors[5],
-                    padding = 5,
-                    format = 'CPU {load_percent}%'
-                ),
-                widget.TextBox(
-                        text = '',
-                        background = colors[5],
-                        foreground = colors[4],
-                        padding = 0,
-                        fontsize = 37
-                        ),
-                widget.TextBox(
-                        text = " 🖬",
-                        foreground = colors[2],
-                        background = colors[4],
-                        padding = 0,
-                        fontsize = 14
-                        ),
-                widget.Memory(
-                        foreground = colors[2],
-                        background = colors[4],
-                        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
-                        padding = 5
-                        ),
-                widget.TextBox(
-                        text = '',
-                        background = colors[4],
-                        foreground = colors[5],
-                        padding = 0,
-                        fontsize = 37
-                        ),
-                widget.TextBox(
-                        text = " Vol:",
-                        foreground = colors[2],
-                        background = colors[5],
-                        padding = 0
-                        ),
-                widget.PulseVolume(
-                        update_interval = 0.1,
-                        foreground = colors[2],
-                        background = colors[5],
-                        padding = 5
-                        ),
-                widget.TextBox(
-                        text = '',
-                        background = colors[5],
-                        foreground = colors[4],
-                        padding = 0,
-                        fontsize = 37
-                        ),
-                widget.CurrentLayoutIcon(
-                        custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
-                        foreground = colors[0],
-                        background = colors[4],
-                        padding = 0,
-                        scale = 0.7
-                        ),
-                widget.CurrentLayout(
-                        foreground = colors[2],
-                        background = colors[4],
-                        padding = 5
-                        ),
-                widget.TextBox(
-                        text = '',
-                        background = colors[4],
-                        foreground = colors[5],
-                        padding = 0,
-                        fontsize = 37
-                        ),
-                widget.Clock(
-                        foreground = colors[2],
-                        background = colors[5],
-                        format = "%A, %B %d - %H:%M "
-                        ),
-                widget.TextBox(
-                        text = '',
-                        background = colors[5],
-                        foreground = colors[4],
-                        padding = 0,
-                        fontsize = 37
-                        ),
-                widget.BatteryIcon(
-                        background = colors[4]
-                        ),
-                widget.Battery(
-                        background = colors[4],
-                        notify_below = 10,
-                        format = "{char} {percent:2.0%} {hour:d}:{min:02d}"
-                        ),
-                widget.Sep(
-                        linewidth = 0,
-                        padding = 6,
-                        foreground = colors[2],
-                        background = colors[0]
-                        ),
-            ],
-            24,
-        ),
-    ),
-]
+  for i in groups:
+      keys.extend([
+	  # mod1 + letter of group = switch to group
+	  Key([mod], i.name[0], lazy.group[i.name].toscreen(),
+	      desc="Switch to group {}".format(i.name)),
 
-# Drag floating layouts.
-mouse = [
-        Drag([mod], "Button1", lazy.window.set_position_floating(),
-            start=lazy.window.get_position()),
-        Drag([mod], "Button3", lazy.window.set_size_floating(),
-            start=lazy.window.get_size()),
-        Click([mod], "Button2", lazy.window.bring_to_front())
-        ]
+	  # # mod1 + shift + letter of group = move focused window to group
+	  Key([mod, "shift"], i.name[0], lazy.window.togroup(i.name),
+	      desc="move focused window to group {}".format(i.name)),
+      ])
 
-dgroups_key_binder = None
-dgroups_app_rules = []  # type: List
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
-    Match(wm_type='utility'),
-    Match(wm_type='notification'),
-    Match(wm_type='toolbar'),
-    Match(wm_type='splash'),
-    Match(wm_type='dialog'),
-    Match(wm_class='file_progress'),
-    Match(wm_class='confirm'),
-    Match(wm_class='dialog'),
-    Match(wm_class='download'),
-    Match(wm_class='error'),
-    Match(wm_class='notification'),
-    Match(wm_class='splash'),
-    Match(wm_class='toolbar'),
-    Match(wm_class='confirmreset'),  # gitk
-    Match(wm_class='makebranch'),  # gitk
-    Match(wm_class='maketag'),  # gitk
-    Match(wm_class='ssh-askpass'),  # ssh-askpass
-    Match(wm_class='pinentry-gtk-2'),  # GPG key password entry
-    Match(title='branchdialog'),  # gitk
-    ])
-auto_fullscreen = True
-focus_on_window_activation = "smart"
-reconfigure_screens = True
+  layout_theme = {"border_width": 2,
+		  "margin": 2,
+		  "border_focus": "e1acff",
+		  "border_normal": "1D2330"
+		  }
+  layouts = [
+      layout.MonadTall(**layout_theme),
+      layout.MonadWide(**layout_theme),
+      layout.Max(**layout_theme),
+      # Try more layouts by unleashing below layouts.
+      # layout.Bsp(),
+      # layout.Matrix(),
+      # layout.RatioTile(),
+      # layout.Tile(),
+      # layout.TreeTab(),
+      # layout.VerticalTile(),
+      # layout.Zoomy(),
+  ]
 
-# If things like steam games want to auto-minimize themselves when losing
-# focus, should we respect this or not?
-auto_minimize = True
+  widget_defaults = dict(
+      font='sans',
+      fontsize=12,
+      padding=3,
+  )
+  extension_defaults = widget_defaults.copy()
 
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, GitHub issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
-wmname = "LG3D"
+  screens = [
+      Screen(
+	  bottom=bar.Bar(
+	      [
+		  widget.Sep(
+		      linewidth = 0,
+		      padding = 6,
+		      foreground = colors[2],
+		      background = colors[0]
+		  ),
+		  widget.Image(
+		      filename = "~/.config/qtile/icons/python-white.png",
+		      scale = "False",
+		      mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)}
+		  ),
+		  widget.Sep(
+		      linewidth = 0,
+		      padding = 6,
+		      foreground = colors[2],
+		      background = colors[0]
+		  ),
+		  widget.GroupBox(
+		      font = "Ubuntu Bold",
+		      fontsize = 9,
+		      margin_y = 3,
+		      margin_x = 0,
+		      padding_y = 5,
+		      padding_x = 3,
+		      borderwidth = 3,
+		      active = colors[2],
+		      inactive = colors[7],
+		      rounded = False,
+		      highlight_color = colors[1],
+		      highlight_method = "line",
+		      this_current_screen_border = colors[6],
+		      this_screen_border = colors [4],
+		      other_current_screen_border = colors[6],
+		      other_screen_border = colors[4],
+		      foreground = colors[2],
+		      background = colors[0]
+		  ),
+		  widget.Prompt(
+		      prompt = prompt,
+		      font = "Ubuntu Mono",
+		      padding = 10,
+		      foreground = colors[3],
+		      background = colors[1]
+		  ),
+		  widget.Sep(
+		      linewidth = 0,
+		      padding = 40,
+		      foreground = colors[2],
+		      background = colors[0]
+		  ),
+		  widget.WindowName(
+		      foreground = colors[6],
+		      background = colors[0],
+		      padding = 0
+		  ),
+		  widget.Systray(
+		      background = colors[0],
+		      padding = 5
+		  ),
+		  widget.Sep(
+		      linewidth = 0,
+		      padding = 6,
+		      foreground = colors[0],
+		      background = colors[0]
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[0],
+		      foreground = colors[5],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.Net(
+		      interface = "wlan0",
+		      format = '{down} ↓↑ {up}',
+		      foreground = colors[2],
+		      background = colors[5],
+		      padding = 5
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[5],
+		      foreground = colors[4],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.TextBox(
+		      text = " 🌡",
+		      padding = 2,
+		      foreground = colors[2],
+		      background = colors[4],
+		      fontsize = 11
+		  ),
+		  widget.ThermalSensor(
+		      foreground = colors[2],
+		      background = colors[4],
+		      threshold = 90,
+		      padding = 5
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[4],
+		      foreground = colors[5],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.CPU(
+		      foreground = colors[2],
+		      background = colors[5],
+		      padding = 5,
+		      format = 'CPU {load_percent}%'
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[5],
+		      foreground = colors[4],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.TextBox(
+		      text = " 🖬",
+		      foreground = colors[2],
+		      background = colors[4],
+		      padding = 0,
+		      fontsize = 14
+		  ),
+		  widget.Memory(
+		      foreground = colors[2],
+		      background = colors[4],
+		      mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
+		      padding = 5
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[4],
+		      foreground = colors[5],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.TextBox(
+		      text = " Vol:",
+		      foreground = colors[2],
+		      background = colors[5],
+		      padding = 0
+		  ),
+		  widget.PulseVolume(
+		      update_interval = 0.1,
+		      foreground = colors[2],
+		      background = colors[5],
+		      padding = 5
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[5],
+		      foreground = colors[4],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.CurrentLayoutIcon(
+		      custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
+		      foreground = colors[0],
+		      background = colors[4],
+		      padding = 0,
+		      scale = 0.7
+		  ),
+		  widget.CurrentLayout(
+		      foreground = colors[2],
+		      background = colors[4],
+		      padding = 5
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[4],
+		      foreground = colors[5],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.Clock(
+		      foreground = colors[2],
+		      background = colors[5],
+		      format = "%A, %B %d - %H:%M "
+		  ),
+		  widget.TextBox(
+		      text = '',
+		      background = colors[5],
+		      foreground = colors[4],
+		      padding = 0,
+		      fontsize = 37
+		  ),
+		  widget.BatteryIcon(
+		      background = colors[4]
+		  ),
+		  widget.Battery(
+		      background = colors[4],
+		      notify_below = 10,
+		      format = "{char} {percent:2.0%} {hour:d}:{min:02d}"
+		  ),
+		  widget.Sep(
+		      linewidth = 0,
+		      padding = 6,
+		      foreground = colors[2],
+		      background = colors[0]
+		  ),
+	      ],
+	      24,
+	  ),
+      ),
+  ]
+
+  # Drag floating layouts.
+  mouse = [
+      Drag([mod], "Button1", lazy.window.set_position_floating(),
+	   start=lazy.window.get_position()),
+      Drag([mod], "Button3", lazy.window.set_size_floating(),
+	   start=lazy.window.get_size()),
+      Click([mod], "Button2", lazy.window.bring_to_front())
+  ]
+
+  dgroups_key_binder = None
+  dgroups_app_rules = []  # type: List
+  follow_mouse_focus = True
+  bring_front_click = False
+  cursor_warp = False
+  floating_layout = layout.Floating(float_rules=[
+      Match(wm_type='utility'),
+      Match(wm_type='notification'),
+      Match(wm_type='toolbar'),
+      Match(wm_type='splash'),
+      Match(wm_type='dialog'),
+      Match(wm_class='file_progress'),
+      Match(wm_class='confirm'),
+      Match(wm_class='dialog'),
+      Match(wm_class='download'),
+      Match(wm_class='error'),
+      Match(wm_class='notification'),
+      Match(wm_class='splash'),
+      Match(wm_class='toolbar'),
+      Match(wm_class='confirmreset'),  # gitk
+      Match(wm_class='makebranch'),  # gitk
+      Match(wm_class='maketag'),  # gitk
+      Match(wm_class='ssh-askpass'),  # ssh-askpass
+      Match(wm_class='pinentry-gtk-2'),  # GPG key password entry
+      Match(title='branchdialog'),  # gitk
+  ])
+  auto_fullscreen = True
+  focus_on_window_activation = "smart"
+  reconfigure_screens = True
+
+  # If things like steam games want to auto-minimize themselves when losing
+  # focus, should we respect this or not?
+  auto_minimize = True
+
+  # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
+  # string besides java UI toolkits; you can see several discussions on the
+  # mailing lists, GitHub issues, and other WM documentation that suggest setting
+  # this string if your java app doesn't work correctly. We may as well just lie
+  # and say that we're a working one by default.
+  #
+  # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
+  # java that happens to be on java's whitelist.
+  wmname = "LG3D"
 
 #+end_src
+** Resources
+Installation python icon qtile
+#+begin_src bash :tangle no :dir ~/.dotfiles
+  mkdir -p ~/.config/qtile/icons/
+  cp resources/qtile/python-white.png ~/.config/qtile/icons/
+#+end_src
+
 ** Required Packages                                               :packages:
 #+begin_example
 qtile
@@ -2107,457 +2118,457 @@ python-psutil
 * qutebrowser
 This configuration is currently not used.
 #+begin_src python :tangle no
-# Autogenerated config.py
-#
-# NOTE: config.py is intended for advanced users who are comfortable
-# with manually migrating the config file on qutebrowser upgrades. If
-# you prefer, you can also configure qutebrowser using the
-# :set/:bind/:config-* commands without having to write a config.py
-# file.
-#
-# Documentation:
-#   qute://help/configuring.html
-#   qute://help/settings.html
-
-# Change the argument to True to still load settings configured via autoconfig.yml
-config.load_autoconfig(False)
-
-# Which cookies to accept. With QtWebEngine, this setting also controls
-# other features with tracking capabilities similar to those of cookies;
-# including IndexedDB, DOM storage, filesystem API, service workers, and
-# AppCache. Note that with QtWebKit, only `all` and `never` are
-# supported as per-domain values. Setting `no-3rdparty` or `no-
-# unknown-3rdparty` per-domain on QtWebKit will have the same effect as
-# `all`. If this setting is used with URL patterns, the pattern gets
-# applied to the origin/first party URL of the page making the request,
-# not the request URL. With QtWebEngine 5.15.0+, paths will be stripped
-# from URLs, so URL patterns using paths will not match. With
-# QtWebEngine 5.15.2+, subdomains are additionally stripped as well, so
-# you will typically need to set this setting for `example.com` when the
-# cookie is set on `somesubdomain.example.com` for it to work properly.
-# To debug issues with this setting, start qutebrowser with `--debug
-# --logfilter network --debug-flag log-cookies` which will show all
-# cookies being set.
-# Type: String
-# Valid values:
-#   - all: Accept all cookies.
-#   - no-3rdparty: Accept cookies from the same origin only. This is known to break some sites, such as GMail.
-#   - no-unknown-3rdparty: Accept cookies from the same origin only, unless a cookie is already set for the domain. On QtWebEngine, this is the same as no-3rdparty.
-#   - never: Don't accept cookies at all.
-config.set('content.cookies.accept', 'all', 'chrome-devtools://*')
-
-# Which cookies to accept. With QtWebEngine, this setting also controls
-# other features with tracking capabilities similar to those of cookies;
-# including IndexedDB, DOM storage, filesystem API, service workers, and
-# AppCache. Note that with QtWebKit, only `all` and `never` are
-# supported as per-domain values. Setting `no-3rdparty` or `no-
-# unknown-3rdparty` per-domain on QtWebKit will have the same effect as
-# `all`. If this setting is used with URL patterns, the pattern gets
-# applied to the origin/first party URL of the page making the request,
-# not the request URL. With QtWebEngine 5.15.0+, paths will be stripped
-# from URLs, so URL patterns using paths will not match. With
-# QtWebEngine 5.15.2+, subdomains are additionally stripped as well, so
-# you will typically need to set this setting for `example.com` when the
-# cookie is set on `somesubdomain.example.com` for it to work properly.
-# To debug issues with this setting, start qutebrowser with `--debug
-# --logfilter network --debug-flag log-cookies` which will show all
-# cookies being set.
-# Type: String
-# Valid values:
-#   - all: Accept all cookies.
-#   - no-3rdparty: Accept cookies from the same origin only. This is known to break some sites, such as GMail.
-#   - no-unknown-3rdparty: Accept cookies from the same origin only, unless a cookie is already set for the domain. On QtWebEngine, this is the same as no-3rdparty.
-#   - never: Don't accept cookies at all.
-config.set('content.cookies.accept', 'all', 'devtools://*')
-
-# Value to send in the `Accept-Language` header. Note that the value
-# read from JavaScript is always the global value.
-# Type: String
-config.set('content.headers.accept_language', '', 'https://matchmaker.krunker.io/*')
-
-# User agent to send.  The following placeholders are defined:  *
-# `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
-# The underlying WebKit version (set to a fixed value   with
-# QtWebEngine). * `{qt_key}`: "Qt" for QtWebKit, "QtWebEngine" for
-# QtWebEngine. * `{qt_version}`: The underlying Qt version. *
-# `{upstream_browser_key}`: "Version" for QtWebKit, "Chrome" for
-# QtWebEngine. * `{upstream_browser_version}`: The corresponding
-# Safari/Chrome version. * `{qutebrowser_version}`: The currently
-# running qutebrowser version.  The default value is equal to the
-# unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
-# read from JavaScript is always the global value. With QtWebEngine
-# between 5.12 and 5.14 (inclusive), changing the value exposed to
-# JavaScript requires a restart.
-# Type: FormatString
-config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}', 'https://web.whatsapp.com/')
-
-# User agent to send.  The following placeholders are defined:  *
-# `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
-# The underlying WebKit version (set to a fixed value   with
-# QtWebEngine). * `{qt_key}`: "Qt" for QtWebKit, "QtWebEngine" for
-# QtWebEngine. * `{qt_version}`: The underlying Qt version. *
-# `{upstream_browser_key}`: "Version" for QtWebKit, "Chrome" for
-# QtWebEngine. * `{upstream_browser_version}`: The corresponding
-# Safari/Chrome version. * `{qutebrowser_version}`: The currently
-# running qutebrowser version.  The default value is equal to the
-# unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
-# read from JavaScript is always the global value. With QtWebEngine
-# between 5.12 and 5.14 (inclusive), changing the value exposed to
-# JavaScript requires a restart.
-# Type: FormatString
-config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}; rv:90.0) Gecko/20100101 Firefox/90.0', 'https://accounts.google.com/*')
-
-# User agent to send.  The following placeholders are defined:  *
-# `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
-# The underlying WebKit version (set to a fixed value   with
-# QtWebEngine). * `{qt_key}`: "Qt" for QtWebKit, "QtWebEngine" for
-# QtWebEngine. * `{qt_version}`: The underlying Qt version. *
-# `{upstream_browser_key}`: "Version" for QtWebKit, "Chrome" for
-# QtWebEngine. * `{upstream_browser_version}`: The corresponding
-# Safari/Chrome version. * `{qutebrowser_version}`: The currently
-# running qutebrowser version.  The default value is equal to the
-# unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
-# read from JavaScript is always the global value. With QtWebEngine
-# between 5.12 and 5.14 (inclusive), changing the value exposed to
-# JavaScript requires a restart.
-# Type: FormatString
-config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99 Safari/537.36', 'https://*.slack.com/*')
-
-# Load images automatically in web pages.
-# Type: Bool
-config.set('content.images', True, 'chrome-devtools://*')
-
-# Load images automatically in web pages.
-# Type: Bool
-config.set('content.images', True, 'devtools://*')
-
-# Enable JavaScript.
-# Type: Bool
-config.set('content.javascript.enabled', True, 'chrome-devtools://*')
-
-# Enable JavaScript.
-# Type: Bool
-config.set('content.javascript.enabled', True, 'devtools://*')
-
-# Enable JavaScript.
-# Type: Bool
-config.set('content.javascript.enabled', True, 'chrome://*/*')
-
-# Enable JavaScript.
-# Type: Bool
-config.set('content.javascript.enabled', True, 'qute://*/*')
-config.set('auto_save.session', True)
-
-# List of user stylesheet filenames to use.
-# Type: List of File, or File
-c.content.user_stylesheets = []
-
-# Text color of the completion widget. May be a single color to use for
-# all columns or a list of three colors, one for each column.
-# Type: List of QtColor, or QtColor
-c.colors.completion.fg = '#d8dee9'
-
-# Background color of the completion widget for odd rows.
-# Type: QssColor
-c.colors.completion.odd.bg = '#3b4252'
-
-# Background color of the completion widget for even rows.
-# Type: QssColor
-c.colors.completion.even.bg = '#3b4252'
-
-# Foreground color of completion widget category headers.
-# Type: QtColor
-c.colors.completion.category.fg = '#e5e9f0'
-
-# Background color of the completion widget category headers.
-# Type: QssColor
-c.colors.completion.category.bg = '#2e3440'
-
-# Top border color of the completion widget category headers.
-# Type: QssColor
-c.colors.completion.category.border.top = '#2e3440'
-
-# Bottom border color of the completion widget category headers.
-# Type: QssColor
-c.colors.completion.category.border.bottom = '#2e3440'
-
-# Foreground color of the selected completion item.
-# Type: QtColor
-c.colors.completion.item.selected.fg = '#eceff4'
-
-# Background color of the selected completion item.
-# Type: QssColor
-c.colors.completion.item.selected.bg = '#4c566a'
-
-# Top border color of the selected completion item.
-# Type: QssColor
-c.colors.completion.item.selected.border.top = '#4c566a'
-
-# Bottom border color of the selected completion item.
-# Type: QssColor
-c.colors.completion.item.selected.border.bottom = '#4c566a'
-
-# Foreground color of the matched text in the completion.
-# Type: QtColor
-c.colors.completion.match.fg = '#ebcb8b'
-
-# Color of the scrollbar handle in the completion view.
-# Type: QssColor
-c.colors.completion.scrollbar.fg = '#e5e9f0'
-
-# Color of the scrollbar in the completion view.
-# Type: QssColor
-c.colors.completion.scrollbar.bg = '#3b4252'
-
-# Background color for the download bar.
-# Type: QssColor
-c.colors.downloads.bar.bg = '#2e3440'
-
-# Color gradient stop for download backgrounds.
-# Type: QtColor
-c.colors.downloads.stop.bg = '#b48ead'
-
-# Color gradient interpolation system for download backgrounds.
-# Type: ColorSystem
-# Valid values:
-#   - rgb: Interpolate in the RGB color system.
-#   - hsv: Interpolate in the HSV color system.
-#   - hsl: Interpolate in the HSL color system.
-#   - none: Don't show a gradient.
-c.colors.downloads.system.bg = 'none'
-
-# Foreground color for downloads with errors.
-# Type: QtColor
-c.colors.downloads.error.fg = '#e5e9f0'
-
-# Background color for downloads with errors.
-# Type: QtColor
-c.colors.downloads.error.bg = '#bf616a'
-
-# Font color for hints.
-# Type: QssColor
-c.colors.hints.fg = '#2e3440'
-
-# Background color for hints. Note that you can use a `rgba(...)` value
-# for transparency.
-# Type: QssColor
-c.colors.hints.bg = '#ebcb8b'
-
-# Font color for the matched part of hints.
-# Type: QtColor
-c.colors.hints.match.fg = '#5e81ac'
-
-# Text color for the keyhint widget.
-# Type: QssColor
-c.colors.keyhint.fg = '#e5e9f0'
-
-# Highlight color for keys to complete the current keychain.
-# Type: QssColor
-c.colors.keyhint.suffix.fg = '#ebcb8b'
-
-# Background color of the keyhint widget.
-# Type: QssColor
-c.colors.keyhint.bg = '#3b4252'
-
-# Foreground color of an error message.
-# Type: QssColor
-c.colors.messages.error.fg = '#e5e9f0'
-
-# Background color of an error message.
-# Type: QssColor
-c.colors.messages.error.bg = '#bf616a'
-
-# Border color of an error message.
-# Type: QssColor
-c.colors.messages.error.border = '#bf616a'
-
-# Foreground color of a warning message.
-# Type: QssColor
-c.colors.messages.warning.fg = '#e5e9f0'
-
-# Background color of a warning message.
-# Type: QssColor
-c.colors.messages.warning.bg = '#d08770'
-
-# Border color of a warning message.
-# Type: QssColor
-c.colors.messages.warning.border = '#d08770'
-
-# Foreground color of an info message.
-# Type: QssColor
-c.colors.messages.info.fg = '#e5e9f0'
-
-# Background color of an info message.
-# Type: QssColor
-c.colors.messages.info.bg = '#88c0d0'
-
-# Border color of an info message.
-# Type: QssColor
-c.colors.messages.info.border = '#88c0d0'
-
-# Foreground color for prompts.
-# Type: QssColor
-c.colors.prompts.fg = '#e5e9f0'
-
-# Border used around UI elements in prompts.
-# Type: String
-c.colors.prompts.border = '1px solid #2e3440'
-
-# Background color for prompts.
-# Type: QssColor
-c.colors.prompts.bg = '#434c5e'
-
-# Background color for the selected item in filename prompts.
-# Type: QssColor
-c.colors.prompts.selected.bg = '#4c566a'
-
-# Foreground color of the statusbar.
-# Type: QssColor
-c.colors.statusbar.normal.fg = '#e5e9f0'
-
-# Background color of the statusbar.
-# Type: QssColor
-c.colors.statusbar.normal.bg = '#2e3440'
-
-# Foreground color of the statusbar in insert mode.
-# Type: QssColor
-c.colors.statusbar.insert.fg = '#3b4252'
-
-# Background color of the statusbar in insert mode.
-# Type: QssColor
-c.colors.statusbar.insert.bg = '#a3be8c'
-
-# Foreground color of the statusbar in passthrough mode.
-# Type: QssColor
-c.colors.statusbar.passthrough.fg = '#e5e9f0'
-
-# Background color of the statusbar in passthrough mode.
-# Type: QssColor
-c.colors.statusbar.passthrough.bg = '#5e81ac'
-
-# Foreground color of the statusbar in private browsing mode.
-# Type: QssColor
-c.colors.statusbar.private.fg = '#e5e9f0'
-
-# Background color of the statusbar in private browsing mode.
-# Type: QssColor
-c.colors.statusbar.private.bg = '#4c566a'
-
-# Foreground color of the statusbar in command mode.
-# Type: QssColor
-c.colors.statusbar.command.fg = '#e5e9f0'
-
-# Background color of the statusbar in command mode.
-# Type: QssColor
-c.colors.statusbar.command.bg = '#434c5e'
-
-# Foreground color of the statusbar in private browsing + command mode.
-# Type: QssColor
-c.colors.statusbar.command.private.fg = '#e5e9f0'
-
-# Background color of the statusbar in private browsing + command mode.
-# Type: QssColor
-c.colors.statusbar.command.private.bg = '#434c5e'
-
-# Foreground color of the statusbar in caret mode.
-# Type: QssColor
-c.colors.statusbar.caret.fg = '#e5e9f0'
-
-# Background color of the statusbar in caret mode.
-# Type: QssColor
-c.colors.statusbar.caret.bg = '#b48ead'
-
-# Foreground color of the statusbar in caret mode with a selection.
-# Type: QssColor
-c.colors.statusbar.caret.selection.fg = '#e5e9f0'
-
-# Background color of the statusbar in caret mode with a selection.
-# Type: QssColor
-c.colors.statusbar.caret.selection.bg = '#b48ead'
-
-# Background color of the progress bar.
-# Type: QssColor
-c.colors.statusbar.progress.bg = '#e5e9f0'
-
-# Default foreground color of the URL in the statusbar.
-# Type: QssColor
-c.colors.statusbar.url.fg = '#e5e9f0'
-
-# Foreground color of the URL in the statusbar on error.
-# Type: QssColor
-c.colors.statusbar.url.error.fg = '#bf616a'
-
-# Foreground color of the URL in the statusbar for hovered links.
-# Type: QssColor
-c.colors.statusbar.url.hover.fg = '#88c0d0'
-
-# Foreground color of the URL in the statusbar on successful load
-# (http).
-# Type: QssColor
-c.colors.statusbar.url.success.http.fg = '#e5e9f0'
-
-# Foreground color of the URL in the statusbar on successful load
-# (https).
-# Type: QssColor
-c.colors.statusbar.url.success.https.fg = '#a3be8c'
-
-# Foreground color of the URL in the statusbar when there's a warning.
-# Type: QssColor
-c.colors.statusbar.url.warn.fg = '#d08770'
-
-# Background color of the tab bar.
-# Type: QssColor
-c.colors.tabs.bar.bg = '#4c566a'
-
-# Color for the tab indicator on errors.
-# Type: QtColor
-c.colors.tabs.indicator.error = '#bf616a'
-
-# Color gradient interpolation system for the tab indicator.
-# Type: ColorSystem
-# Valid values:
-#   - rgb: Interpolate in the RGB color system.
-#   - hsv: Interpolate in the HSV color system.
-#   - hsl: Interpolate in the HSL color system.
-#   - none: Don't show a gradient.
-c.colors.tabs.indicator.system = 'none'
-
-# Foreground color of unselected odd tabs.
-# Type: QtColor
-c.colors.tabs.odd.fg = '#e5e9f0'
-
-# Background color of unselected odd tabs.
-# Type: QtColor
-c.colors.tabs.odd.bg = '#4c566a'
-
-# Foreground color of unselected even tabs.
-# Type: QtColor
-c.colors.tabs.even.fg = '#e5e9f0'
-
-# Background color of unselected even tabs.
-# Type: QtColor
-c.colors.tabs.even.bg = '#4c566a'
-
-# Foreground color of selected odd tabs.
-# Type: QtColor
-c.colors.tabs.selected.odd.fg = '#e5e9f0'
-
-# Background color of selected odd tabs.
-# Type: QtColor
-c.colors.tabs.selected.odd.bg = '#2e3440'
-
-# Foreground color of selected even tabs.
-# Type: QtColor
-c.colors.tabs.selected.even.fg = '#e5e9f0'
-
-# Background color of selected even tabs.
-# Type: QtColor
-c.colors.tabs.selected.even.bg = '#2e3440'
-
-# Bindings for normal mode
-config.bind(',M', 'hint links spawn mpv {hint-url}')
-config.bind(',m', 'spawn mpv {url}')
-config.bind('<Ctrl+r>', 'config-cycle content.user_stylesheets "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-all-sites.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-duckduckgo.com.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-reddit.com.css"  ""')
+  # Autogenerated config.py
+  #
+  # NOTE: config.py is intended for advanced users who are comfortable
+  # with manually migrating the config file on qutebrowser upgrades. If
+  # you prefer, you can also configure qutebrowser using the
+  # :set/:bind/:config-* commands without having to write a config.py
+  # file.
+  #
+  # Documentation:
+  #   qute://help/configuring.html
+  #   qute://help/settings.html
+
+  # Change the argument to True to still load settings configured via autoconfig.yml
+  config.load_autoconfig(False)
+
+  # Which cookies to accept. With QtWebEngine, this setting also controls
+  # other features with tracking capabilities similar to those of cookies;
+  # including IndexedDB, DOM storage, filesystem API, service workers, and
+  # AppCache. Note that with QtWebKit, only `all` and `never` are
+  # supported as per-domain values. Setting `no-3rdparty` or `no-
+  # unknown-3rdparty` per-domain on QtWebKit will have the same effect as
+  # `all`. If this setting is used with URL patterns, the pattern gets
+  # applied to the origin/first party URL of the page making the request,
+  # not the request URL. With QtWebEngine 5.15.0+, paths will be stripped
+  # from URLs, so URL patterns using paths will not match. With
+  # QtWebEngine 5.15.2+, subdomains are additionally stripped as well, so
+  # you will typically need to set this setting for `example.com` when the
+  # cookie is set on `somesubdomain.example.com` for it to work properly.
+  # To debug issues with this setting, start qutebrowser with `--debug
+  # --logfilter network --debug-flag log-cookies` which will show all
+  # cookies being set.
+  # Type: String
+  # Valid values:
+  #   - all: Accept all cookies.
+  #   - no-3rdparty: Accept cookies from the same origin only. This is known to break some sites, such as GMail.
+  #   - no-unknown-3rdparty: Accept cookies from the same origin only, unless a cookie is already set for the domain. On QtWebEngine, this is the same as no-3rdparty.
+  #   - never: Don't accept cookies at all.
+  config.set('content.cookies.accept', 'all', 'chrome-devtools://*')
+
+  # Which cookies to accept. With QtWebEngine, this setting also controls
+  # other features with tracking capabilities similar to those of cookies;
+  # including IndexedDB, DOM storage, filesystem API, service workers, and
+  # AppCache. Note that with QtWebKit, only `all` and `never` are
+  # supported as per-domain values. Setting `no-3rdparty` or `no-
+  # unknown-3rdparty` per-domain on QtWebKit will have the same effect as
+  # `all`. If this setting is used with URL patterns, the pattern gets
+  # applied to the origin/first party URL of the page making the request,
+  # not the request URL. With QtWebEngine 5.15.0+, paths will be stripped
+  # from URLs, so URL patterns using paths will not match. With
+  # QtWebEngine 5.15.2+, subdomains are additionally stripped as well, so
+  # you will typically need to set this setting for `example.com` when the
+  # cookie is set on `somesubdomain.example.com` for it to work properly.
+  # To debug issues with this setting, start qutebrowser with `--debug
+  # --logfilter network --debug-flag log-cookies` which will show all
+  # cookies being set.
+  # Type: String
+  # Valid values:
+  #   - all: Accept all cookies.
+  #   - no-3rdparty: Accept cookies from the same origin only. This is known to break some sites, such as GMail.
+  #   - no-unknown-3rdparty: Accept cookies from the same origin only, unless a cookie is already set for the domain. On QtWebEngine, this is the same as no-3rdparty.
+  #   - never: Don't accept cookies at all.
+  config.set('content.cookies.accept', 'all', 'devtools://*')
+
+  # Value to send in the `Accept-Language` header. Note that the value
+  # read from JavaScript is always the global value.
+  # Type: String
+  config.set('content.headers.accept_language', '', 'https://matchmaker.krunker.io/*')
+
+  # User agent to send.  The following placeholders are defined:  *
+  # `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
+  # The underlying WebKit version (set to a fixed value   with
+  # QtWebEngine). * `{qt_key}`: "Qt" for QtWebKit, "QtWebEngine" for
+  # QtWebEngine. * `{qt_version}`: The underlying Qt version. *
+  # `{upstream_browser_key}`: "Version" for QtWebKit, "Chrome" for
+  # QtWebEngine. * `{upstream_browser_version}`: The corresponding
+  # Safari/Chrome version. * `{qutebrowser_version}`: The currently
+  # running qutebrowser version.  The default value is equal to the
+  # unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
+  # read from JavaScript is always the global value. With QtWebEngine
+  # between 5.12 and 5.14 (inclusive), changing the value exposed to
+  # JavaScript requires a restart.
+  # Type: FormatString
+  config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}', 'https://web.whatsapp.com/')
+
+  # User agent to send.  The following placeholders are defined:  *
+  # `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
+  # The underlying WebKit version (set to a fixed value   with
+  # QtWebEngine). * `{qt_key}`: "Qt" for QtWebKit, "QtWebEngine" for
+  # QtWebEngine. * `{qt_version}`: The underlying Qt version. *
+  # `{upstream_browser_key}`: "Version" for QtWebKit, "Chrome" for
+  # QtWebEngine. * `{upstream_browser_version}`: The corresponding
+  # Safari/Chrome version. * `{qutebrowser_version}`: The currently
+  # running qutebrowser version.  The default value is equal to the
+  # unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
+  # read from JavaScript is always the global value. With QtWebEngine
+  # between 5.12 and 5.14 (inclusive), changing the value exposed to
+  # JavaScript requires a restart.
+  # Type: FormatString
+  config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}; rv:90.0) Gecko/20100101 Firefox/90.0', 'https://accounts.google.com/*')
+
+  # User agent to send.  The following placeholders are defined:  *
+  # `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
+  # The underlying WebKit version (set to a fixed value   with
+  # QtWebEngine). * `{qt_key}`: "Qt" for QtWebKit, "QtWebEngine" for
+  # QtWebEngine. * `{qt_version}`: The underlying Qt version. *
+  # `{upstream_browser_key}`: "Version" for QtWebKit, "Chrome" for
+  # QtWebEngine. * `{upstream_browser_version}`: The corresponding
+  # Safari/Chrome version. * `{qutebrowser_version}`: The currently
+  # running qutebrowser version.  The default value is equal to the
+  # unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
+  # read from JavaScript is always the global value. With QtWebEngine
+  # between 5.12 and 5.14 (inclusive), changing the value exposed to
+  # JavaScript requires a restart.
+  # Type: FormatString
+  config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99 Safari/537.36', 'https://*.slack.com/*')
+
+  # Load images automatically in web pages.
+  # Type: Bool
+  config.set('content.images', True, 'chrome-devtools://*')
+
+  # Load images automatically in web pages.
+  # Type: Bool
+  config.set('content.images', True, 'devtools://*')
+
+  # Enable JavaScript.
+  # Type: Bool
+  config.set('content.javascript.enabled', True, 'chrome-devtools://*')
+
+  # Enable JavaScript.
+  # Type: Bool
+  config.set('content.javascript.enabled', True, 'devtools://*')
+
+  # Enable JavaScript.
+  # Type: Bool
+  config.set('content.javascript.enabled', True, 'chrome://*/*')
+
+  # Enable JavaScript.
+  # Type: Bool
+  config.set('content.javascript.enabled', True, 'qute://*/*')
+  config.set('auto_save.session', True)
+
+  # List of user stylesheet filenames to use.
+  # Type: List of File, or File
+  c.content.user_stylesheets = []
+
+  # Text color of the completion widget. May be a single color to use for
+  # all columns or a list of three colors, one for each column.
+  # Type: List of QtColor, or QtColor
+  c.colors.completion.fg = '#d8dee9'
+
+  # Background color of the completion widget for odd rows.
+  # Type: QssColor
+  c.colors.completion.odd.bg = '#3b4252'
+
+  # Background color of the completion widget for even rows.
+  # Type: QssColor
+  c.colors.completion.even.bg = '#3b4252'
+
+  # Foreground color of completion widget category headers.
+  # Type: QtColor
+  c.colors.completion.category.fg = '#e5e9f0'
+
+  # Background color of the completion widget category headers.
+  # Type: QssColor
+  c.colors.completion.category.bg = '#2e3440'
+
+  # Top border color of the completion widget category headers.
+  # Type: QssColor
+  c.colors.completion.category.border.top = '#2e3440'
+
+  # Bottom border color of the completion widget category headers.
+  # Type: QssColor
+  c.colors.completion.category.border.bottom = '#2e3440'
+
+  # Foreground color of the selected completion item.
+  # Type: QtColor
+  c.colors.completion.item.selected.fg = '#eceff4'
+
+  # Background color of the selected completion item.
+  # Type: QssColor
+  c.colors.completion.item.selected.bg = '#4c566a'
+
+  # Top border color of the selected completion item.
+  # Type: QssColor
+  c.colors.completion.item.selected.border.top = '#4c566a'
+
+  # Bottom border color of the selected completion item.
+  # Type: QssColor
+  c.colors.completion.item.selected.border.bottom = '#4c566a'
+
+  # Foreground color of the matched text in the completion.
+  # Type: QtColor
+  c.colors.completion.match.fg = '#ebcb8b'
+
+  # Color of the scrollbar handle in the completion view.
+  # Type: QssColor
+  c.colors.completion.scrollbar.fg = '#e5e9f0'
+
+  # Color of the scrollbar in the completion view.
+  # Type: QssColor
+  c.colors.completion.scrollbar.bg = '#3b4252'
+
+  # Background color for the download bar.
+  # Type: QssColor
+  c.colors.downloads.bar.bg = '#2e3440'
+
+  # Color gradient stop for download backgrounds.
+  # Type: QtColor
+  c.colors.downloads.stop.bg = '#b48ead'
+
+  # Color gradient interpolation system for download backgrounds.
+  # Type: ColorSystem
+  # Valid values:
+  #   - rgb: Interpolate in the RGB color system.
+  #   - hsv: Interpolate in the HSV color system.
+  #   - hsl: Interpolate in the HSL color system.
+  #   - none: Don't show a gradient.
+  c.colors.downloads.system.bg = 'none'
+
+  # Foreground color for downloads with errors.
+  # Type: QtColor
+  c.colors.downloads.error.fg = '#e5e9f0'
+
+  # Background color for downloads with errors.
+  # Type: QtColor
+  c.colors.downloads.error.bg = '#bf616a'
+
+  # Font color for hints.
+  # Type: QssColor
+  c.colors.hints.fg = '#2e3440'
+
+  # Background color for hints. Note that you can use a `rgba(...)` value
+  # for transparency.
+  # Type: QssColor
+  c.colors.hints.bg = '#ebcb8b'
+
+  # Font color for the matched part of hints.
+  # Type: QtColor
+  c.colors.hints.match.fg = '#5e81ac'
+
+  # Text color for the keyhint widget.
+  # Type: QssColor
+  c.colors.keyhint.fg = '#e5e9f0'
+
+  # Highlight color for keys to complete the current keychain.
+  # Type: QssColor
+  c.colors.keyhint.suffix.fg = '#ebcb8b'
+
+  # Background color of the keyhint widget.
+  # Type: QssColor
+  c.colors.keyhint.bg = '#3b4252'
+
+  # Foreground color of an error message.
+  # Type: QssColor
+  c.colors.messages.error.fg = '#e5e9f0'
+
+  # Background color of an error message.
+  # Type: QssColor
+  c.colors.messages.error.bg = '#bf616a'
+
+  # Border color of an error message.
+  # Type: QssColor
+  c.colors.messages.error.border = '#bf616a'
+
+  # Foreground color of a warning message.
+  # Type: QssColor
+  c.colors.messages.warning.fg = '#e5e9f0'
+
+  # Background color of a warning message.
+  # Type: QssColor
+  c.colors.messages.warning.bg = '#d08770'
+
+  # Border color of a warning message.
+  # Type: QssColor
+  c.colors.messages.warning.border = '#d08770'
+
+  # Foreground color of an info message.
+  # Type: QssColor
+  c.colors.messages.info.fg = '#e5e9f0'
+
+  # Background color of an info message.
+  # Type: QssColor
+  c.colors.messages.info.bg = '#88c0d0'
+
+  # Border color of an info message.
+  # Type: QssColor
+  c.colors.messages.info.border = '#88c0d0'
+
+  # Foreground color for prompts.
+  # Type: QssColor
+  c.colors.prompts.fg = '#e5e9f0'
+
+  # Border used around UI elements in prompts.
+  # Type: String
+  c.colors.prompts.border = '1px solid #2e3440'
+
+  # Background color for prompts.
+  # Type: QssColor
+  c.colors.prompts.bg = '#434c5e'
+
+  # Background color for the selected item in filename prompts.
+  # Type: QssColor
+  c.colors.prompts.selected.bg = '#4c566a'
+
+  # Foreground color of the statusbar.
+  # Type: QssColor
+  c.colors.statusbar.normal.fg = '#e5e9f0'
+
+  # Background color of the statusbar.
+  # Type: QssColor
+  c.colors.statusbar.normal.bg = '#2e3440'
+
+  # Foreground color of the statusbar in insert mode.
+  # Type: QssColor
+  c.colors.statusbar.insert.fg = '#3b4252'
+
+  # Background color of the statusbar in insert mode.
+  # Type: QssColor
+  c.colors.statusbar.insert.bg = '#a3be8c'
+
+  # Foreground color of the statusbar in passthrough mode.
+  # Type: QssColor
+  c.colors.statusbar.passthrough.fg = '#e5e9f0'
+
+  # Background color of the statusbar in passthrough mode.
+  # Type: QssColor
+  c.colors.statusbar.passthrough.bg = '#5e81ac'
+
+  # Foreground color of the statusbar in private browsing mode.
+  # Type: QssColor
+  c.colors.statusbar.private.fg = '#e5e9f0'
+
+  # Background color of the statusbar in private browsing mode.
+  # Type: QssColor
+  c.colors.statusbar.private.bg = '#4c566a'
+
+  # Foreground color of the statusbar in command mode.
+  # Type: QssColor
+  c.colors.statusbar.command.fg = '#e5e9f0'
+
+  # Background color of the statusbar in command mode.
+  # Type: QssColor
+  c.colors.statusbar.command.bg = '#434c5e'
+
+  # Foreground color of the statusbar in private browsing + command mode.
+  # Type: QssColor
+  c.colors.statusbar.command.private.fg = '#e5e9f0'
+
+  # Background color of the statusbar in private browsing + command mode.
+  # Type: QssColor
+  c.colors.statusbar.command.private.bg = '#434c5e'
+
+  # Foreground color of the statusbar in caret mode.
+  # Type: QssColor
+  c.colors.statusbar.caret.fg = '#e5e9f0'
+
+  # Background color of the statusbar in caret mode.
+  # Type: QssColor
+  c.colors.statusbar.caret.bg = '#b48ead'
+
+  # Foreground color of the statusbar in caret mode with a selection.
+  # Type: QssColor
+  c.colors.statusbar.caret.selection.fg = '#e5e9f0'
+
+  # Background color of the statusbar in caret mode with a selection.
+  # Type: QssColor
+  c.colors.statusbar.caret.selection.bg = '#b48ead'
+
+  # Background color of the progress bar.
+  # Type: QssColor
+  c.colors.statusbar.progress.bg = '#e5e9f0'
+
+  # Default foreground color of the URL in the statusbar.
+  # Type: QssColor
+  c.colors.statusbar.url.fg = '#e5e9f0'
+
+  # Foreground color of the URL in the statusbar on error.
+  # Type: QssColor
+  c.colors.statusbar.url.error.fg = '#bf616a'
+
+  # Foreground color of the URL in the statusbar for hovered links.
+  # Type: QssColor
+  c.colors.statusbar.url.hover.fg = '#88c0d0'
+
+  # Foreground color of the URL in the statusbar on successful load
+  # (http).
+  # Type: QssColor
+  c.colors.statusbar.url.success.http.fg = '#e5e9f0'
+
+  # Foreground color of the URL in the statusbar on successful load
+  # (https).
+  # Type: QssColor
+  c.colors.statusbar.url.success.https.fg = '#a3be8c'
+
+  # Foreground color of the URL in the statusbar when there's a warning.
+  # Type: QssColor
+  c.colors.statusbar.url.warn.fg = '#d08770'
+
+  # Background color of the tab bar.
+  # Type: QssColor
+  c.colors.tabs.bar.bg = '#4c566a'
+
+  # Color for the tab indicator on errors.
+  # Type: QtColor
+  c.colors.tabs.indicator.error = '#bf616a'
+
+  # Color gradient interpolation system for the tab indicator.
+  # Type: ColorSystem
+  # Valid values:
+  #   - rgb: Interpolate in the RGB color system.
+  #   - hsv: Interpolate in the HSV color system.
+  #   - hsl: Interpolate in the HSL color system.
+  #   - none: Don't show a gradient.
+  c.colors.tabs.indicator.system = 'none'
+
+  # Foreground color of unselected odd tabs.
+  # Type: QtColor
+  c.colors.tabs.odd.fg = '#e5e9f0'
+
+  # Background color of unselected odd tabs.
+  # Type: QtColor
+  c.colors.tabs.odd.bg = '#4c566a'
+
+  # Foreground color of unselected even tabs.
+  # Type: QtColor
+  c.colors.tabs.even.fg = '#e5e9f0'
+
+  # Background color of unselected even tabs.
+  # Type: QtColor
+  c.colors.tabs.even.bg = '#4c566a'
+
+  # Foreground color of selected odd tabs.
+  # Type: QtColor
+  c.colors.tabs.selected.odd.fg = '#e5e9f0'
+
+  # Background color of selected odd tabs.
+  # Type: QtColor
+  c.colors.tabs.selected.odd.bg = '#2e3440'
+
+  # Foreground color of selected even tabs.
+  # Type: QtColor
+  c.colors.tabs.selected.even.fg = '#e5e9f0'
+
+  # Background color of selected even tabs.
+  # Type: QtColor
+  c.colors.tabs.selected.even.bg = '#2e3440'
+
+  # Bindings for normal mode
+  config.bind(',M', 'hint links spawn mpv {hint-url}')
+  config.bind(',m', 'spawn mpv {url}')
+  config.bind('<Ctrl+r>', 'config-cycle content.user_stylesheets "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-all-sites.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-duckduckgo.com.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-reddit.com.css"  ""')
 #+end_src
 * rofi
 ** exac
@@ -2623,47 +2634,47 @@ lightdm
 * scripts
 ** audioctl
 #+begin_src sh :tangle ~/.local/bin/audioctl :tangle-mode (identity #o555)
-getDefaultSinkName() {
-    pacmd stat | awk -F": " '/^Default sink name: /{print $2}'
-}
+  getDefaultSinkName() {
+      pacmd stat | awk -F": " '/^Default sink name: /{print $2}'
+  }
 
-getDefaultSinkVol() {
-    pacmd list-sinks |
-        awk '/^\s+name: /{indefault = $2 == "<'$(getdefaultsinkname)'>"}
-            /^\s+volume: / && indefault {print $5; exit}'
-}
+  getDefaultSinkVol() {
+      pacmd list-sinks |
+	  awk '/^\s+name: /{indefault = $2 == "<'$(getdefaultsinkname)'>"}
+	      /^\s+volume: / && indefault {print $5; exit}'
+  }
 
-toggleMuteDefaultSink() {
-    pactl set-sink-mute $(getDefaultSinkName) toggle
-}
+  toggleMuteDefaultSink() {
+      pactl set-sink-mute $(getDefaultSinkName) toggle
+  }
 
-raiseDefaultSinkVol() {
-    pactl set-sink-volume $(getDefaultSinkName) +5%
-}
+  raiseDefaultSinkVol() {
+      pactl set-sink-volume $(getDefaultSinkName) +5%
+  }
 
-lowerDefaultSinkVol() {
-    pactl set-sink-volume $(getDefaultSinkName) -5%
-}
+  lowerDefaultSinkVol() {
+      pactl set-sink-volume $(getDefaultSinkName) -5%
+  }
 
-for i in "$@"; do
-    case $i in
-        -m|--mute=*)
-            toggleMuteDefaultSink
-            shift # past argument=value
-            ;;
-        -r|--raise)
-            raiseDefaultSinkVol
-            shift # past argument=value
-            ;;
-        -l|--lower)
-            lowerDefaultSinkVol
-            shift # past argument=value
-            ;;
-        *)
-            # unknown option
-            ;;
-    esac
-done
+  for i in "$@"; do
+      case $i in
+	  -m|--mute=*)
+	      toggleMuteDefaultSink
+	      shift # past argument=value
+	      ;;
+	  -r|--raise)
+	      raiseDefaultSinkVol
+	      shift # past argument=value
+	      ;;
+	  -l|--lower)
+	      lowerDefaultSinkVol
+	      shift # past argument=value
+	      ;;
+	  ,*)
+	      # unknown option
+	      ;;
+      esac
+  done
 #+end_src
 ** fm6000
 The Installation for fm6000 (no tangle)
@@ -2700,20 +2711,20 @@ starship
 * tmux
 I do not use tmux at the moment (=~/.tmux.conf=)
 #+begin_src conf :tangle no
-# split panes using | and -
-bind | split-window -h
-bind - split-window -v
-unbind '"'
-unbind %
+  # split panes using | and -
+  bind | split-window -h
+  bind - split-window -v
+  unbind '"'
+  unbind %
 
-# activate mouse wheel
-setw -g mouse on
+  # activate mouse wheel
+  setw -g mouse on
 
-# reload config file
-bind r source-file ~/.tmux.conf
+  # reload config file
+  bind r source-file ~/.tmux.conf
 
-# terminal color
-set -g default-terminal "screen-256color"
+  # terminal color
+  set -g default-terminal "screen-256color"
 
 #+end_src
 
@@ -2723,81 +2734,81 @@ set -g default-terminal "screen-256color"
 #+end_example
 * vim
 #+begin_src sh :tangle ~/.vimrc
-"  Default ~/.vimrc for vagrant user on Arch Linux.
+  "  Default ~/.vimrc for vagrant user on Arch Linux.
 
-" Vundle
-" {{{
-set nocompatible              " be iMproved, required
-filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+  " Vundle
+  " {{{
+  set nocompatible              " be iMproved, required
+  filetype off                  " required
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
 
-" Let Vundle manage itself.
-Plugin 'gmarik/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-" Color schemes
-Plugin 'tomasr/molokai'
-Plugin 'chriskempson/base16-vim'
-Plugin 'dracula/vim', { 'name': 'dracula' }
+  " Let Vundle manage itself.
+  Plugin 'gmarik/Vundle.vim'
+  Plugin 'vim-airline/vim-airline'
+  " Color schemes
+  Plugin 'tomasr/molokai'
+  Plugin 'chriskempson/base16-vim'
+  Plugin 'dracula/vim', { 'name': 'dracula' }
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" }}}
+  " All of your Plugins must be added before the following line
+  call vundle#end()            " required
+  filetype plugin indent on    " required
+  " }}}
 
-" Airline
-" {{{
-let g:airline_powerline_fonts = 1
-set laststatus=2
-" }}}
+  " Airline
+  " {{{
+  let g:airline_powerline_fonts = 1
+  set laststatus=2
+  " }}}
 
-" Colors
-" {{{
-set t_Co=256
-colorscheme dracula
-syntax enable                   "syntax highlighting
-" }}}
+       " Colors
+  " {{{
+	 set t_Co=256
+	 colorscheme dracula
+	 syntax enable                   "syntax highlighting
+  " }}}
 
-" UI
-" {{{
-set ruler                       "show the cursor position all the time
-set showcmd                     "display incomplete commands
-set nu                          "show line numbers
-set cmdheight=1                 "The commandbar height
-set splitbelow                  " Horizontal splits open below current file
-set splitright                  " Vertical splits open to the right of the current file
-set wildmode=longest,list       " Pressing <Tab> shows command suggestions similar to pressing <Tab> in bash 
-" }}}
+       " UI
+  " {{{
+	 set ruler                       "show the cursor position all the time
+  set showcmd                     "display incomplete commands
+	 set nu                          "show line numbers
+  set cmdheight=1                 "The commandbar height
+	 set splitbelow                  " Horizontal splits open below current file
+  set splitright                  " Vertical splits open to the right of the current file
+	 set wildmode=longest,list       " Pressing <Tab> shows command suggestions similar to pressing <Tab> in bash 
+  " }}}
 
-" Moving
-" {{{
-set backspace=indent,eol,start  "allow backspacing over everything in insert mode
-" }}}
+       " Moving
+  " {{{
+	 set backspace=indent,eol,start  "allow backspacing over everything in insert mode
+  " }}}
 
-" Search
-" {{{
-set incsearch                   "do incremental searching
-set hlsearch                    "highlight search terms
-set ic                          "Ignore Case during searches
-set showmatch                   "Show matching bracets when text indicator is over them
-" }}}
+       " Search
+  " {{{
+	 set incsearch                   "do incremental searching
+  set hlsearch                    "highlight search terms
+	 set ic                          "Ignore Case during searches
+  set showmatch                   "Show matching bracets when text indicator is over them
+	 " }}}
 
-" Whitespaces
-" {{{
-set expandtab                   "use spaces instead of tabs
-set tabstop=4                   "insert 4 spaces whenever the tab key is pressed
-set shiftwidth=4                "set indentation to 4 spaces
-set autoindent                  "start new line at the same indentation level
-" }}}
+  " Whitespaces
+	 " {{{
+  set expandtab                   "use spaces instead of tabs
+	 set tabstop=4                   "insert 4 spaces whenever the tab key is pressed
+  set shiftwidth=4                "set indentation to 4 spaces
+	 set autoindent                  "start new line at the same indentation level
+  " }}}
 
 
-" Misc
-" {{{
-set history=50                  "keep 50 lines of command line history
-set nobackup                    " do not keep backup files, it's 70's style cluttering
-set noswapfile                  " do not write annoying intermediate swap files,
-set ttimeoutlen=50              "Solves: there is a pause when leaving insert mode
-" }}}
+       " Misc
+  " {{{
+	 set history=50                  "keep 50 lines of command line history
+  set nobackup                    " do not keep backup files, it's 70's style cluttering
+	 set noswapfile                  " do not write annoying intermediate swap files,
+  set ttimeoutlen=50              "Solves: there is a pause when leaving insert mode
+  " }}}
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
@@ -2806,9 +2817,9 @@ vim
 
 * xmodmap
 #+begin_src conf :tangle ~/.config/xmodmap/xmodmap.conf
-remove Lock = Caps_Lock
-keysym Caps_Lock = Control_L
-add Control = Control_L
+  remove Lock = Caps_Lock
+  keysym Caps_Lock = Control_L
+  add Control = Control_L
 #+end_src
 
 * xmonad
@@ -2893,66 +2904,66 @@ myFocusedBorderColor = "#50fa7b"
 --
 myKeys :: [(String, X ())]
 myKeys =
-        [
+	[
     -- Xmonad
-          ("M-C-r", spawn "xmonad --recompile && xmonad --restart")      -- Recompiles xmonad
-        , ("M-S-r", spawn "xmonad --restart")                            -- Restarts xmonad
-        , ("M-S-q", io exitSuccess)                                      -- Quits xmonad
-        , ("M-<Return>", spawn (myTerminal))
+	  ("M-C-r", spawn "xmonad --recompile && xmonad --restart")      -- Recompiles xmonad
+	, ("M-S-r", spawn "xmonad --restart")                            -- Restarts xmonad
+	, ("M-S-q", io exitSuccess)                                      -- Quits xmonad
+	, ("M-<Return>", spawn (myTerminal))
 
     -- Window
-        , ("M-S-c", kill)
-        , ("M-S-a", killAll)                         -- Kill all windows on current workspace
+	, ("M-S-c", kill)
+	, ("M-S-a", killAll)                         -- Kill all windows on current workspace
 
     -- Layout
-        , ("M-<Space>", sendMessage NextLayout)     -- Switch to next layout
-        , ("M-n", refresh)                          -- Resize viewed windows to the correct size
-        , ("M-<Tab>", windows W.focusDown)          -- Move focus to the next window
-        , ("M-j", windows W.focusDown)              -- Move focus to the next window
-        , ("M-k", windows W.focusUp  )              -- Move focus to the previous window
-        , ("M-m", windows W.focusMaster  )          -- Move focus to the master window
-        , ("M-S-<Return>", windows W.swapMaster)    -- Swap the focused window and the master window
-        , ("M-S-j", windows W.swapDown  )           -- Swap the focused window with the next window
-        , ("M-S-k", windows W.swapUp    )           -- Swap the focused window with the previous window
-        , ("M-h", sendMessage Shrink)               -- Shrink the master area
-        , ("M-l", sendMessage Expand)               -- Expand the master area
-        , ("M-t", withFocused $ windows . W.sink)   -- Push window back into tiling
-        , ("M-,", sendMessage (IncMasterN 1))       -- Increment the number of windows in the master area
-        , ("M-.", sendMessage (IncMasterN (-1)))    -- Deincrement the number of windows in the master area
+	, ("M-<Space>", sendMessage NextLayout)     -- Switch to next layout
+	, ("M-n", refresh)                          -- Resize viewed windows to the correct size
+	, ("M-<Tab>", windows W.focusDown)          -- Move focus to the next window
+	, ("M-j", windows W.focusDown)              -- Move focus to the next window
+	, ("M-k", windows W.focusUp  )              -- Move focus to the previous window
+	, ("M-m", windows W.focusMaster  )          -- Move focus to the master window
+	, ("M-S-<Return>", windows W.swapMaster)    -- Swap the focused window and the master window
+	, ("M-S-j", windows W.swapDown  )           -- Swap the focused window with the next window
+	, ("M-S-k", windows W.swapUp    )           -- Swap the focused window with the previous window
+	, ("M-h", sendMessage Shrink)               -- Shrink the master area
+	, ("M-l", sendMessage Expand)               -- Expand the master area
+	, ("M-t", withFocused $ windows . W.sink)   -- Push window back into tiling
+	, ("M-,", sendMessage (IncMasterN 1))       -- Increment the number of windows in the master area
+	, ("M-.", sendMessage (IncMasterN (-1)))    -- Deincrement the number of windows in the master area
 
     -- Menus
-        , ("M-p s", spawn "rofi -show drun")
-        , ("M-p e", spawn "/usr/bin/env bash ~/.xmonad/rofi_power") -- Run power menu
-        , ("M-p p", spawn "/usr/bin/passmenu -i")
+	, ("M-p s", spawn "rofi -show drun")
+	, ("M-p e", spawn "/usr/bin/env bash ~/.xmonad/rofi_power") -- Run power menu
+	, ("M-p p", spawn "/usr/bin/passmenu -i")
     -- Emacs
-        , ("M-d e", spawn "emacsclient -c -a ''")                           -- start emacs
-        , ("M-d b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
-        , ("M-d d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
-        , ("M-d m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
-        , ("M-d s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
-        , ("M-d a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
-        , ("M-d c", spawn "emacsclient -c -a '' --eval '(org-capture)'")    -- open org-capture
+	, ("M-d e", spawn "emacsclient -c -a ''")                           -- start emacs
+	, ("M-d b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")        -- list emacs buffers
+	, ("M-d d", spawn "emacsclient -c -a '' --eval '(dired nil)'")      -- dired emacs file manager
+	, ("M-d m", spawn "emacsclient -c -a '' --eval '(mu4e)'")           -- mu4e emacs email client
+	, ("M-d s", spawn "emacsclient -c -a '' --eval '(eshell)'")         -- eshell within emacs
+	, ("M-d a", spawn "emacsclient -c -a '' --eval '(org-agenda)'")     -- open org agenda
+	, ("M-d c", spawn "emacsclient -c -a '' --eval '(org-capture)'")    -- open org-capture
 
     -- Applications
-        , ("<F12>", spawn "pcmanfm")                          -- Run filemanager
-        , ("M-S-b", spawn "bash /home/liolin/bin/bar-toggle") -- Toggle the status bar (polybar)
+	, ("<F12>", spawn "pcmanfm")                          -- Run filemanager
+	, ("M-S-b", spawn "bash /home/liolin/bin/bar-toggle") -- Toggle the status bar (polybar)
 
     -- Multimedia Keys
-        , ("<XF86AudioMute>", spawn "pamixer --toggle-mute")        -- Toggle mute
-        , ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 5")  -- Lower Volume
-        , ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 5")  -- Raise Volume
-        , ("<XF86AudioMicMute>", spawn "amixer set Capture toggle") -- Toggle microphone
-        , ("<XF86AudioPlay>", spawn "playerctl play-pause")         -- Toggle pause
-        , ("<XF86AudioPrev>", spawn "playerctl previous")           -- Skip backwards in playlist
-        , ("<XF86AudioNext>", spawn "playerctl next")               -- Skip forwards in playlist
+	, ("<XF86AudioMute>", spawn "pamixer --toggle-mute")        -- Toggle mute
+	, ("<XF86AudioLowerVolume>", spawn "pamixer --decrease 5")  -- Lower Volume
+	, ("<XF86AudioRaiseVolume>", spawn "pamixer --increase 5")  -- Raise Volume
+	, ("<XF86AudioMicMute>", spawn "amixer set Capture toggle") -- Toggle microphone
+	, ("<XF86AudioPlay>", spawn "playerctl play-pause")         -- Toggle pause
+	, ("<XF86AudioPrev>", spawn "playerctl previous")           -- Skip backwards in playlist
+	, ("<XF86AudioNext>", spawn "playerctl next")               -- Skip forwards in playlist
 
-        , ("<XF86MonBrightnessUp>", spawn "brightnessctl 5%+")
-        , ("<XF86MonBrightnessDown>", spawn "brightnessctl 5%-")
+	, ("<XF86MonBrightnessUp>", spawn "brightnessctl 5%+")
+	, ("<XF86MonBrightnessDown>", spawn "brightnessctl 5%-")
 
-        , ("<XF86WLAN>", spawn "nmcli radio wifi on")
+	, ("<XF86WLAN>", spawn "nmcli radio wifi on")
 
-        , ("<Print>", spawn "sleep 0.2; /home/liolin/bin/screenshot")
-        ]
+	, ("<Print>", spawn "sleep 0.2; /home/liolin/bin/screenshot")
+	]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -2961,14 +2972,14 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster))
+				       >> windows W.shiftMaster))
 
     -- mod-button2, Raise the window to the top of the stack
     , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
 
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
-                                       >> windows W.shiftMaster))
+				       >> windows W.shiftMaster))
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
@@ -3058,8 +3069,8 @@ myLogHook dbus = def
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus str = do
     let signal = (D.signal objectPath interfaceName memberName) {
-            D.signalBody = [D.toVariant $ UTF8.decodeString str]
-        }
+	    D.signalBody = [D.toVariant $ UTF8.decodeString str]
+	}
     D.emit dbus signal
   where
     objectPath = D.objectPath_ "/org/xmonad/Log"
@@ -3104,24 +3115,24 @@ main = do
 --
 defaults = def {
       -- simple stuff
-        terminal           = myTerminal,
-        focusFollowsMouse  = myFocusFollowsMouse,
-        clickJustFocuses   = myClickJustFocuses,
-        borderWidth        = myBorderWidth,
-        modMask            = myModMask,
-        workspaces         = myWorkspaces,
-        normalBorderColor  = myNormalBorderColor,
-        focusedBorderColor = myFocusedBorderColor,
+	terminal           = myTerminal,
+	focusFollowsMouse  = myFocusFollowsMouse,
+	clickJustFocuses   = myClickJustFocuses,
+	borderWidth        = myBorderWidth,
+	modMask            = myModMask,
+	workspaces         = myWorkspaces,
+	normalBorderColor  = myNormalBorderColor,
+	focusedBorderColor = myFocusedBorderColor,
 
       -- key bindings
-        mouseBindings      = myMouseBindings,
+	mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
-        layoutHook         = myLayout,
-        manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
-        --logHook            = myLogHook,
-        startupHook        = myStartupHook
+	layoutHook         = myLayout,
+	manageHook         = myManageHook,
+	handleEventHook    = myEventHook,
+	--logHook            = myLogHook,
+	startupHook        = myStartupHook
     }
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.
@@ -3187,54 +3198,54 @@ Config {
        , position = TopW L 90
        , iconRoot = "/home/liolin/.xmonad/xpm/" 
        , commands = [ Run Cpu            [ "--template", "<fc=#a9a1e1><fn=1></fn></fc> <total>%"
-                                         , "--Low","3"
-                                         , "--High","50"
-                                         , "--low","#bbc2cf"
-                                         , "--normal","#bbc2cf"
-                                         , "--high","#fb4934"] 50
+					 , "--Low","3"
+					 , "--High","50"
+					 , "--low","#bbc2cf"
+					 , "--normal","#bbc2cf"
+					 , "--high","#fb4934"] 50
 
-                    , Run Memory         ["-t","<fc=#51afef><fn=1></fn></fc> <usedratio>%"
-                                         ,"-H","80"
-                                         ,"-L","10"
-                                         ,"-l","#bbc2cf"
-                                         ,"-n","#bbc2cf"
-                                         ,"-h","#fb4934"] 50
+		    , Run Memory         ["-t","<fc=#51afef><fn=1></fn></fc> <usedratio>%"
+					 ,"-H","80"
+					 ,"-L","10"
+					 ,"-l","#bbc2cf"
+					 ,"-n","#bbc2cf"
+					 ,"-h","#fb4934"] 50
 
-                    , Run Date           "<fc=#ECBE7B><fn=1></fn></fc> %a %d.%m.%Y - %H:%M" "date" 300
+		    , Run Date           "<fc=#ECBE7B><fn=1></fn></fc> %a %d.%m.%Y - %H:%M" "date" 300
 
-                    , Run CoreTemp       ["-t", "<fc=#CDB464><fn=1></fn></fc> <core0>°"
-                                         , "-L", "30"
-                                         , "-H", "75"
-                                         , "-l", "lightblue"
-                                         , "-n", "#bbc2cf"
-                                         , "-h", "#aa4450"] 50
-                     
-                    -- , Run Alsa           "default" "Master"
-                    --                      [ "--"
-                    --                                , "--alsactl=/usr/bin/alsactl"
-                    --                      ]
-                   
-                    , Run BatteryP       [ "BAT0" ]
-                                         [ "--template" , "<fc=#B1DE76><fn=1></fn></fc> <acstatus>"
-                                         , "--Low"      , "10"        -- units: %
-                                         , "--High"     , "80"        -- units: %
-                                         , "--low"      , "#fb4934" -- #ff5555
-                                         , "--normal"   , "#bbc2cf"
-                                         , "--high"     , "#98be65"
+		    , Run CoreTemp       ["-t", "<fc=#CDB464><fn=1></fn></fc> <core0>°"
+					 , "-L", "30"
+					 , "-H", "75"
+					 , "-l", "lightblue"
+					 , "-n", "#bbc2cf"
+					 , "-h", "#aa4450"] 50
+		     
+		    -- , Run Alsa           "default" "Master"
+		    --                      [ "--"
+		    --                                , "--alsactl=/usr/bin/alsactl"
+		    --                      ]
+		   
+		    , Run BatteryP       [ "BAT0" ]
+					 [ "--template" , "<fc=#B1DE76><fn=1></fn></fc> <acstatus>"
+					 , "--Low"      , "10"        -- units: %
+					 , "--High"     , "80"        -- units: %
+					 , "--low"      , "#fb4934" -- #ff5555
+					 , "--normal"   , "#bbc2cf"
+					 , "--high"     , "#98be65"
 
-                                         , "--" -- battery specific options
-                                                   -- discharging status
-                                                   , "-o"   , "<left>% (<timeleft>)"
-                                                   -- AC "on" status
-                                                   , "-O"   , "<left>% (<fc=#98be65>Charging</fc>)" -- 50fa7b
-                                                   -- charged status
-                                                   , "-i"   , "<fc=#98be65>Charged</fc>"
-                                         ] 50
+					 , "--" -- battery specific options
+						   -- discharging status
+						   , "-o"   , "<left>% (<timeleft>)"
+						   -- AC "on" status
+						   , "-O"   , "<left>% (<fc=#98be65>Charging</fc>)" -- 50fa7b
+						   -- charged status
+						   , "-i"   , "<fc=#98be65>Charged</fc>"
+					 ] 50
 
-                    -- , Run Com            "/usr/local/bin/xkblayout-state" ["print \"%s-%e\""] "kbx" 600
-                    , Run Com "/home/liolin/.xmonad/cmus" [] "cmus" 300
-                    , Run StdinReader
-                    ]
+		    -- , Run Com            "/usr/local/bin/xkblayout-state" ["print \"%s-%e\""] "kbx" 600
+		    , Run Com "/home/liolin/.xmonad/cmus" [] "cmus" 300
+		    , Run StdinReader
+		    ]
        , sepChar = "%"
        , alignSep = "}{"
        , template = "<icon=haskell_20.xpm/> %StdinReader% }{ %cmus% | %cpu% | %memory% | %battery% | %date%  |" -- #69DFFA
