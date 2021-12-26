@@ -1636,7 +1636,7 @@ polybar
 #+end_example
 
 * Autostart
-#+begin_src sh :tangle ~/.config/autostart.sh
+#+begin_src sh :tangle ~/.config/autostart.sh :tangle-mode (identity #o555)
   /usr/bin/nm-applet &
   /usr/bin/picom --daemon --config ~/.config/picom.conf
   /usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle
@@ -1745,7 +1745,7 @@ keys = [
     ## Menus
     KeyChord([mod], "p", [
         Key([], "e",
-            lazy.spawn("/home/liolin/.dmscripts/rofi_power")),
+            lazy.spawn(format("{}/.local/bin/exac", os.environ.get("HOME")))),
         Key([], "p",
             lazy.spawn("/usr/bin/passmenu -i"))
     ]),
@@ -2560,8 +2560,8 @@ config.bind(',m', 'spawn mpv {url}')
 config.bind('<Ctrl+r>', 'config-cycle content.user_stylesheets "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-all-sites.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-duckduckgo.com.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-reddit.com.css"  ""')
 #+end_src
 * rofi
-** exit
-#+begin_src sh :tangle ~/.local/bin/exit :tangle-mode (identity #o555)
+** exac
+#+begin_src sh :tangle ~/.local/bin/exac :tangle-mode (identity #o555)
   lock() {
       dm-tool lock
   }
