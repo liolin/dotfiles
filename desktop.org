@@ -1,6 +1,8 @@
 #+TITLE: Dekstop Configuration of liolin
 #+PROPERTY: header-args :mkdirp yes
 #+PROPERTY: header-args:sh :tangle-mode (identity #o555)
+#+PROPERTY: header-args:conf :tangle-mode (identity #o444)
+#+PROPERTY: header-args:yaml :tangle-mode (identity #o444)
 
 
 
@@ -37,6 +39,79 @@ They are included over =noweb= in the =profile= files for the specific shells.
   export LEDGER_FILE=~/finance/2021.journal
   export LANG=en_US.UTF-8
 #+end_src
+
+* Alacritty
+** Top Level
+#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+background_opacity: 0.85
+#+end_src
+** Font
+#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+  font:
+    normal:
+      family: Fira Code Nerd Font
+      style: Regular
+
+    bold:
+      style: Bold
+
+    italic:
+      style: Italic
+
+    bold_italic:
+      style: Bold Italic
+
+    size: 9.0
+#+end_src
+** Colors
+I use a the dracula theme from [[https://draculatheme.com/alacritty][here]]. 
+#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+  colors:
+    primary:
+      background: '0x282a36'
+      foreground: '0xf8f8f2'
+
+    cursor:
+      text: '0x44475a'
+      cursor: '0xf8f8f2'
+
+    normal:
+      black:   '0x000000'
+      red:     '0xff5555'
+      green:   '0x50fa7b'
+      yellow:  '0xf1fa8c'
+      blue:    '0xbd93f9'
+      magenta: '0xff79c6'
+      cyan:    '0x8be9fd'
+      white:   '0xbfbfbf'
+
+    bright:
+      black:   '0x4d4d4d'
+      red:     '0xff6e67'
+      green:   '0x5af78e'
+      yellow:  '0xf4f99d'
+      blue:    '0xcaa9fa'
+      magenta: '0xff92d0'
+      cyan:    '0x9aedfe'
+      white:   '0xe6e6e6'
+
+    dim:
+      black:   '0x14151b'
+      red:     '0xff2222'
+      green:   '0x1ef956'
+      yellow:  '0xebf85b'
+      blue:    '0x4d5b86'
+      magenta: '0xff46b0'
+      cyan:    '0x59dffc'
+      white:   '0xe6e6d1'
+
+    indexed_colors: []
+#+end_src
+
+** Required Packages
+#+begin_example
+alacritty
+#+end_example
 
 * Bash
 ** bash_profile
@@ -101,6 +176,207 @@ rsync
 starship
 fzf
 (miniconda)
+#+end_example
+
+* cmus
+#+begin_src python :tangle no
+#!/usr/bin/env python
+
+import sys
+import gi
+
+cacheDir = "/home/liolin/.cache/cmus-notify/cover"
+
+def parseCmusArgs():
+    length = len(sys.argv)
+    args = {};
+    for i in range(1, length-1, 2):
+        args[sys.argv[i]] = sys.argv[i+1]
+
+    return args
+
+
+def calculateDuration():
+    pass
+
+def extractImage(inputFile, artist, album, title):
+    import ffmpeg
+    import os
+
+    outputFile = "%s/%s-%s-%s.png" % (cacheDir, artist, album, title);
+    if not os.path.isfile(outputFile):
+        stream = ffmpeg.input(inputFile)
+        stream = ffmpeg.output(stream, outputFile)
+        ffmpeg.run(stream)
+    return outputFile
+
+
+def sendNotification(title, outputString = '', cover='/home/liolin/.cache/cmus-notify/cover/default.png'):
+    gi.require_version('Notify', '0.7')
+    from gi.repository import Notify, GdkPixbuf
+    Notify.init("cmus")
+    cmusNotification = Notify.Notification.new(title, outputString)
+    image = GdkPixbuf.Pixbuf.new_from_file(cover)
+    cmusNotification.set_image_from_pixbuf(image)
+    cmusNotification.show()
+    Notify.uninit()
+
+def main():
+    args = parseCmusArgs()
+
+    title = ""
+    message = ""
+
+    if "file" in args:
+        cover = extractImage(args["file"], args["artist"], args["album"], args["title"])
+        title = "[%s]" % args["status"]
+        message = "%s\n%s - %s" % (args["title"], args["artist"], args["album"])
+
+    elif "url" in args:
+        title = "[%s]" % args["status"]
+        message = "%s - %s" % (args["url"], args["title"])
+
+    else:
+        title = "[%s]" % args["status"]
+        message = ""
+
+    sendNotification(title, message, cover)
+
+if __name__ == "__main__":
+    main()
+#+end_src
+
+** Required Packages
+#+begin_example
+cmus
+#+end_example
+
+* Conky
+#+begin_src conf :tangle ~/.config/conky/conky.conf
+--[[
+#=====================================================================================
+#                               XMonad Conky
+#======================================================================================
+]]
+
+conky.config = {
+	--Various settings
+	background = true,			-- forked to background
+	cpu_avg_samples = 2,			-- The number of samples to average for CPU monitoring.
+	diskio_avg_samples = 10,		-- The number of samples to average for disk I/O monitoring.
+	double_buffer = true,			-- Use the Xdbe extension? (eliminates flicker)
+	if_up_strictness = 'address',		-- how strict if testing interface is up - up, link or address
+	net_avg_samples = 2,			-- The number of samples to average for net data
+	no_buffers = true,			-- Subtract (file system) buffers from used memory?
+	temperature_unit = 'celsius',		-- fahrenheit or celsius
+	text_buffer_size = 2048,		-- size of buffer for display of content of large variables - default 256
+	update_interval = 1,			-- update interval
+	--imlib_cache_size = 0,                 -- disable image cache to get a new spotify cover per song
+
+	alignment = 'bottom_right',	        -- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
+	gap_x = 50,				-- pixels between right or left border
+	gap_y = 50,				-- pixels between bottom or left border
+
+	-- Size
+    	minimum_height = 200,			-- minimum height of window
+	minimum_width = 260,			-- minimum height of window
+	maximum_width = 260,			-- maximum height of window
+
+	--Graphical
+	border_inner_margin = 5, 		-- margin between border and text
+	border_outer_margin = 5, 		-- margin between border and edge of window
+	border_width = 0, 			-- border width in pixels
+	default_bar_width = 260,		-- default is 0 - full width
+	default_bar_height = 10,		-- default is 6
+	default_gauge_height = 25,		-- default is 25
+	default_gauge_width =40,		-- default is 40
+	default_graph_height = 40,		-- default is 25
+	default_graph_width = 153,		-- default is 0 - full width
+	default_shade_color = '#000000',	-- default shading colour
+	default_outline_color = '#000000',	-- default outline colour
+	draw_borders = false,			-- draw borders around text
+	draw_graph_borders = true,		-- draw borders around graphs
+	draw_shades = false,			-- draw shades
+	draw_outline = false,			-- draw outline
+	stippled_borders = 0,			-- dashing the border
+
+	--Textual
+	format_human_readable = true,		-- KiB, MiB rather then number of bytes
+	font = 'Source Code Pro:bold:size=10',  -- font for complete conky unless in code defined
+	max_text_width = 0,			-- 0 will make sure line does not get broken if width too smal
+	max_user_text = 16384,			-- max text in conky default 16384
+	override_utf8_locale = true,		-- force UTF8 requires xft
+	short_units = true,			-- shorten units from KiB to k
+	top_name_width = 21,			-- width for $top name value default 15
+	top_name_verbose = false,		-- If true, top name shows the full command line of  each  process - Default value is false.
+	uppercase = false,			-- uppercase or not
+	use_spacer = 'none',			-- adds spaces around certain objects to align - default none
+	use_xft = true,				-- xft font - anti-aliased font
+	xftalpha = 1,				-- alpha of the xft font - between 0-1
+
+	--Windows
+	own_window = true,			-- create your own window to draw
+	own_window_argb_value = 255,		-- real transparency - composite manager required 0-255
+	own_window_argb_visual = true,		-- use ARGB - composite manager required
+	own_window_class = 'Conky',		-- manually set the WM_CLASS name for use with xprop
+	own_window_colour = '#282c34',		-- set colour if own_window_transparent no
+	own_window_transparent = false,		-- if own_window_argb_visual is true sets background opacity 0%
+	own_window_title = 'xmonad_conky',	-- set the name manually; default conky "hostname"
+	own_window_type = 'override',		-- if own_window true options are: normal/override/dock/desktop/panel
+	own_window_hints = 'undecorated,below,above,sticky,skip_taskbar,skip_pager',	-- if own_window true - just hints - own_window_type sets it
+
+	--Colors
+	color0 = '#c678dd',
+	color1 = '#bbc2cf',
+	color2 = '#51afef',
+	color3 = '#98be65',
+};
+
+conky.text = [[
+${alignc}${color0}${font Ubuntu:size=30}${time %H:%M}${font}
+${voffset 6}${alignc}${color0}${font Ubuntu:size=14}${time %b %d, %Y}${font}${color}
+${alignc}${color0}${font Ubuntu:size=11}${nodename}${font}${color}
+${voffset 18}${goto 12}${color3}CPU${goto 50}$cpu%
+${color2}${goto 12}${cpubar 8,254}
+${voffset 5}${goto 12}$font${color1}${top name 1}$alignr$color${top cpu 1}%
+${goto 12}${color1}${top name 2}$alignr$color${top cpu 2}%
+${goto 12}${color1}${top name 3}$alignr$color${top cpu 3}%
+${voffset 14}${goto 12}${color3}RAM${goto 50}$mem/$memmax
+${color2}${goto 12}${membar 8,254}${color}
+${goto 12}${voffset 5}${color1}${top_mem name 1}$alignr$color${top_mem mem_res 1}
+${goto 12}${color1}${top_mem name 2}$alignr$color${top_mem mem_res 2}
+${goto 12}${color1}${top_mem name 3}$alignr$color${top_mem mem_res 3}
+${voffset 18}${color1}${alignc}XMONAD KEYBINDINGS${color}
+${color1}${hr}${color}
+${color1}[S]+[RET]${alignr}${color2}opens terminal${color}
+${color1}[S]+[SHIFT]+c${alignr}${color2}close window${color}
+${color1}[S]+jk${alignr}${color2}move win focus${color}
+${color1}[S]+[SHIFT]+hjkl${alignr}${color2}move window${color}
+${color1}[S]+[0-9]${alignr}${color2}switch workspace${color}
+${color1}[S]+[SHIFT]+[0-9]${alignr}${color2}send window${color}
+${color1}[S]+h/l${alignr}${color2}shrink/expand${color}
+${color1}${hr}${color}
+${color1}[S]+d, e${alignr}${color2}launch emacs${color}
+${color1}[S]+d, b${alignr}${color2}ibuffer${color}
+${color1}[S]+d, d${alignr}${color2}dired${color}
+${color1}[S]+d, m${alignr}${color2}mu4e${color}
+${color1}[S]+d, s${alignr}${color2}eshell${color}
+${color1}[S]+d, a${alignr}${color2}agenda${color}
+${color1}[S]+d, c${alignr}${color2}capture${color}
+${color1}${hr}${color}
+${color1}[S]+p, s${alignr}${color2}app launcher${color}
+${color1}[S]+p, e${alignr}${color2}power menu${color}
+${color1}[S]+p, p${alignr}${color2}pass${color}
+${color1}${hr}${color}
+${color1}[S]+[CTRL]+r${alignr}${color2}recompile xmonad${color}
+${color1}[S]+[SHIFT]+r${alignr}${color2}restart xmonad${color}
+${color1}[S]+[SHIFT]+q${alignr}${color2}quit xmonad${color}
+]];
+#+end_src
+
+** Required Packages
+#+begin_example
+conky
 #+end_example
 
 * Dunst
@@ -239,3 +515,375 @@ The mod1 key is the alt key on the left side of the space bar.
 #+begin_example
 dunst
 #+end_example
+
+* TODO Etc 
+* Git
+#+begin_src conf :tangle ~/.gitconfig
+[user]
+name = Olivier Lischer
+email = olivier.lischer@liolin.ch
+signingKey = C165B44337F5C026
+username = liolin
+[pull]
+rebase = false
+#+end_src
+
+** Required Packages
+#+begin_example
+git
+#+end_example
+
+
+* GPG
+** TODO gpg-agent-info
+** gpg.conf
+#+begin_src conf :tangle ~/.gnupg/gpg.conf
+# https://github.com/drduh/config/blob/master/gpg.conf
+# https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html
+# https://www.gnupg.org/documentation/manuals/gnupg/GPG-Esoteric-Options.html
+# Use AES256, 192, or 128 as cipher
+personal-cipher-preferences AES256 AES192 AES
+# Use SHA512, 384, or 256 as digest
+personal-digest-preferences SHA512 SHA384 SHA256
+# Use ZLIB, BZIP2, ZIP, or no compression
+personal-compress-preferences ZLIB BZIP2 ZIP Uncompressed
+# Default preferences for new keys
+default-preference-list SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
+# SHA512 as digest to sign keys
+cert-digest-algo SHA512
+# SHA512 as digest for symmetric ops
+s2k-digest-algo SHA512
+# AES256 as cipher for symmetric ops
+s2k-cipher-algo AES256
+# UTF-8 support for compatibility
+charset utf-8
+# Show Unix timestamps
+fixed-list-mode
+# No comments in signature
+no-comments
+# No version in signature
+no-emit-version
+# Disable banner
+no-greeting
+# Long hexidecimal key format
+keyid-format 0xlong
+# Display UID validity
+list-options show-uid-validity
+verify-options show-uid-validity
+# Display all keys and their fingerprints
+with-fingerprint
+# Display key origins and updates
+#with-key-origin
+# Cross-certify subkeys are present and valid
+require-cross-certification
+# Disable caching of passphrase for symmetrical ops
+no-symkey-cache
+# Enable smartcard
+use-agent
+# Disable recipient key ID in messages
+throw-keyids
+# Default/trusted key ID to use (helpful with throw-keyids)
+#default-key 0xFF3E7D88647EBCDB
+#trusted-key 0xFF3E7D88647EBCDB
+# Keyserver URL
+#keyserver hkps://keys.openpgp.org
+#keyserver hkps://keyserver.ubuntu.com:443
+#keyserver hkps://hkps.pool.sks-keyservers.net
+#keyserver hkps://pgp.ocf.berkeley.edu
+# Proxy to use for keyservers
+#keyserver-options http-proxy=socks5-hostname://127.0.0.1:9050
+# Verbose output
+#verbose
+#+end_src
+** gpg-agent.conf
+#+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
+## Set timeout for passphrase unlock to 8 hours
+default-cache-ttl 28800
+max-cache-ttl 28800
+
+## Set timeout for SSH key unlock
+enable-ssh-support
+default-cache-ttl-ssh 28800
+max-cache-ttl-ssh 28800
+#+end_src
+
+** sshcontrol
+#+begin_src conf :tangle ~/.gnupg/sshcontrol
+# List of allowed ssh keys.  Only keys present in this file are used
+# in the SSH protocol.  The ssh-add tool may add new entries to this
+# file to enable them; you may also add them manually.  Comment
+# lines, like this one, as well as empty lines are ignored.  Lines do
+# have a certain length limit but this is not serious limitation as
+# the format of the entries is fixed and checked by gpg-agent. A
+# non-comment line starts with optional white spaces, followed by the
+# keygrip of the key given as 40 hex digits, optionally followed by a
+# caching TTL in seconds, and another optional field for arbitrary
+# flags.   Prepend the keygrip with an '!' mark to disable it.
+90783C7BE49932998FB01359A3958092318E442A
+!48ED9915566EAD80A32C2DAE3C6A23629ADC0BB4
+#+end_src
+
+* TODO i3
+* TODO lxsession
+=#+begin_src conf :tangle ~/.config/systemd/user/lxsession.service=
+#+begin_src conf :tangle no
+[Unit]
+Description=lxsession - polkit
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/lxpolkit &
+ExecStop=/usr/bin/killall lxpolkit
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+#+end_src
+
+** TODO Required Packages
+#+begin_example
+#+end_example
+
+* mailsignature
+#+begin_src conf :tangle ~/.signature
+Olivier Lischer
+Ersalinstrasse 3
+7411 Sils im Domleschg
+olivier.lischer@liolin.ch
+keybase.io: liolin
+#+end_src
+
+* mbsync
+** olivier.lischer@liolin.ch
+#+begin_src conf :tangle ~/.mbsyncrc
+IMAPAccount olivier.lischer@liolin.ch
+# Address to connect to
+Host imap.mail.hostpoint.ch
+User olivier.lischer@liolin.ch
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "pass show Privat/Communication/Mail/olivier.lischer@liolin.ch | head -n1"
+#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+#
+# Use SSL
+SSLType IMAPS
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+
+IMAPStore olivier.lischer@liolin.ch-remote
+Account olivier.lischer@liolin.ch
+
+MaildirStore olivier.lischer@liolin.ch-local
+Subfolders Verbatim
+# The trailing "/" is important
+Path ~/.mail/liolin/
+Inbox ~/.mail/liolin/Inbox
+
+Channel olivier.lischer@liolin.ch
+Far :olivier.lischer@liolin.ch-remote:
+Near :olivier.lischer@liolin.ch-local:
+Patterns * 
+Create Both
+SyncState *
+Expunge Both
+CopyArrivalDate yes
+#+end_src
+** notes@liolin.ch
+#+begin_src conf :tangle ~/.mbsyncrc
+IMAPAccount notes@liolin.ch
+# Address to connect to
+Host imap.mail.hostpoint.ch
+User notes@liolin.ch
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "pass show Privat/Communication/Mail/notes@liolin.ch | head -n1"
+#
+# Use SSL
+SSLType IMAPS
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore notes@liolin.ch-remote
+Account notes@liolin.ch
+
+MaildirStore notes@liolin.ch-local
+Subfolders Verbatim
+# The trailing "/" is important
+Path ~/.mail/notes/
+Inbox ~/.mail/notes/Inbox
+
+Channel notes@liolin.ch
+Far :notes@liolin.ch-remote:
+Near :notes@liolin.ch-local:
+Patterns * 
+Create Both
+SyncState *
+Expunge Both
+CopyArrivalDate yes
+#+end_src
+
+** olivier.lischer.blong@gmail.com
+#+begin_src conf :tangle ~/.mbsyncrc
+IMAPAccount olivier.lischer.blon@gmail.com
+# Address to connect to
+Host imap.gmail.com
+User olivier.lischer.blon@gmail.com
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.gmail_mailpass.gpg"
+#
+# Use SSL
+SSLType IMAPS
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+
+IMAPStore olivier.lischer.blon@gmail.com-remote
+Account olivier.lischer.blon@gmail.com
+
+MaildirStore olivier.lischer.blon@gmail.com-local
+Subfolders Verbatim
+#The trailing "/" is important
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/Inbox
+
+Channel olivier.lischer.blon@gmail.com
+Far :olivier.lischer.blon@gmail.com-remote:
+Near :olivier.lischer.blon@gmail.com-local:
+Patterns *
+Create Both
+Expunge Both
+SyncState *
+CopyArrivalDate yes
+#+end_src
+
+** Required Packages
+#+begin_example
+mbsync
+#+end_example
+
+* picom
+#+begin_src conf :tangle ~/.config/picom.conf
+# Shadow
+shadow = true;
+# no-dnd-shadow = true;
+# no-dock-shadow = true;
+detect-rounded-corners = true;
+shadow-radius = 5;
+shadow-offset-x = 1;
+shadow-offset-y = 1;
+shadow-opacity = .3;
+shadow-ignore-shaped = false;
+shadow-exclude = [
+	"name = 'Notification'", 
+# workaround for conky until it provides window properties:
+	"override_redirect = 1 && !WM_CLASS@:s", 
+#	"class_g ?= 'Dunst'", 
+# disable shadows for hidden windows:
+	"_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+	"_GTK_FRAME_EXTENTS@:c",
+# disables shadows on sticky windows:
+#	"_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'",
+# disables shadows on i3 frames
+	"class_g ?= 'i3-frame'"
+];
+
+# shadow-exclude-reg = "x10+0+0";
+# xinerama-shadow-crop = true;
+
+#menu-opacity = 0.95;
+inactive-opacity = 0.93;
+active-opacity = 1;
+#alpha-step = 0.01;
+inactive-dim = 0.0;
+blur-background = false;
+blur-kern = "3x3box";
+
+fading = false;
+fade-delta = 1;
+fade-in-step = 0.03;
+fade-out-step = 0.03;
+fade-exclude = [ ];
+
+backend = "xrender";
+mark-wmwin-focused = true;
+mark-ovredir-focused = true;
+detect-client-opacity = true;
+unredir-if-possible = true;
+refresh-rate = 0;
+vsync = true;
+dbe = false;
+#paint-on-overlay = true;
+focus-exclude = [ "class_g = 'Cairo-clock'" ];
+detect-transient = true;
+detect-client-leader = true;
+invert-color-include = [ ];
+#glx-copy-from-front = false;
+#glx-swap-method = "undefined";
+use-damage = true
+
+opacity-rule = [ 
+"99:name *?= 'Call'", 
+"99:class_g = 'Chromium'", 
+"99:name *?= 'Conky'", 
+"99:class_g = 'Darktable'", 
+"50:class_g = 'Dmenu'", 
+"99:name *?= 'Event'", 
+"99:class_g = 'Firefox'", 
+"99:name *?= 'Firefox'", 
+"99:class_g = 'GIMP'", 
+"99:name *?= 'Image'",
+"99:class_g = 'Lazpaint'", 
+"99:class_g = 'Midori'", 
+"99:name *?= 'Minitube'", 
+"99:class_g = 'Mousepad'",
+"99:name *?= 'MuseScore'", 
+"90:name *?= 'Page Info'", 
+"99:name *?= 'Pale Moon'", 
+"90:name *?= 'Panel'", 
+"99:class_g = 'Pinta'", 
+"90:name *?= 'Restart'", 
+"99:name *?= 'sudo'", 
+"99:name *?= 'Screenshot'", 
+"99:class_g = 'Viewnior'", 
+"99:class_g = 'VirtualBox'", 
+"99:name *?= 'VLC'", 
+"99:name *?= 'Write'", 
+"99:class_g = 'teams-for-linux'",
+"99:class_g = 'jetbrains-idea'",
+"93:class_g = 'URxvt' && !_NET_WM_STATE@:32a",
+"0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'", 
+"96:_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'" 
+];
+
+wintypes : 
+{
+  tooltip : 
+  {
+    fade = true;
+    shadow = false;
+    opacity = 0.85;
+    focus = true;
+  };
+  fullscreen : 
+  {
+    fade = true;
+    shadow = false;
+    opacity = 1;
+    focus = true;
+  };
+};
+#+end_src
+
+** Required Packages
+#+begin_example
+picom
+#+end_example
+
+* TODO polybar
+* TODO qtile
+* TODO ranger
+* TODO rofi
+* TODO scripts
+* starship
+* TODO tmux
+* TODO vim
