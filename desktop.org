@@ -517,9 +517,15 @@ The mod1 key is the alt key on the left side of the space bar.
 dunst
 #+end_example
 
-* TODO Etc 
-* TODO Fonts
-See directory.
+* Etc 
+See [[file:system.org][system.org]]
+* Fonts
+See font directory.
+
+Installation of the fonts
+#+begin_src sh :tangle no
+  cp fonts/* ~/.fonts/
+#+end_src
 * Git
 #+begin_src conf :tangle ~/.gitconfig
 [user]
@@ -1149,7 +1155,7 @@ SyncState *
 CopyArrivalDate yes
 #+end_src
 
-** Required Packages
+** Required Packages                                               :packages:
 #+begin_example
 mbsync
 #+end_example
@@ -1399,11 +1405,15 @@ label-indicator-underline = #ffc299
 
 **** TODO filesystem
 #+NAME: mount-points
-#+begin_src emacs-lisp :noweb 
-(if (string-equal (system-name) "COLA") "mount-0 = /" "mount-0 = /\nmount-1 = /home")
+#+begin_src emacs-lisp :noweb yes
+  (let ((devices '(("COLA" . ("mount-0 = /"))
+		   ("SPRITE" . ("mount-0 = /"
+				"mount-1 = /"))
+		   ("BERGAMOTTE" . ("mount-0 = /")))))
+    (string-join (cdr (assoc (system-name) devices)) "\n"))
 #+end_src
 
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/polybar/config :noweb yes
   [module/filesystem]
   type = internal/fs
   interval = 25
@@ -1627,18 +1637,33 @@ polybar
 
 * Autostart
 #+begin_src sh :tangle ~/.config/autostart.sh
-/usr/bin/nm-applet &
-/usr/bin/picom --daemon --config ~/.config/picom.conf
-/usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle
-/usr/bin/playerctld daemon
-/usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
-/usr/bin/conky
-/usr/bin/nitrogen --restore
-#/bin/sh ~/bin/update-notify
-#/usr/bin/keybase-gui
+  /usr/bin/nm-applet &
+  /usr/bin/picom --daemon --config ~/.config/picom.conf
+  /usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle
+  /usr/bin/playerctld daemon
+  /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
+  /usr/bin/conky
+  /usr/bin/nitrogen --restore
+  /usr/bin/redshift -l 46.70041:9.45404 #sils
+  #/bin/sh ~/bin/update-notify
+  #/usr/bin/keybase-gui
 #+end_src
 
-* TODO qtile
+
+** Required Packages                                               :packages:
+#+begin_example
+network-manager-applet (nm-applet)
+picom
+xorg-setxkbmap
+playerctld
+xorg-xmodmap
+redshift
+nitrogen (feh?)
+(conky)
+(keybase=)
+#+end_example
+
+* qtile
 ** Configuration
 #+begin_src python :tangle ~/.config/qtile/config.py
 from typing import List  # noqa: F401
@@ -2077,6 +2102,7 @@ wmname = "LG3D"
 ** Required Packages                                               :packages:
 #+begin_example
 qtile
+python-psutil
 #+end_example
 * qutebrowser
 This configuration is currently not used.
@@ -2533,7 +2559,6 @@ config.bind(',M', 'hint links spawn mpv {hint-url}')
 config.bind(',m', 'spawn mpv {url}')
 config.bind('<Ctrl+r>', 'config-cycle content.user_stylesheets "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-all-sites.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-duckduckgo.com.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-reddit.com.css"  ""')
 #+end_src
-* TODO ranger
 * rofi
 ** exit
 #+begin_src sh :tangle ~/.local/bin/exit :tangle-mode (identity #o555)
