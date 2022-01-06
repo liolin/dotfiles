@@ -181,6 +181,7 @@ rsync
 starship
 fzf
 bash-completion 
+fm6000
 (miniconda)
 #+end_example
 
@@ -2694,6 +2695,10 @@ The Installation for fm6000 (no tangle)
 #+end_src
 ** screenshot
 - flameshot
+** hl
+#+begin_src sh :tangle ~/.local/bin/hl :tangle-mode (identity #o555)
+  gpg --decrypt $HOME/finance/2022.journal.gpg 2> /dev/null | hledger -f- "$@"
+#+end_src
 ** Required Packages                                               :packages:
 #+begin_example
 sxiv
