@@ -1791,6 +1791,11 @@ nitrogen (feh?)
 	      lazy.spawn("emacsclient -c -a '' --eval '(eshell)'")),
 	  Key([], "a",
 	      lazy.spawn("emacsclient -c -a '' --eval '(org-agenda)'")),
+      ]),
+
+      KeyChord([mod], "s", [
+	  Key([], "p",
+	      lazy.spawn("evince")),
       ])
   ]
 
