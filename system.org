@@ -1,0 +1,49 @@
+#+TITLE: System Configuration
+
+* modprobe.d
+*/etc/modprobe.d/nobeep.conf*
+#+begin_src conf 
+blacklist pcspkr
+#+end_src
+
+*/etc/modprobe.d/disable_dmic.conf*
+#+begin_src conf 
+options snd_hda_intel dmic_detect=0
+#+end_src
+
+
+
+* Mount Points
+
+#+begin_src conf
+[Unit]
+Before=remote-fs.target
+After=network-online.target
+Wants=network-online.target
+
+[Mount]
+Where=/home/liolin/shares/ds
+What=//192.168.1.176/data
+Type=cifs
+Options=vers=2.0,credentials=/home/liolin/.credentials/data,uid=1000,gid=1000,iocharset=utf8
+
+[Install]
+WantedBy=multi-user.target
+#+end_src
+
+
+** Required Packages                                               :packages:
+#+begin_example
+cifs-utils
+#+end_example
+
+
+* Installation
+
+#+NAME: conky
+/tmp/root-babel/conky
+
+
+#+begin_src bash :tangle no :noweb yes :var data=conky :result output
+  sudo touch $data
+#+end_src
