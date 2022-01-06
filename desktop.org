@@ -2582,9 +2582,19 @@ This configuration is currently not used.
   config.bind('<Ctrl+r>', 'config-cycle content.user_stylesheets "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-all-sites.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-duckduckgo.com.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-reddit.com.css"  ""')
 #+end_src
 * rofi
-** exac
+** TODO exac
+trap does not work. Why?
 #+begin_src sh :tangle ~/.local/bin/exac :tangle-mode (identity #o555)
-  lock() {
+  set -Eeuo pipefail
+
+  function onError {
+      FAILED_COMMAND="$(caller): ${BASH_COMMAND}"
+      dunstify --appname="Exit Actions" --urgency=critical --timeout=7000 exac "${FAILED_COMMAND}"
+  }
+
+  trap onError ERR
+
+  function lock {
       dm-tool lock
   }
 
