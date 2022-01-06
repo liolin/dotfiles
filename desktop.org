@@ -2621,7 +2621,7 @@ This configuration is currently not used.
 	      dbus-send --system --print-reply --type=method_call --reply-timeout=2000 --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
 	  fi
 	  ;;
-      shutdown)
+      poweroff)
 	  if [ $(cat /proc/1/comm) = "systemd" ]; then
 	      systemctl poweroff
 	  else
