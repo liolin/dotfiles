@@ -115,10 +115,15 @@ alacritty
 #+end_example
 
 * Bash
+** profile
+#+begin_src sh :tangle ~/.profile :tangle-mode (identity #o555) :noweb yes
+  <<ENV-VARS>>
+#+end_src
 ** bash_profile
 #+begin_src sh :tangle ~/.bash_profile :tangle-mode (identity #o555) :noweb yes
   <<ENV-VARS>>
-  [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+  if [ -r "~/.bashrc" ]; then source ~/.bashrc 
 #+end_src
 ** Guard
 #+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
@@ -168,7 +173,6 @@ alacritty
   fm6000 -r
 #+end_src
 
-
 ** Required Packages                                               :packages:
 #+begin_example
 exa
@@ -176,6 +180,7 @@ upower
 rsync
 starship
 fzf
+bash-completion 
 (miniconda)
 #+end_example
 
@@ -1648,18 +1653,18 @@ polybar
   /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
   /usr/bin/conky
   /usr/bin/nitrogen --restore
-  /usr/bin/redshift -l 46.70041:9.45404 #sils
+  /usr/bin/redshift -l 46.70041:9.45404 & #sils
   #/bin/sh ~/bin/update-notify
-  #/usr/bin/keybase-gui
+  /usr/bin/keybase-gui &
+  /usr/bin/owncloud &
 #+end_src
-
 
 ** Required Packages                                               :packages:
 #+begin_example
 network-manager-applet (nm-applet)
 picom
 xorg-setxkbmap
-playerctld
+playerctl
 xorg-xmodmap
 redshift
 nitrogen (feh?)
@@ -2815,6 +2820,33 @@ I do not use tmux at the moment (=~/.tmux.conf=)
 vim
 #+end_example
 
+* owncloud for OST
+** Required Packages                                               :packages:
+#+begin_example
+owncloud-client
+#+end_example
+
+* keybase
+** Required Packages                                               :packages:
+#+begin_example
+keybase-gui
+#+end_example
+
+* pass
+** Required Packages                                               :packages:
+#+begin_example
+pass
+dmenu
+browserpass
+browserpass-firefox
+#+end_example
+
+* Latex
+** Required Packages                                               :packages:
+#+begin_example
+texlive-most
+#+end_example
+
 * xmodmap
 #+begin_src conf :tangle ~/.config/xmodmap/xmodmap.conf
   remove Lock = Caps_Lock
@@ -3251,3 +3283,34 @@ Config {
        , template = "<icon=haskell_20.xpm/> %StdinReader% }{ %cmus% | %cpu% | %memory% | %battery% | %date%  |" -- #69DFFA
        }
 #+end_src
+
+* Xouranlpp
+** Required Packages                                               :packages:
+#+begin_example
+xournalpp
+#+end_example
+
+* TODO Wireguard
+
+** Required Packages                                               :packages:
+#+begin_example
+wireguard-tools
+openresolv
+#+end_example
+
+* Virtual Machine Management
+** Required Packages                                               :packages:
+#+begin_example
+virt-viewer
+#+end_example
+
+* Evince
+** Required Packages                                               :packages:
+#+begin_example
+evince
+#+end_example
+
+* Local Variables
+;; Local Variables: 
+;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t) 
+;; End:
