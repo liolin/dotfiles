@@ -2845,6 +2845,7 @@ vim
 ** Required Packages                                               :packages:
 #+begin_example
 owncloud-client
+gnome-keyring
 #+end_example
 
 * keybase
