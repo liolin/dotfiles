@@ -2718,6 +2718,7 @@ The Installation for fm6000 (no tangle)
 #+begin_example
 sxiv
 flameshot
+hledger
 #+end_example
 
 * starship
@@ -3328,6 +3329,12 @@ virt-viewer
 ** Required Packages                                               :packages:
 #+begin_example
 evince
+#+end_example
+
+* .NET
+** Required Packages                                               :packages:
+#+begin_example
+dotnet-sdk
 #+end_example
 
 * Local Variables
