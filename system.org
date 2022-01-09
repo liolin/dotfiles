@@ -38,7 +38,14 @@ cifs-utils
 #+end_example
 
 
-* Installation
+* hibernation image size
+/etc/tmpfiles.d/sys_power_image_size.conf
+#+begin_src conf
+#Type   Path            Mode    UID GID Age Argument
+w   /sys/power/image_size   -   -   -   -   0
+#+end_src
+
+* TODO Installation
 
 #+NAME: conky
 /tmp/root-babel/conky
