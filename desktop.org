@@ -2714,6 +2714,11 @@ The Installation for fm6000 (no tangle)
 #+begin_src sh :tangle ~/.local/bin/hl :tangle-mode (identity #o555)
   gpg --decrypt $HOME/finance/2022.journal.gpg 2> /dev/null | hledger -f- "$@"
 #+end_src
+** wolsprite
+WoL for SPRITE
+#+begin_src sh :tangle ~/.local/bin/wolsprite :tangle-mode (identity #o555)
+wol a8:5e:45:56:5c:66
+#+end_src
 ** Required Packages                                               :packages:
 #+begin_example
 sxiv
