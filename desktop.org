@@ -2583,20 +2583,25 @@ This configuration is currently not used.
 #+end_src
 * rofi
 ** TODO exac
+#+begin_src python
+  required=['dm-tool', 'rofi', 'dunstify']
+#+end_src
 trap does not work. Why?
 #+begin_src sh :tangle ~/.local/bin/exac :tangle-mode (identity #o555)
   set -Eeuo pipefail
 
   function onError {
-      FAILED_COMMAND="$(caller): ${BASH_COMMAND}"
-      dunstify --appname="Exit Actions" --urgency=critical --timeout=7000 exac "${FAILED_COMMAND}"
+      MESSAGE=$1
+      dunstify --appname="Exit Actions" --urgency=critical --timeout=7000 exac "${MESSAGE}"
   }
 
-  trap onError ERR
 
-  function lock {
-      dm-tool lock
+  function availabel {
+      echo $1
+      which $1 > /dev/null 2>&1
   }
+
+  required=(dm-tool xscreenlock rofi dunstify)
 
   options="lock\nswitch_user\nsuspend\nhibernate\nreboot\npoweroff"
   action=$(
@@ -2605,41 +2610,25 @@ trap does not work. Why?
 
   case "$action" in
       lock)
-	  lock
+	  xsecurelock
 	  ;;
       switch_user)
 	  dm-tool switch-to-greeter
 	  ;;
       suspend)
-	  if [ $(cat /proc/1/comm) = "systemd" ]; then 
-	      lock && systemctl suspend
-	  else
-	      lock && dbus-send --system --dest=org.freedesktop.ConsoleKit --type=method_call --print-reply --reply-timeout=2000 /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Suspend boolean:true
-	  fi
+	  xsecurelock -- systemctl suspend
 	  ;;
       hibernate)
-	  if [ $(cat /proc/1/comm) = "systemd" ]; then
-	      lock && systemctl hibernate
-	  else
-	      lock && dbus-send --system --dest=org.freedesktop.ConsoleKit --type=method_call --print-reply --reply-timeout=2000 /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Hibernate boolean:true
-	  fi
+	  xsecurelock -- systemctl hibernate
 	  ;;
       reboot)
-	  if [ $(cat /proc/1/comm) = "systemd" ]; then
-	      systemctl reboot
-	  else
-	      dbus-send --system --print-reply --type=method_call --reply-timeout=2000 --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
-	  fi
+	  systemctl reboot
 	  ;;
       poweroff)
-	  if [ $(cat /proc/1/comm) = "systemd" ]; then
-	      systemctl poweroff
-	  else
-	      dbus-send --system --print-reply --type=method_call --reply-timeout=2000 --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
-	  fi
+	  systemctl poweroff
 	  ;;
       ,*)
-	  echo "== ! wrong argument ! ==
+	  onError "== ! wrong argument ! ==
   Try again with: lock | switch_user | suspend | hibernate | reboot | shutdown"
 	  exit 2
   esac
@@ -2650,6 +2639,7 @@ trap does not work. Why?
 #+begin_example
 rofi
 lightdm
+xsecurelock 
 #+end_example
 
 * scripts
