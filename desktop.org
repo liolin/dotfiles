@@ -3333,6 +3333,15 @@ evince
 dotnet-sdk
 #+end_example
 
+* UxPlay
+A AirPlay Application.
+It enables streaming from iPhone to Linux
+** Required Packages                                               :packages:
+#+begin_example
+uxplay
+#+end_example
+
+
 * Local Variables
 ;; Local Variables: 
 ;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t) 
