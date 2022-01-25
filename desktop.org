@@ -44,7 +44,7 @@ They are included over =noweb= in the =profile= files for the specific shells.
 * Alacritty
 ** Top Level
 #+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
-background_opacity: 0.85
+window.opacity: 0.85
 #+end_src
 ** Font
 #+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
