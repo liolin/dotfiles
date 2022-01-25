@@ -3334,12 +3334,20 @@ dotnet-sdk
 #+end_example
 
 * UxPlay
-A AirPlay Application.
+An AirPlay Application.
 It enables streaming from iPhone to Linux
 ** Required Packages                                               :packages:
 #+begin_example
 uxplay
 #+end_example
+
+* TiLP
+An application to transfer files to the TI-Nspire
+** Required Packages                                               :packages:
+#+begin_example
+tilp
+#+end_example
+
 
 
 * Local Variables
