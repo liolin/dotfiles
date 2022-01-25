@@ -42,9 +42,10 @@ They are included over =noweb= in the =profile= files for the specific shells.
 #+end_src
 
 * Alacritty
-** Top Level
+** Window
 #+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
-window.opacity: 0.85
+  window:
+    opacity: 0.85
 #+end_src
 ** Font
 #+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
