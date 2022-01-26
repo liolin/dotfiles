@@ -1168,7 +1168,15 @@ lxsession
 
 ** Required Packages                                               :packages:
 #+begin_example
-mbsync
+isync
+#+end_example
+
+* mu
+** Required Packages                                               :packages:
+#+begin_example
+mu
+meson
+ninja
 #+end_example
 
 * picom
