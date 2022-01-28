@@ -1657,7 +1657,7 @@ polybar
 * Autostart
 #+begin_src sh :tangle ~/.config/autostart.sh :tangle-mode (identity #o555)
   /usr/bin/nm-applet &
-  /usr/bin/picom --daemon --config ~/.config/picom.conf
+  /usr/bin/picom --backend glx --daemon --config ~/.config/picom.conf
   /usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle
   /usr/bin/playerctld daemon
   /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
