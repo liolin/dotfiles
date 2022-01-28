@@ -2865,6 +2865,7 @@ pass
 dmenu
 browserpass
 browserpass-firefox
+xclip
 #+end_example
 
 * Latex
