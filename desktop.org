@@ -31,6 +31,8 @@ They are included over =noweb= in the =profile= files for the specific shells.
       XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share/applications:$XDG_DATA_DIRS"
   fi
 
+  [ -f "/home/liolin/.ghcup/env" ] && source "/home/liolin/.ghcup/env"
+
   export PATH
   export XDG_DATA_DIRS
   export ALTERNATE_EDITOR=""
@@ -1778,8 +1780,8 @@ nitrogen (feh?)
       Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
       Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
       Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
-      Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl 5%+")),
-      Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl 5%+")),
+      Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set 5%+")),
+      Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-")),
       Key([], "XF86WLAN", lazy.spawn("nmcli radio wifi on")),
 
       ## Start Applications
@@ -1869,7 +1871,7 @@ nitrogen (feh?)
 		  widget.Image(
 		      filename = "~/.config/qtile/icons/python-white.png",
 		      scale = "False",
-		      mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)}
+		      mouse_callbacks = {'Button1': lambda: lazy.spawn(myTerm)}
 		  ),
 		  widget.Sep(
 		      linewidth = 0,
@@ -1989,7 +1991,7 @@ nitrogen (feh?)
 		  widget.Memory(
 		      foreground = colors[2],
 		      background = colors[4],
-		      mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
+		      mouse_callbacks = {'Button1': lambda: lazy.spawn(myTerm + ' -e htop')},
 		      padding = 5
 		  ),
 		  widget.TextBox(
@@ -2134,6 +2136,8 @@ Installation python icon qtile
 #+begin_example
 qtile
 python-psutil
+python-pytest-mypy
+brightnessctl 
 #+end_example
 * qutebrowser
 This configuration is currently not used.
