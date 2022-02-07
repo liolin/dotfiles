@@ -41,6 +41,8 @@ They are included over =noweb= in the =profile= files for the specific shells.
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export LEDGER_FILE=~/finance/$(date +%Y).journal.gpg
   export LANG=en_US.UTF-8
+  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  gpgconf --launch gpg-agent
 #+end_src
 
 * Alacritty
@@ -166,9 +168,6 @@ alacritty
 ** SSH
 #+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
   export GPG_TTY="$(tty)"
-  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-
-  gpgconf --launch gpg-agent
 #+end_src
 
 ** fm6000
