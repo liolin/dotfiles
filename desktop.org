@@ -33,6 +33,10 @@ They are included over =noweb= in the =profile= files for the specific shells.
 
   [ -f "/home/liolin/.ghcup/env" ] && source "/home/liolin/.ghcup/env"
 
+  [ -f "/home/liolin/.nix-profile/etc/profile.d/nix.sh" ] && source "/home/liolin/.nix-profile/etc/profile.d/nix.sh"
+  [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+
   export PATH
   export XDG_DATA_DIRS
   export ALTERNATE_EDITOR=""
@@ -46,13 +50,16 @@ They are included over =noweb= in the =profile= files for the specific shells.
 #+end_src
 
 * Alacritty
+:PROPERTIES:
+:header-args:yaml: :tangle ~/.config/alacritty/alacritty.yml :tangle-mode (identity #o555)
+:END:
 ** Window
-#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+#+begin_src yaml
   window:
     opacity: 0.85
 #+end_src
 ** Font
-#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+#+begin_src yaml
   font:
     normal:
       family: Fira Code Nerd Font
@@ -71,7 +78,7 @@ They are included over =noweb= in the =profile= files for the specific shells.
 #+end_src
 ** Colors
 I use a the dracula theme from [[https://draculatheme.com/alacritty][here]]. 
-#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+#+begin_src yaml
   colors:
     primary:
       background: '0x282a36'
@@ -114,6 +121,11 @@ I use a the dracula theme from [[https://draculatheme.com/alacritty][here]].
     indexed_colors: []
 #+end_src
 
+** Shell
+#+begin_src yaml
+shell:
+  program: /home/liolin/.nix-profile/bin/fish
+#+end_src
 ** Required Packages                                               :packages:
 #+begin_example
 alacritty
@@ -527,6 +539,58 @@ dunst
 
 * Etc 
 See [[file:system.org][system.org]]
+* fish
+:PROPERTIES:
+:header-args:sh: :tangle-mode (identity #o555) :tangle ~/.config/fish/config.fish
+:END:
+** interactive shell
+#+begin_src sh
+  if status is-interactive
+     alias ls="exa"
+     alias cp="cp -i"
+     alias cat="bat -p"
+     alias mount-share="systemctl start home-liolin-shares-ds.mount"
+     alias batstat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+     alias syncost="rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/10_HSR/01_Unterrichtsunterlagen/03_Semester/"
+     alias syncmail="rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/99_mailArchive/"
+     alias gp="git push"
+     alias gpu="git pull"
+     alias gc="git commit"
+     alias ga="git add"
+
+     starship init fish | source
+   end
+#+end_src
+** login shell
+#+begin_src sh 
+  if status is-login
+     set -gx PATH "$HOME/.cargo/bin" "$HOME/.dotnet/tools" "$HOME/.local/bin" $PATH
+
+     if test -d "/var/lib/flatpak/exports/share/applications"
+	set -gx XDG_DATA_DIRS "/var/lib/flatpak/exports/share/applications" $XDG_DATA_DIRS
+     end
+
+     if test -d "$HOME/.local/share/flatpak/exports/share/applications"
+	set -gx XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share/applications" $XDG_DATA_DIRS
+     end 
+
+     # ghcup
+     set -gx PATH "$HOME/.ghcup/bin" $PATH
+     set -gx PATH "$HOME/.cabal/bin" $PATH
+
+     test -f "$HOME/.nix-profile/etc/profile.d/nix.sh" && fenv source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+     test -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" && fenv source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+     set -gx ALTERNATE_EDITOR ""
+     set -gx EDITOR "emacsclient -t"                  # $EDITOR opens in terminal
+     set -gx VISUAL "emacsclient -t -a emacs"         # $VISUAL opens in GUI mode
+     set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
+     set -gx LEDGER_FILE "~/finance/(date +%Y).journal.gpg"
+     set -gx LANG "en_US.UTF-8"
+     set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+     gpgconf --launch gpg-agent
+  end
+#+end_src
 * Fonts
 See font directory.
 
