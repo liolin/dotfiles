@@ -543,6 +543,10 @@ See [[file:system.org][system.org]]
 :PROPERTIES:
 :header-args:sh: :tangle-mode (identity #o555) :tangle ~/.config/fish/config.fish
 :END:
+** general
+#+begin_src sh
+  set fish_function_path $fish_function_path ~/code/plugin-foreign-env/functions
+#+end_src
 ** interactive shell
 #+begin_src sh
   if status is-interactive
