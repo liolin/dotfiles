@@ -543,11 +543,12 @@ See [[file:system.org][system.org]]
 :PROPERTIES:
 :header-args:sh: :tangle-mode (identity #o555) :tangle ~/.config/fish/config.fish
 :END:
-** general
+** config.fish
+*** general
 #+begin_src sh
   set fish_function_path $fish_function_path ~/code/plugin-foreign-env/functions
 #+end_src
-** interactive shell
+*** interactive shell
 #+begin_src sh
   if status is-interactive
      alias ls="exa"
@@ -565,7 +566,7 @@ See [[file:system.org][system.org]]
      starship init fish | source
    end
 #+end_src
-** login shell
+*** login shell
 #+begin_src sh 
   if status is-login
      set -gx PATH "$HOME/.cargo/bin" "$HOME/.dotnet/tools" "$HOME/.local/bin" $PATH
@@ -593,6 +594,12 @@ See [[file:system.org][system.org]]
      set -gx LANG "en_US.UTF-8"
      set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
      gpgconf --launch gpg-agent
+  end
+#+end_src
+** funtions
+#+begin_src sh :tangle ~/.config/fish/functions/fish_user_key_bindings.fish :tangle-mode (identity #o444)
+  function fish_user_key_bindings
+     fzf_key_bindings
   end
 #+end_src
 * Fonts
