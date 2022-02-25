@@ -552,6 +552,7 @@ See [[file:system.org][system.org]]
 #+begin_src sh
   if status is-interactive
      alias ls="exa"
+     alias l="exa"
      alias cp="cp -i"
      alias cat="bat -p"
      alias mount-share="systemctl start home-liolin-shares-ds.mount"
