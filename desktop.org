@@ -563,6 +563,7 @@ See [[file:system.org][system.org]]
      alias gpu="git pull"
      alias gc="git commit"
      alias ga="git add"
+     alias kubectl="minikube kubectl --"
 
      starship init fish | source
    end
