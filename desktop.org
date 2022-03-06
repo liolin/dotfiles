@@ -1110,6 +1110,12 @@ This is currenlty not tanggeld to a file (=~/.config/i3/config=).
   bindsym Escape mode "default"
   }
 #+end_src
+* sway
+** Required Packages                                               :packages:
+#+begin_example
+sway swaylock swayidle
+#+end_example
+
 * lxsession
 #+begin_src conf :tangle ~/.config/systemd/user/lxsession.service
   [Unit]
