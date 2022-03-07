@@ -1114,7 +1114,11 @@ This is currenlty not tanggeld to a file (=~/.config/i3/config=).
 * sway
 ** Required Packages                                               :packages:
 #+begin_example
-sway swaylock swayidle
+sway
+swaylock
+swayidle
+ly
+dmenu-wayland-git
 #+end_example
 
 * lxsession
