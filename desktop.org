@@ -46,6 +46,7 @@ They are included over =noweb= in the =profile= files for the specific shells.
   export LEDGER_FILE=~/finance/$(date +%Y).journal.gpg
   export LANG=en_US.UTF-8
   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  export _JAVA_AWT_WM_NONREPARENTING=1
   gpgconf --launch gpg-agent
 #+end_src
 
@@ -622,8 +623,12 @@ Installation of the fonts
   email = olivier.lischer@liolin.ch
   signingKey = 6B52B67EDA21CAF6
   username = liolin
+
   [pull]
   rebase = false
+
+  [commit]
+  gpgsign = true
 #+end_src
 
 ** Required Packages                                               :packages:
