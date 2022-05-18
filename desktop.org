@@ -627,6 +627,9 @@ Installation of the fonts
   [pull]
   rebase = false
 
+  [merge]
+  conflictstyle = diff3
+
   [commit]
   gpgsign = true
 #+end_src
