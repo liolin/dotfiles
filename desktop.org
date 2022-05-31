@@ -564,6 +564,8 @@ See [[file:system.org][system.org]]
      alias gpu="git pull"
      alias gc="git commit"
      alias ga="git add"
+     alias cdr="cd ~/roam/"
+     alias cdo="cd ~/org/"
      alias kubectl="minikube kubectl --"
 
      starship init fish | source
@@ -1754,7 +1756,7 @@ polybar
 #+begin_src sh :tangle ~/.config/autostart.sh :tangle-mode (identity #o555)
   /usr/bin/nm-applet &
   /usr/bin/picom --backend glx --daemon --config ~/.config/picom.conf
-  /usr/bin/setxkbmap -layout ch,us -option grp:alt_space_toggle
+  /usr/bin/setxkbmap -layout ch,us -variant ",altgr-intl" -option grp:alt_space_toggle
   /usr/bin/playerctld daemon
   /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
   /usr/bin/conky
