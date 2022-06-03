@@ -40,8 +40,8 @@ They are included over =noweb= in the =profile= files for the specific shells.
   export PATH
   export XDG_DATA_DIRS
   export ALTERNATE_EDITOR=""
-  export EDITOR="emacsclient -t"                  # $EDITOR opens in terminal
-  export VISUAL="emacsclient -t -a emacs"         # $VISUAL opens in GUI mode
+  export EDITOR="emacsclient -c -a emacs"
+  export VISUAL="emacsclient -c -a emacs"
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
   export LEDGER_FILE=~/finance/$(date +%Y).journal.gpg
   export LANG=en_US.UTF-8
