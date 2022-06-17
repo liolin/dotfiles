@@ -170,6 +170,11 @@ alacritty
   eval "$(starship init bash)"
 #+end_src
 
+** direnv
+#+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
+  eval "$(direnv hook bash)"
+#+end_src
+
 ** includes
 #+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
   source /usr/share/fzf/key-bindings.bash
@@ -568,6 +573,7 @@ See [[file:system.org][system.org]]
      alias kubectl="minikube kubectl --"
 
      starship init fish | source
+     direnv hook fish | source
    end
 #+end_src
 ** funtions
@@ -1989,9 +1995,23 @@ nitrogen (feh?)
 		  widget.Sep(
 		      linewidth = 0,
 		      padding = 6,
-		      foreground = colors[0],
+		      foreground = colors[2],
 		      background = colors[0]
 		  ),
+		  # widget.TextBox(
+		  #     text = '',
+		  #     background = colors[0],
+		  #     foreground = colors[4],
+		  #     padding = 0,
+		  #     fontsize = 37
+		  # ),
+		  # widget.KeyboardLayout(
+		  #     configured_keyboards = ['CH', 'US'],
+		  #     foreground = colors[2],
+		  #     background = colors[4],
+		  #     padding = 5,
+		  #     update_interval = 1,
+		  # ),
 		  widget.TextBox(
 		      text = '',
 		      background = colors[0],
@@ -2800,6 +2820,11 @@ hledger
   [hostname]
   ssh_only = false
   format = "on [$hostname](bold blue) "
+  disabled = false
+
+  [shell]
+  unknown_indicator = "mystery shell"
+  style = "cyan bold"
   disabled = false
 #+end_src
 
