@@ -184,7 +184,7 @@ alacritty
 
 ** fm6000
 #+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
-  fm6000 -r
+  #fm6000 -r
 #+end_src
 
 ** Required Packages                                               :packages:
