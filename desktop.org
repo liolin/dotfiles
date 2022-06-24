@@ -810,8 +810,8 @@ dmenu-wayland-git
   bindsym $mod+Shift+9 move container to workspace number 9
   bindsym $mod+Shift+0 move container to workspace number 10
 
-  bindsym $mod+Shift+w move container to output left
-  bindsym $mod+Shift+e move container to output right
+  bindsym $mod+Shift+w move workspace to output left
+  bindsym $mod+Shift+e move workspace to output right
 
 
   bindsym $mod+b splith
