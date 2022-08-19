@@ -124,7 +124,7 @@ I use a the dracula theme from [[https://draculatheme.com/alacritty][here]].
 ** Shell
 #+begin_src yaml
 shell:
-  program: /home/liolin/.nix-profile/bin/fish
+  program: /bin/fish
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
@@ -1593,11 +1593,11 @@ polybar
   /usr/bin/setxkbmap -layout ch,us -variant ",altgr-intl" -option grp:alt_space_toggle
   /usr/bin/playerctld daemon
   /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
-  /usr/bin/conky
   /usr/bin/nitrogen --restore
-  /usr/bin/redshift -l 46.70041:9.45404 & #sils
-  #/bin/sh ~/bin/update-notify
-  /usr/bin/keybase-gui &
+  [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
+  [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
+  [ -x ~/.screenlayout/static.sh ] && ~/.screenlayout/static.sh 
+  #/bin/sh ~/bin/update-notif
   /usr/bin/owncloud &
 #+end_src
 
