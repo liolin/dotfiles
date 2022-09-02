@@ -3291,6 +3291,16 @@ virt-viewer
 evince
 #+end_example
 
+* mpv
+#+begin_src conf :tangle ~/.config/mpv/mpv.conf
+ytdl-raw-options=yes-playlist=
+#+end_src
+
+** Required Packages                                               :packages:
+#+begin_example
+mpv, yt-dlp
+#+end_example
+
 * .NET
 ** Required Packages                                               :packages:
 #+begin_example
