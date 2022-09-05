@@ -172,8 +172,8 @@ alacritty
   alias cp='cp -i'
   alias mount-share='systemctl start home-liolin-shares-ds.mount'
   alias batstat='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
-  alias syncost='rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/10_HSR/01_Unterrichtsunterlagen/03_Semester/'
-  alias syncmail='rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/99_mailArchive/'
+  alias syncost='rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/01_School/02_HSR/01_Unterrichtsunterlagen/04_Semester/'
+  alias syncmail='rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/00_Private/99_mailArchive/'
   alias gp='git push'
   alias gpu='git pull'
   alias gc='git commit'
@@ -577,8 +577,8 @@ See [[file:system.org][system.org]]
      alias cat="bat -p"
      alias mount-share="systemctl start home-liolin-shares-ds.mount"
      alias batstat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
-     alias syncost="rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/10_HSR/01_Unterrichtsunterlagen/04_Semester/"
-     alias syncmail="rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/99_mailArchive/"
+     alias syncost="rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/01_School/02_HSR/01_Unterrichtsunterlagen/05_Semester/"
+     alias syncmail="rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/00_Private/99_mailArchive/"
      alias gp="git push"
      alias gpu="git pull"
      alias gc="git commit"
@@ -3309,6 +3309,16 @@ virt-viewer
 ** Required Packages                                               :packages:
 #+begin_example
 evince
+#+end_example
+
+* mpv
+#+begin_src conf :tangle ~/.config/mpv/mpv.conf
+ytdl-raw-options=yes-playlist=
+#+end_src
+
+** Required Packages                                               :packages:
+#+begin_example
+mpv, yt-dlp
 #+end_example
 
 * .NET
