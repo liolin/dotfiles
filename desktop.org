@@ -784,6 +784,10 @@ dmenu-wayland-git
   ### Autostart
   exec_always bash /home/liolin/.config/autostart.sh
 #+end_src
+** assign
+#+begin_src conf :tangle ~/.config/i3/config
+  assign [class="Chromium"] 6
+#+end_src
 ** Keybindings
 
 #+begin_src conf :tangle ~/.config/i3/config
@@ -1219,6 +1223,7 @@ ninja
   "99:name *?= 'VLC'", 
   "99:name *?= 'Write'", 
   "99:class_g = 'teams-for-linux'",
+  "99:class_g = 'teams'",
   "99:class_g = 'jetbrains-idea'",
   "93:class_g = 'URxvt' && !_NET_WM_STATE@:32a",
   "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'", 
@@ -1617,6 +1622,7 @@ polybar
   [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
   [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
   [ -x ~/.screenlayout/static.sh ] && ~/.screenlayout/static.sh 
+  [ -x ~/.local/share/applications/teams.desktop ] && gtk-launch ~/.local/share/applications/teams.desktop 
   #/bin/sh ~/bin/update-notif
   /usr/bin/owncloud &
 #+end_src
