@@ -995,8 +995,8 @@ i3status-rust
   Description=lxsession - polkit
 
   [Service]
-  Type=oneshot
-  ExecStart=/usr/bin/lxpolkit &
+  Type=simple
+  ExecStart=/usr/bin/lxpolkit
   ExecStop=/usr/bin/killall lxpolkit
   Restart=on-failure
 
@@ -1622,7 +1622,7 @@ polybar
   [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
   [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
   [ -x ~/.screenlayout/static.sh ] && ~/.screenlayout/static.sh 
-  [ -x ~/.local/share/applications/teams.desktop ] && gtk-launch ~/.local/share/applications/teams.desktop 
+  [ -x ~/.local/share/applications/teams.desktop ] &&  cd ~/.local/share/applications/ && gtk-launch teams.desktop 
   #/bin/sh ~/bin/update-notif
   /usr/bin/owncloud &
 #+end_src
