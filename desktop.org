@@ -966,11 +966,6 @@ dmenu-wayland-git
   format = "{1m}"
 
   [[block]]
-  block = "backlight"
-  maximum = 100
-  cycle = [100, 50, 0, 50]
-
-  [[block]]
   block = "sound"
   on_click = "/usr/bin/pamixer --toggle-mute"
 
@@ -1183,7 +1178,6 @@ ninja
   mark-ovredir-focused = true;
   detect-client-opacity = true;
   unredir-if-possible = true;
-  refresh-rate = 0;
   vsync = true;
   dbe = false;
   #paint-on-overlay = true;
@@ -1202,8 +1196,10 @@ ninja
   "99:class_g = 'Darktable'", 
   "50:class_g = 'Dmenu'", 
   "99:name *?= 'Event'", 
-  "99:class_g = 'Firefox'", 
-  "99:name *?= 'Firefox'", 
+  "99:class_g = 'Firefox' && focused",
+  "99:name *?= 'Firefox' && focused",
+  "99:class_g = 'Firefox' && !focused",
+  "99:name *?= 'Firefox' && !focused",
   "99:class_g = 'GIMP'", 
   "99:name *?= 'Image'",
   "99:class_g = 'Lazpaint'", 
