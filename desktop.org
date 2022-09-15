@@ -139,7 +139,7 @@ I use a the dracula theme from [[https://draculatheme.com/alacritty][here]].
 ** Shell
 #+begin_src yaml
 shell:
-  program: /bin/fish
+  program: fish
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
