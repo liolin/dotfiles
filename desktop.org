@@ -777,6 +777,7 @@ dmenu-wayland-git
   client.background       #F8F8F2
 
   default_border pixel 3
+  for_window [class="^.*"] border pixel 3
 #+end_src
 
 ** Others
