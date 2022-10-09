@@ -50,6 +50,7 @@ They are included over =noweb= in the =profile= files for the specific shells.
   export GTK_IM_MODULE=ibus
   export QT_IM_MODULE=ibus
   export XMODIFIERS=@im=ibus
+  export CARGO_TARGET_DIR="$HOME/.cargo-target"
 #+end_src
 
 * org-protocol
@@ -749,6 +750,7 @@ dmenu-wayland-git
   set $right l
   set $term alacritty
   set $menu rofi -show drun
+  set $menu rofi -show drun -icon-theme "ePapirus-Dark" -show-icons
 
   set $ws1 "1: "
   set $ws2 "2: "
@@ -2588,6 +2590,10 @@ This configuration is currently not used.
   config.bind('<Ctrl+r>', 'config-cycle content.user_stylesheets "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-all-sites.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-duckduckgo.com.css" "/home/liolin/.config/qutebrowser/css/solarized-dark/solarized-dark-reddit.com.css"  ""')
 #+end_src
 * rofi
+** Configuration
+#+begin_src conf :tangle ~/.config/rofi/config.rasi
+  @theme "/usr/share/rofi/themes/Arc-Dark.rasi"
+#+end_src
 ** TODO exac
 #+begin_src python
   required=['dm-tool', 'rofi', 'dunstify']
