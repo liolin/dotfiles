@@ -749,7 +749,6 @@ dmenu-wayland-git
   set $up k
   set $right l
   set $term alacritty
-  set $menu rofi -show drun
   set $menu rofi -show drun -icon-theme "ePapirus-Dark" -show-icons
 
   set $ws1 "1: "
