@@ -790,6 +790,8 @@ dmenu-wayland-git
 
   ## Go back to previous workspace with the same keybinding
   workspace_auto_back_and_forth yes
+
+  floating_modifier $mod
 #+end_src
 ** assign
 #+begin_src conf :tangle ~/.config/i3/config
