@@ -36,7 +36,6 @@ They are included over =noweb= in the =profile= files for the specific shells.
   [ -f "/home/liolin/.nix-profile/etc/profile.d/nix.sh" ] && source "/home/liolin/.nix-profile/etc/profile.d/nix.sh"
   [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-
   export PATH
   export XDG_DATA_DIRS
   export ALTERNATE_EDITOR=""
@@ -67,6 +66,53 @@ Terminal=false
 StartupWMClass=Emacs
 MimeType=x-scheme-handler/org-protocol;
 
+#+end_src
+* syncorg
+** syncorg service
+#+begin_src conf :tangle ~/.config/systemd/user/syncorg.service :tangle-mode (identity #o444)
+  [Unit]
+  Description=Sync org directory with Github
+
+  [Service]
+  Type=simple
+  ExecStart=/home/liolin/.local/bin/syncorg
+
+  [Install]
+  WantedBy=default.target
+#+end_src
+** syncorg timer
+#+begin_src conf :tangle ~/.config/systemd/user/syncorg.timer :tangle-mode (identity #o444)
+  [Timer]
+  Description=Sync org directory with Github
+
+  [Timer]
+  OnUnitActiveSec=15m
+
+  [Install]
+  WantedBy=timers.target
+#+end_src
+** syncorg script
+#+begin_src sh :tangle ~/.local/bin/syncorg :tangle-mode (identity #o555)
+#!/usr/bin/env bash
+set -Eeuo
+
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+echo "Start"
+cd /home/liolin/org
+dirty=$(git status -s | grep -E "[a-zA-Z]" | wc -l)
+
+if [ $dirty -gt 0 ]; then
+    echo "Add new files"
+    git add .
+    git commit -m "Update"
+fi
+
+echo "Pull"
+git pull
+
+echo "Push"
+git push
 #+end_src
 * Alacritty
 :PROPERTIES:
