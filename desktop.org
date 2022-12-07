@@ -105,7 +105,7 @@ dirty=$(git status -s | grep -E "[a-zA-Z]" | wc -l)
 if [ $dirty -gt 0 ]; then
     echo "Add new files"
     git add .
-    git commit -m "Update"
+    git commit -m "Update using systemd.timer"
 fi
 
 echo "Pull"
