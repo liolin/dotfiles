@@ -1066,6 +1066,8 @@ dmenu-wayland-git
 #+begin_example
 i3
 i3status-rust
+pamixer
+brightnessctl
 #+end_example
 * lxsession
 #+begin_src conf :tangle ~/.config/systemd/user/lxsession.service
