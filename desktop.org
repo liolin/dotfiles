@@ -103,11 +103,11 @@ MimeType=x-scheme-handler/org-protocol;
   cd /home/liolin/org
   dirty=$(git status -s | grep -E "[a-zA-Z]" | wc -l)
 
-  if [ $dirty -gt 0 ]; then
-      echo "Add new files"
-      git add .
-      git commit -m "Update"
-  fi
+if [ $dirty -gt 0 ]; then
+    echo "Add new files"
+    git add .
+    git commit -m "Update using systemd.timer"
+fi
 
   echo "Pull"
   git pull
@@ -1784,6 +1784,8 @@ dmenu-wayland-git
 #+begin_example
 i3
 i3status-rust
+pamixer
+brightnessctl
 #+end_example
 * lxsession
 #+begin_src conf :tangle ~/.config/systemd/user/lxsession.service
