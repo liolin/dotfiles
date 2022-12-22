@@ -1926,6 +1926,25 @@ isync
 #+end_example
 
 * mu
+** emacsmail
+#+begin_src sh :tangle ~/.local/bin/emacsmail :tangle-mode (identity #o555)
+  emacsclient -c --eval "(liolin/mailto \"$@\")"
+#+end_src
+** emacsclient-mail.desktop
+#+begin_src conf :tangle ~/.local/share/applications/emacsclient-mail.desktop
+[Desktop Entry]
+Categories=Network;Email;
+Comment=GNU Emacs is an extensible, customizable text editor - and more
+Exec=/home/liolin/.local/bin/emacsmail
+Icon=emacs
+Name=Emacs (Mail, Client)
+MimeType=x-scheme-handler/mailto;
+NoDisplay=true
+Terminal=false
+Type=Application
+Keywords=emacsclient;
+Actions=new-window;new-instance;
+#+end_src
 ** Required Packages                                               :packages:
 #+begin_example
 mu
