@@ -1342,6 +1342,7 @@ See [[file:system.org][system.org]]
      alias ls="exa"
      alias l="exa"
      alias cp="cp -i"
+    alias mv="mv -i"
      alias cat="bat -p"
      alias mount-share="systemctl start home-liolin-shares-ds.mount"
      alias batstat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
@@ -4121,7 +4122,6 @@ xournalpp
 #+end_example
 
 * TODO Wireguard
-
 ** Required Packages                                               :packages:
 #+begin_example
 wireguard-tools
