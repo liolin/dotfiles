@@ -832,7 +832,7 @@ function are_we_going(attendee)
   URL=$(cat ~/.credentials/ost_calendar)
   curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_ost.org 
 #+end_src
-* Alacritty
+* Alacritty (problem with opengl in nix)
 :PROPERTIES:
 :header-args:yaml: :tangle ~/.config/alacritty/alacritty.yml :tangle-mode (identity #o555)
 :END:
@@ -940,7 +940,7 @@ alacritty
   alias cp='cp -i'
   alias mount-share='systemctl start home-liolin-shares-ds.mount'
   alias batstat='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
-  alias syncost='rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/01_School/02_HSR/01_Unterrichtsunterlagen/04_Semester/'
+  alias syncost='rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/01_School/02_HSR/01_Unterrichtsunterlagen/06_Semester/'
   alias syncmail='rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/00_Private/99_mailArchive/'
   alias gp='git push'
   alias gpu='git pull'
@@ -1188,14 +1188,14 @@ cmus
 conky
 #+end_example
 
-* Dunst
+* Dunst (ported to nix)
 ** Global
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   [global]
 #+end_src
 
 *** Display
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   monitor = 0
   follow = none
   geometry = "300x5-30+20"
@@ -1221,7 +1221,7 @@ conky
 #+end_src
 
 *** Text
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   font = Monospace 10
   line_height = 0
   markup = full
@@ -1237,14 +1237,14 @@ conky
 #+end_src
 
 *** Icons
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   icon_position = left
   max_icon_size = 64
   icon_path = /usr/share/icons/Arc-X-D/status/:/usr/share/icons/Arc-X-D/devices/
 #+end_src
 
 *** History
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   # Should a notification popped up from history be sticky or timeout
   # as if it would normally do.
   sticky_history = yes
@@ -1254,7 +1254,7 @@ conky
 #+end_src
 
 *** Misc / Advanced
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   dmenu = /usr/bin/dmenu -p dunst:
   browser = /usr/bin/firefox -new-tab
 
@@ -1272,7 +1272,7 @@ conky
 #+end_src
 
 *** Legacy
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   # Use the Xinerama extension instead of RandR for multi-monitor support.
   # This setting is provided for compatibility with older nVidia drivers that
   # do not support RandR and using it on systems that support RandR is highly
@@ -1285,7 +1285,7 @@ conky
 #+end_src
 
 *** Mouse
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   mouse_left_click = close_current
   mouse_middle_click = do_action
   mouse_right_click = close_all
@@ -1293,7 +1293,7 @@ conky
 
 ** Shortcuts
 The mod1 key is the alt key on the left side of the space bar.
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   [shortcuts]
   close = mod1+k
   close_all = mod1+shift+k
@@ -1302,7 +1302,7 @@ The mod1 key is the alt key on the left side of the space bar.
 #+end_src
 
 ** Urgency style
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
+#+begin_src conf
   [urgency_low]
   background = "#222222"
   foreground = "#888888"
@@ -1327,10 +1327,7 @@ dunst
 
 * Etc 
 See [[file:system.org][system.org]]
-* fish
-:PROPERTIES:
-:header-args:sh: :tangle-mode (identity #o555) :tangle ~/.config/fish/config.fish
-:END:
+* fish (ported to nix)
 ** config.fish
 *** general
 #+begin_src sh
@@ -1342,11 +1339,11 @@ See [[file:system.org][system.org]]
      alias ls="exa"
      alias l="exa"
      alias cp="cp -i"
-    alias mv="mv -i"
+     alias mv="mv -i"
      alias cat="bat -p"
      alias mount-share="systemctl start home-liolin-shares-ds.mount"
      alias batstat="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
-     alias syncost="rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/01_School/02_HSR/01_Unterrichtsunterlagen/05_Semester/"
+     alias syncost="rsync -avz /home/liolin/ownCloud/Private/ost/ /home/liolin/shares/ds/Documents/01_School/02_HSR/01_Unterrichtsunterlagen/06_Semester/"
      alias syncmail="rsync -avz /home/liolin/.mail/ /home/liolin/shares/ds/Documents/00_Private/99_mailArchive/"
      alias gp="git push"
      alias gpu="git pull"
@@ -1358,17 +1355,18 @@ See [[file:system.org][system.org]]
 
      starship init fish | source
      direnv hook fish | source
-   end
+     end
 #+end_src
 ** funtions
-#+begin_src sh :tangle ~/.config/fish/functions/fish_user_key_bindings.fish :tangle-mode (identity #o444)
+#+begin_src sh
   function fish_user_key_bindings
-     fzf_key_bindings
+  fzf_key_bindings
   end
 #+end_src
-#+begin_src sh :tangle ~/.config/fish/functions/yta.fish :tangle-mode (identity #o444)
+
+#+begin_src sh 
   function yta
-      mpv --ytdl-format=bestaudio "$argv"
+  mpv --ytdl-format=bestaudio "$argv"
   end
 #+end_src
 * Fonts
@@ -1382,8 +1380,8 @@ Installation of the fonts
 
 #+RESULTS:
 
-* Git
-#+begin_src conf :tangle ~/.gitconfig
+* Git (ported to nix)
+#+begin_src conf
   [user]
   name = Olivier Lischer
   email = olivier.lischer@liolin.ch
@@ -1405,10 +1403,10 @@ Installation of the fonts
 git
 #+end_example
 
-* GPG
+* GPG (ported to nix)
 ** TODO gpg-agent-info
 ** gpg.conf
-#+begin_src conf :tangle ~/.gnupg/gpg.conf
+#+begin_src conf 
   # https://github.com/drduh/config/blob/master/gpg.conf
   # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html
   # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Esoteric-Options.html
@@ -1467,7 +1465,7 @@ git
   #verbose
 #+end_src
 ** gpg-agent.conf
-#+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
+#+begin_src conf
   ## Set timeout for passphrase unlock to 8 hours
   default-cache-ttl 28800
   max-cache-ttl 28800
@@ -1479,7 +1477,7 @@ git
 #+end_src
 
 ** sshcontrol
-#+begin_src conf :tangle ~/.gnupg/sshcontrol
+#+begin_src conf
   # List of allowed ssh keys.  Only keys present in this file are used
   # in the SSH protocol.  The ssh-add tool may add new entries to this
   # file to enable them; you may also add them manually.  Comment
@@ -1818,9 +1816,9 @@ lxsession
   keybase.io: liolin
 #+end_src
 
-* mbsync
+* mbsync (ported to nix)
 ** olivier.lischer@liolin.ch
-#+begin_src conf :tangle ~/.mbsyncrc
+#+begin_src conf 
   IMAPAccount olivier.lischer@liolin.ch
   # Address to connect to
   Host imap.mail.hostpoint.ch
@@ -1855,7 +1853,7 @@ lxsession
   CopyArrivalDate yes
 #+end_src
 ** notes@liolin.ch
-#+begin_src conf :tangle ~/.mbsyncrc
+#+begin_src conf
   IMAPAccount notes@liolin.ch
   # Address to connect to
   Host imap.mail.hostpoint.ch
@@ -1888,7 +1886,7 @@ lxsession
 #+end_src
 
 ** olivier.lischer.blong@gmail.com
-#+begin_src conf :tangle ~/.mbsyncrc
+#+begin_src conf
   IMAPAccount olivier.lischer.blon@gmail.com
   # Address to connect to
   Host imap.gmail.com
@@ -4140,8 +4138,8 @@ virt-viewer
 evince
 #+end_example
 
-* mpv
-#+begin_src conf :tangle ~/.config/mpv/mpv.conf
+* mpv (ported to nix)
+#+begin_src conf 
 ytdl-raw-options=yes-playlist=
 #+end_src
 
