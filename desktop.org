@@ -1803,6 +1803,7 @@ brightnessctl
   exec-once = waybar & dunst & nm-applet & playerctld daemon & owncloud
   exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
+  $locker = swaylock -k -l -i ~/Pictures/wall_anime_8K.png
 
   # Source a file (multi-file configs)
   # source = ~/.config/hypr/myColors.conf
@@ -1912,7 +1913,7 @@ brightnessctl
   ## General keybindings
   bind = $mainMod, RETURN, exec, alacritty
   bind = $mainMod SHIFT, C, killactive, 
-  bind = $mainMod, R, exec, wofi --show drun
+  bind = $mainMod, R, exec, wofi --allow-images --show drun
   bind = $mainMod SHIFT, Q, exit, 
   bind = $mainMod, SPACE, togglefloating,
   bind = $mainMod, F, fullscreen
@@ -2024,10 +2025,10 @@ brightnessctl
   $systemMode = System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (CTRL+s) shutdown
   bind = $mainMod,BACKSPACE,submap,$systemMode
   submap = $systemMode
-  bind = ,L, exec, swaylock
+  bind = ,L, exec, $locker
   bind = ,E, exec, exit
-  bind = ,S, exec, xsecurelock -- systemctl suspend
-  bind = ,H, exec, xsecurelock -- systemctl hibernate
+  bind = ,S, exec, $locker -f && sleep 2 && systemctl suspend
+  bind = ,H, exec, $locker -f && sleep 2 && systemctl hibernate
   bind = ,R, exec, systemctl reboot
   bind = CTRL,S, exec, systemctl poweroff -i
 
