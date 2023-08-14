@@ -2061,115 +2061,107 @@ brightnessctl
   {
       "height": 30, // Waybar height (to be removed for auto height)
       "position": "bottom",
-      "modules-left": ["hyprland/workspaces"],
+      "layer": "top",
+      "modules-left": ["wlr/workspaces"],
       "modules-center": ["hyprland/submap", "hyprland/window"],
       "modules-right": ["idle_inhibitor", "wireplumber", "network", "hyprland/language", "battery", "clock", "tray"],
 
 
-      "hyprland/workspaces": {
-  	  "format": "{id}: {icon}",
-  	  "format-icons": {
-  	      "1": "",
-  	      "2": "",
-  	      "3": "",
-  	      "4": "",
-  	      "5": "",
-  	      "urgent": "",
-  	      "default": ""
-  	  },
+      "wlr/workspaces": {
+	  "sort-by-number": true,
+	  "format": "{name}: {icon}",
+	  "format-icons": {
+	      "1": "",
+	      "2": "",
+	      "3": " ",
+	      "4": "",
+	      "5": "",
+	      "6": "",
+	      "7": "",
+	      "8": "",
+	      "9": "",
+	      "10": "",
+	      "urgent": "",
+	      "default": ""
+	  }
+
       },
       "hyprland/submap": {
-  	  "format": "<span style=\"italic\">{}</span>",
-  	  "tooltip": false
-      },
-      "sway/workspaces": {
-  	  "disable-scroll": true,
-  	  "all-outputs": true,
-  	  "format": "{name}: {icon}",
-  	  "format-icons": {
-  	      "1": "",
-  	      "2": "",
-  	      "3": " ",
-  	      "5": "",
-  	      "6": "",
-  	      "7": "",
-  	      "9": "",
-  	      "urgent": "",
-  	      "default": ""
-  	  }
+	  "format": "<span style=\"italic\">{}</span>",
+	  "tooltip": false
       },
       "keyboard-state": {
-  	  "numlock": true,
-  	  "capslock": true,
-  	  "format": "{name} {icon}",
-  	  "format-icons": {
-  	      "locked": "",
-  	      "unlocked": ""
-  	  }
+	  "numlock": true,
+	  "capslock": true,
+	  "format": "{name} {icon}",
+	  "format-icons": {
+	      "locked": "",
+	      "unlocked": ""
+	  }
       },
       "sway/mode": {
-  	  "format": "<span style=\"italic\">{}</span>"
+	  "format": "<span style=\"italic\">{}</span>"
       },
       "idle_inhibitor": {
-  	  "format": "{icon}",
-  	  "format-icons": {
-  	      "activated": "",
-  	      "deactivated": ""
-  	  }
+	  "format": "{icon}",
+	  "format-icons": {
+	      "activated": "",
+	      "deactivated": ""
+	  }
       },
       "tray": {
-  	  // "icon-size": 21,
-  	  "spacing": 10
+	  // "icon-size": 21,
+	  "spacing": 10
       },
       "clock": {
-  	  "timezone": "Europe/Zurich",
-  	  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-  	  "format": "{:%Y-%m-%d %H:%M}",
+	  "timezone": "Europe/Zurich",
+	  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+	  "format": "{:%Y-%m-%d %H:%M}",
       },
       "battery": {
-  	  "states": {
-  	      // "good": 95,
-  	      "warning": 30,
-  	      "critical": 15
-  	  },
-  	  "format": "{capacity}% {icon}",
-  	  "format-charging": "{capacity}% ",
-  	  "format-plugged": "{capacity}% ",
-  	  "format-alt": "{time} {icon}",
-  	  "format-icons": ["", "", "", "", ""]
+	  "states": {
+	      // "good": 95,
+	      "warning": 30,
+	      "critical": 15
+	  },
+	  "format": "{capacity}% {icon}",
+	  "format-charging": "{capacity}% ",
+	  "format-plugged": "{capacity}% ",
+	  "format-alt": "{time} {icon}",
+	  "format-icons": ["", "", "", "", ""]
       },
       "network": {
-  	  "format-wifi": "{essid} ({signalStrength}%) ",
-  	  "format-ethernet": "{ipaddr}/{cidr} ",
-  	  "tooltip-format": "{ifname} via {gwaddr} ",
-  	  "format-linked": "{ifname} (No IP) ",
-  	  "format-disconnected": "Disconnected ⚠",
-  	  "format-alt": "{ifname}: {ipaddr}/{cidr}"
+	  "format-wifi": "{essid} ({signalStrength}%) ",
+	  "format-ethernet": "{ipaddr}/{cidr} ",
+	  "tooltip-format": "{ifname} via {gwaddr} ",
+	  "format-linked": "{ifname} (No IP) ",
+	  "format-disconnected": "Disconnected ⚠",
+	  "format-alt": "{ifname}: {ipaddr}/{cidr}"
       },
       "pulseaudio": {
-  	  // "scroll-step": 1, // %, can be a float
-  	  "format": "{volume}% {icon} {format_source}",
-  	  "format-bluetooth": "{volume}% {icon} {format_source}",
-  	  "format-bluetooth-muted": " {icon} {format_source}",
-  	  "format-muted": " {format_source}",
-  	  "format-source": "{volume}% ",
-  	  "format-source-muted": "",
-  	  "format-icons": {
-  	      "headphone": "",
-  	      "hands-free": "",
-  	      "headset": "",
-  	      "phone": "",
-  	      "portable": "",
-  	      "car": "",
-  	      "default": ["", "", ""]
-  	  },
-  	  "on-click": "pavucontrol"
+	  // "scroll-step": 1, // %, can be a float
+	  "format": "{volume}% {icon} {format_source}",
+	  "format-bluetooth": "{volume}% {icon} {format_source}",
+	  "format-bluetooth-muted": " {icon} {format_source}",
+	  "format-muted": " {format_source}",
+	  "format-source": "{volume}% ",
+	  "format-source-muted": "",
+	  "format-icons": {
+	      "headphone": "",
+	      "hands-free": "",
+	      "headset": "",
+	      "phone": "",
+	      "portable": "",
+	      "car": "",
+	      "default": ["", "", ""]
+	  },
+	  "on-click": "pavucontrol"
       },
       "wireplumber": {
-  	  "format": "{volume}% {icon}",
-  	  "format-muted": "",
-  	  "on-click": "pavucontrol",
-  	  "format-icons": ["", "", ""]
+	  "format": "{volume}% {icon}",
+	  "format-muted": "",
+	  "on-click": "pavucontrol",
+	  "format-icons": ["", "", ""]
       }
   }
 
@@ -2195,15 +2187,6 @@ brightnessctl
       opacity: 0.2;
   }
 
-  /*
-  window#waybar.empty {
-      background-color: transparent;
-  }
-  window#waybar.solo {
-      background-color: #FFFFFF;
-  }
-  ,*/
-
   window#waybar.termite {
       background-color: #3F3F3F;
   }
@@ -2224,14 +2207,13 @@ brightnessctl
       border-radius: 0;
   }
 
-  /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
   #workspaces button:hover {
       background: rgba(0, 0, 0, 0.2);
       box-shadow: inset 0 -3px #ffffff;
   }
 
   #workspaces button.active {
-      background-color: #64727D;
+      background-color: #7D6F64;
       box-shadow: inset 0 -3px #ffffff;
   }
 
