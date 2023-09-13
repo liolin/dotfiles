@@ -2058,6 +2058,30 @@ brightnessctl
   bind = ,XF86MonBrightnessDown, exec, /usr/bin/brightnessctl set 5%-
 
 #+end_src
+
+** dmenu-wl
+#+begin_src sh :tangle ~/.local/bin/dmenu-wl :tangle-mode (identity #o555)
+  #!/usr/bin/env bash
+  set -Eeu
+  wofi --dmenu "$@"
+#+end_src
+** Required Packages                                               :packages:
+#+begin_example
+hyprland
+pipewire
+wireplumber
+pipewire-alsa
+pipewire-pulse
+xdg-desktop-portal-hyprland
+qt5-wayland
+qt6-wayland=
+waybar
+wofi
+nwg-look
+wl-clipboard
+create dmenu-wl script (=wofi --dmenu "$@"=)
+#+end_example
+
 * Waybar
 ** Config
 #+begin_src json :tangle ~/.config/waybar/config
