@@ -2062,12 +2062,12 @@ brightnessctl
       "height": 30, // Waybar height (to be removed for auto height)
       "position": "bottom",
       "layer": "top",
-      "modules-left": ["wlr/workspaces"],
+      "modules-left": ["hyprland/workspaces"],
       "modules-center": ["hyprland/submap", "hyprland/window"],
       "modules-right": ["idle_inhibitor", "wireplumber", "network", "hyprland/language", "battery", "clock", "tray"],
 
 
-      "wlr/workspaces": {
+      "hyprland/workspaces": {
 	  "sort-by-number": true,
 	  "format": "{name}: {icon}",
 	  "format-icons": {
