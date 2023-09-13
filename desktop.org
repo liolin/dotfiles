@@ -1963,6 +1963,9 @@ brightnessctl
   bind = $mainMod SHIFT, W, movecurrentworkspacetomonitor, -1 
   bind = $mainMod SHIFT, E, movecurrentworkspacetomonitor, +1
 
+  # Mouse Bindings
+  bindm=ALT,mouse:272,movewindow
+
   ## Resize (does noething currently)
   bind = $mainMod SHIFT, S, submap,resize
   submap=resize
