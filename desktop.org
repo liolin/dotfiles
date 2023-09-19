@@ -3090,6 +3090,7 @@ polybar
   /usr/bin/playerctld daemon
   /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
   /usr/bin/nitrogen --restore
+  /sbin/udiskie --no-automount --no-notify --tray &
   [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
   [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
   [ -x ~/.screenlayout/static.sh ] && ~/.screenlayout/static.sh 
