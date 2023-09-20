@@ -25,6 +25,9 @@ They are included over =noweb= in the =profile= files for the specific shells.
   PATH="$HOME/.dotnet/tools:$PATH"
   PATH="$HOME/.local/bin:$PATH"
   PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
+  BUN_INSTALL="$HOME/.bun"
+  PATH=$BUN_INSTALL/bin:$PATH
+
 
   if [ -d "/var/lib/flatpak/exports/share/applications" ] ; then
       XDG_DATA_DIRS="/var/lib/flatpak/exports/share/applications:$XDG_DATA_DIRS"
@@ -40,6 +43,7 @@ They are included over =noweb= in the =profile= files for the specific shells.
   [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
   export PATH
+  export BUN_INSTALL
   export XDG_DATA_DIRS
   export ALTERNATE_EDITOR=""
   export EDITOR="emacsclient -c -a emacs"
@@ -1844,10 +1848,13 @@ brightnessctl
       # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
       rounding = 0
-      blur = yes
-      blur_size = 3
-      blur_passes = 1
-      blur_new_optimizations = on
+
+      blur {
+      	 enabled = yes
+      	 size = 3
+      	 passes = 1
+      	 new_optimizations = on
+      }
 
       drop_shadow = yes
       shadow_range = 4
