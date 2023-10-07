@@ -1535,7 +1535,7 @@ git
 
   ### Output configuration
   # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-  output * bg ~/Pictures/wallpaper/liolin_wallpaper_black.jpg fill
+  output * bg ~/Pictures/wall_anime_8K.png fill
   output $internal_mon resolution 1920x1080 position 0,0
   #output $external_mon resolution 2560x1440 position 660,0
   #focus output $external_mon # primary focus on $external mon
