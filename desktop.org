@@ -1700,8 +1700,7 @@ git
 
   ### Launch Application
 
-  bindsym Print exec grim -g "$(slurp)"
-  bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy
+  bindsym Print exec grim -g "$(slurp)" - | ksnip -
   bindsym XF86AudioMute exec /usr/bin/pamixer --toggle-mute
   bindsym XF86AudioLowerVolume exec /usr/bin/pamixer --decrease 5
   bindsym XF86AudioRaiseVolume exec /usr/bin/pamixer --increase 5
