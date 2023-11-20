@@ -1536,7 +1536,8 @@ git
   ### Output configuration
   # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
   output * bg ~/Pictures/wall_anime_8K.png fill
-  output $internal_mon resolution 1920x1080 position 0,0
+  output $internal_mon resolution 1920x1080 position 2560,0
+  output $external_mon resolution 2560x1440 position 0,0
   #output $external_mon resolution 2560x1440 position 660,0
   #focus output $external_mon # primary focus on $external mon
   # You can get the names of your outputs by running: swaymsg -t get_outputs
@@ -1563,7 +1564,7 @@ git
   }
   # You can get the names of your inputs by running: swaymsg -t get_inputs
   # Read `man 5 sway-input` for more information about this section.
-   
+
   ### Key bindings
   #
   # Basics:
@@ -1637,8 +1638,8 @@ git
   # Note: workspaces can have any name you want, not just numbers.
   # We just use 1-10 as the default.
 
-  bindsym $mod+Shift+w move container to output left
-  bindsym $mod+Shift+e move container to output right
+  bindsym $mod+Shift+w move workspace to output left
+  bindsym $mod+Shift+e move workspace to output right
 
 
   #
@@ -1768,6 +1769,9 @@ swaylock
 swayidle
 ly
 dmenu-wayland-git
+grim
+slurp
+ksnip
 #+end_example
 
 * i3
