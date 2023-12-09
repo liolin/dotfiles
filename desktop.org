@@ -21,11 +21,11 @@ They are included over =noweb= in the =profile= files for the specific shells.
 
 #+NAME: ENV-VARS
 #+begin_src sh :tangle no
+  BUN_INSTALL="$HOME/.bun"
   PATH="$HOME/.cargo/bin:$PATH"
   PATH="$HOME/.dotnet/tools:$PATH"
   PATH="$HOME/.local/bin:$PATH"
   PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
-  BUN_INSTALL="$HOME/.bun"
   PATH=$BUN_INSTALL/bin:$PATH
 
 
@@ -45,6 +45,7 @@ They are included over =noweb= in the =profile= files for the specific shells.
   export PATH
   export BUN_INSTALL
   export XDG_DATA_DIRS
+  export BUN_INSTALL
   export ALTERNATE_EDITOR=""
   export EDITOR="emacsclient -c -a emacs"
   export VISUAL="emacsclient -c -a emacs"
@@ -3397,6 +3398,7 @@ polybar
   /usr/bin/playerctld daemon
   /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
   /usr/bin/nitrogen --restore
+  /sbin/udiskie --no-automount --no-notify --tray &
   [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
   [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
   [ -x ~/.screenlayout/static.sh ] && ~/.screenlayout/static.sh 
