@@ -3403,6 +3403,7 @@ polybar
   [ -x ~/.local/share/applications/teams.desktop ] &&  cd ~/.local/share/applications/ && gtk-launch teams.desktop 
   #/bin/sh ~/bin/update-notif
   /usr/bin/owncloud &
+  udiskie --automount --notify --tray
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -3414,6 +3415,7 @@ playerctl
 xorg-xmodmap
 redshift
 nitrogen (feh?)
+udiskie
 (conky)
 (keybase=)
 #+end_example
