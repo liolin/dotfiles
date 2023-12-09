@@ -3398,14 +3398,13 @@ polybar
   /usr/bin/playerctld daemon
   /usr/bin/xmodmap ~/.config/xmodmap/xmodmap.conf
   /usr/bin/nitrogen --restore
-  /sbin/udiskie --no-automount --no-notify --tray &
+  /sbin/udiskie --no-automount --tray &
   [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
   [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
   [ -x ~/.screenlayout/static.sh ] && ~/.screenlayout/static.sh 
   [ -x ~/.local/share/applications/teams.desktop ] &&  cd ~/.local/share/applications/ && gtk-launch teams.desktop 
   #/bin/sh ~/bin/update-notif
   /usr/bin/owncloud &
-  udiskie --automount --notify --tray
 #+end_src
 
 ** Required Packages                                               :packages:
