@@ -1536,7 +1536,7 @@ git
 
   ### Output configuration
   # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-  output * bg ~/Pictures/wall_anime_8K.png fill
+  output * bg ~/Pictures/wallpapers/0008.png fill
   output $internal_mon resolution 1920x1080 position 2560,0
   output $external_mon resolution 2560x1440 position 0,0
   #output $external_mon resolution 2560x1440 position 660,0
@@ -1752,7 +1752,7 @@ git
        bindsym h exec --no-startup-id $locker -f && sleep 2 && systemctl hibernate; mode "default"
        bindsym r exec --no-startup-id systemctl reboot; mode "default"
        bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i; mode "default"
-       
+
        # back to normal: Enter or Escape
        bindsym Return mode "default"
        bindsym Escape mode "default"
