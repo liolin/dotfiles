@@ -1588,9 +1588,6 @@ git
   # Reload the configuration file
   bindsym $mod+Shift+r reload
 
-  # Exit sway (logs you out of your Wayland session)
-  bindsym $mod+Shift+q exec swaymsg exit
-
   #
   # Moving around:
   #
