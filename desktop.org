@@ -1535,7 +1535,6 @@ git
   exec ~/.config/autostart.sh
 
   ### Output configuration
-  # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
   output * bg ~/Pictures/wallpapers/0008.png fill
   output $internal_mon resolution 1920x1080 position 2560,0
   output $external_mon resolution 2560x1440 position 0,0
@@ -1767,11 +1766,12 @@ git
 sway
 swaylock
 swayidle
-ly
+swaybg
 dmenu-wayland-git
 grim
 slurp
 ksnip
+wofi
 #+end_example
 
 * i3
@@ -2347,7 +2347,7 @@ pipewire-alsa
 pipewire-pulse
 xdg-desktop-portal-hyprland
 qt5-wayland
-qt6-wayland=
+qt6-wayland
 waybar
 wofi
 nwg-look
