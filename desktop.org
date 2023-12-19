@@ -1513,7 +1513,7 @@ git
   set $right l
   set $term alacritty
 
-  set $locker swaylock -k -l -i ~/Pictures/wall_anime_8K.png
+  set $locker swaylock -k -l -i ~/Pictures/wallpapers/0008.png
 
   # Note: pass the final command to swaymsg so that the resulting window can be opened
   # on the original workspace that the command was run on.
@@ -1546,9 +1546,10 @@ git
 
   ### Idle configuration
   exec swayidle -w \
-           timeout 300 $locker \
-           timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-           before-sleep $locker
+       timeout 180 '$locker' \
+       timeout 300 'swaymsg "output * dpms off"' \
+       resume 'swaymsg "output * dpms on"' \
+       before-sleep '$locker'
   #
   # This will lock your screen after 300 seconds of inactivity, then turn off
   # your displays after another 300 seconds, and turn your screens back on when
