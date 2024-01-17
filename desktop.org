@@ -20,7 +20,7 @@ The following are the env variables which are valid over all shells.
 They are included over =noweb= in the =profile= files for the specific shells.
 
 #+NAME: ENV-VARS
-#+begin_src sh :tangle no
+#+begin_src sh :tanle no
   BUN_INSTALL="$HOME/.bun"
   PATH="$HOME/.cargo/bin:$PATH"
   PATH="$HOME/.dotnet/tools:$PATH"
@@ -39,8 +39,8 @@ They are included over =noweb= in the =profile= files for the specific shells.
 
   [ -f "/home/liolin/.ghcup/env" ] && source "/home/liolin/.ghcup/env"
 
-  [ -f "/home/liolin/.nix-profile/etc/profile.d/nix.sh" ] && source "/home/liolin/.nix-profile/etc/profile.d/nix.sh"
-  [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+  #[ -f "/home/liolin/.nix-profile/etc/profile.d/nix.sh" ] && source "/home/liolin/.nix-profile/etc/profile.d/nix.sh"
+  #[ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
   export PATH
   export BUN_INSTALL
@@ -924,7 +924,7 @@ alacritty
 
 * Bash
 ** profile
-#+begin_src sh :tangle ~/.profile :tangle-mode (identity #o555) :noweb yes
+#+begin_src sh :tangle ~/.profile :tangle-mode (identity #o555) :noweb yey
   <<ENV-VARS>>
 #+end_src
 ** bash_profile
@@ -940,9 +940,8 @@ alacritty
 
 ** Alias
 #+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
-  alias ls='exa'
-  alias ll='exa -la'   # show long listing of all except ".."
-  alias l='exa -la --ignore-glob=.?*'   # show long listing but no hidden dotfiles except "."
+  alias ls='eza'
+  alias ll='eza -la'   # show long listing of all except ".."
   alias rm='rm -I'
   alias mv='mv -i'
   alias cp='cp -i'
@@ -959,11 +958,6 @@ alacritty
 ** starship
 #+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
   eval "$(starship init bash)"
-#+end_src
-
-** direnv
-#+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
-  eval "$(direnv hook bash)"
 #+end_src
 
 ** includes
@@ -985,7 +979,7 @@ alacritty
 
 ** Required Packages                                               :packages:
 #+begin_example
-exa
+eza
 upower
 rsync
 starship
@@ -1196,14 +1190,14 @@ cmus
 conky
 #+end_example
 
-* Dunst (ported to nix)
+* Dunst
 ** Global
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   [global]
 #+end_src
 
 *** Display
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   monitor = 0
   follow = none
   geometry = "300x5-30+20"
@@ -1229,7 +1223,7 @@ conky
 #+end_src
 
 *** Text
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   font = Monospace 10
   line_height = 0
   markup = full
@@ -1245,14 +1239,14 @@ conky
 #+end_src
 
 *** Icons
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   icon_position = left
   max_icon_size = 64
   icon_path = /usr/share/icons/Arc-X-D/status/:/usr/share/icons/Arc-X-D/devices/
 #+end_src
 
 *** History
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   # Should a notification popped up from history be sticky or timeout
   # as if it would normally do.
   sticky_history = yes
@@ -1262,7 +1256,7 @@ conky
 #+end_src
 
 *** Misc / Advanced
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   dmenu = /usr/bin/dmenu -p dunst:
   browser = /usr/bin/firefox -new-tab
 
@@ -1280,7 +1274,7 @@ conky
 #+end_src
 
 *** Legacy
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   # Use the Xinerama extension instead of RandR for multi-monitor support.
   # This setting is provided for compatibility with older nVidia drivers that
   # do not support RandR and using it on systems that support RandR is highly
@@ -1293,7 +1287,7 @@ conky
 #+end_src
 
 *** Mouse
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   mouse_left_click = close_current
   mouse_middle_click = do_action
   mouse_right_click = close_all
@@ -1301,7 +1295,7 @@ conky
 
 ** Shortcuts
 The mod1 key is the alt key on the left side of the space bar.
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   [shortcuts]
   close = mod1+k
   close_all = mod1+shift+k
@@ -1310,7 +1304,7 @@ The mod1 key is the alt key on the left side of the space bar.
 #+end_src
 
 ** Urgency style
-#+begin_src conf
+#+begin_src conf :tangle ~/.config/dunst/dunstrc
   [urgency_low]
   background = "#222222"
   foreground = "#888888"
@@ -1335,17 +1329,13 @@ dunst
 
 * Etc 
 See [[file:system.org][system.org]]
-* fish (ported to nix)
+* fish
 ** config.fish
-*** general
-#+begin_src sh
-  set fish_function_path $fish_function_path ~/code/plugin-foreign-env/functions
-#+end_src
 *** interactive shell
-#+begin_src sh
+#+begin_src sh :tangle ~/.config/fish/config.fish
   if status is-interactive
-     alias ls="exa"
-     alias l="exa"
+     alias ls="eza"
+     alias ll="eza -la"   # show long listing of all except ".."
      alias cp="cp -i"
      alias mv="mv -i"
      alias cat="bat -p"
@@ -1359,22 +1349,20 @@ See [[file:system.org][system.org]]
      alias ga="git add"
      alias cdr="cd ~/roam/"
      alias cdo="cd ~/org/"
-     alias kubectl="minikube kubectl --"
 
      starship init fish | source
-     direnv hook fish | source
-     end
+   end
 #+end_src
 ** funtions
-#+begin_src sh
+#+begin_src sh :tangle ~/.config/fish/functions/fish_user_key_bindings.fish
   function fish_user_key_bindings
-  fzf_key_bindings
+    fzf_key_bindings
   end
 #+end_src
 
-#+begin_src sh 
+#+begin_src sh :tangle ~/.config/fish/functions/yta.fish
   function yta
-  mpv --ytdl-format=bestaudio "$argv"
+    mpv --ytdl-format=bestaudio "$argv"
   end
 #+end_src
 * Fonts
@@ -1388,8 +1376,8 @@ Installation of the fonts
 
 #+RESULTS:
 
-* Git (ported to nix)
-#+begin_src conf
+* Git
+#+begin_src conf :tangle ~/.gitconfig
   [user]
   name = Olivier Lischer
   email = olivier.lischer@liolin.ch
@@ -1411,10 +1399,10 @@ Installation of the fonts
 git
 #+end_example
 
-* GPG (ported to nix)
+* GPG
 ** TODO gpg-agent-info
 ** gpg.conf
-#+begin_src conf 
+#+begin_src conf :tangle ~/.gnupg/gpg.conf
   # https://github.com/drduh/config/blob/master/gpg.conf
   # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html
   # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Esoteric-Options.html
@@ -1473,7 +1461,7 @@ git
   #verbose
 #+end_src
 ** gpg-agent.conf
-#+begin_src conf
+#+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
   ## Set timeout for passphrase unlock to 8 hours
   default-cache-ttl 28800
   max-cache-ttl 28800
@@ -1485,7 +1473,7 @@ git
 #+end_src
 
 ** sshcontrol
-#+begin_src conf
+#+begin_src conf :tangle ~/.gnupg/sshcontrol
   # List of allowed ssh keys.  Only keys present in this file are used
   # in the SSH protocol.  The ssh-add tool may add new entries to this
   # file to enable them; you may also add them manually.  Comment
@@ -2486,12 +2474,10 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
         "car": "",
         "default": ["", "", ""]
       },
-      "on-click": "pavucontrol"
     },
     "wireplumber": {
       "format": "{volume}% {icon}",
       "format-muted": "",
-      "on-click": "pavucontrol",
       "format-icons": ["", "", ""]
     }
   }
@@ -2777,9 +2763,9 @@ lxsession
   keybase.io: liolin
 #+end_src
 
-* mbsync (ported to nix)
+* mbsync
 ** olivier.lischer@liolin.ch
-#+begin_src conf 
+#+begin_src conf :tangle ~/.mbsyncrc
   IMAPAccount olivier.lischer@liolin.ch
   # Address to connect to
   Host imap.mail.hostpoint.ch
@@ -2814,7 +2800,7 @@ lxsession
   CopyArrivalDate yes
 #+end_src
 ** notes@liolin.ch
-#+begin_src conf
+#+begin_src conf :tangle ~/.mbsyncrc
   IMAPAccount notes@liolin.ch
   # Address to connect to
   Host imap.mail.hostpoint.ch
@@ -2847,7 +2833,7 @@ lxsession
 #+end_src
 
 ** olivier.lischer.blong@gmail.com
-#+begin_src conf
+#+begin_src conf :tangle ~/.mbsyncrc
   IMAPAccount olivier.lischer.blon@gmail.com
   # Address to connect to
   Host imap.gmail.com
@@ -5101,8 +5087,8 @@ virt-viewer
 evince
 #+end_example
 
-* mpv (ported to nix)
-#+begin_src conf 
+* mpv
+#+begin_src conf :tangle ~/.config/mpv/mpv.conf
 ytdl-raw-options=yes-playlist=
 #+end_src
 
