@@ -15,6 +15,38 @@ tangle-mode:
 - [[https://orgmode.org/manual/Extracting-Source-Code.html][Extracting Source Code (The Org Manual)]]
 
 
+* env
+#+begin_src sh :tanle no
+  PATH DEFAULT=${PATH}:@{HOME}/cargo/bin
+  PATH DEFAULT=${PATH}:@{HOME}/.local/bin
+  PATH DEFAULT=${PATH}:@{HOME}/dotnet/tools
+  PATH DEFAULT=${PATH}:@{HOME}/.ghcup/bin
+  PATH DEFAULT=${PATH}:@{HOME}/.cabal/bin
+  PATH DEFAULT=${PATH}:@{HOME}/.bun/bin
+
+  EDITOR DEFAULT="emacsclient -c -a emacs"
+  VISUAL DEFAULT="emacsclient -c -a emacs"
+
+  # Globals
+  TZ=Europe/Zurich
+  LANG=en_US.UTF-8
+
+  # Environment-local
+  CARGO_TARGET_DIR DEFAULT=@{HOME}/.cargo-target
+  PATH DEFAULT=${PATH}:@{HOME}/.cargo-target/release/
+
+  # Rust stuff
+  RUST_BACKTRACE=1
+
+  # .NET stuff
+  DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+  # Java stuff
+  _JAVA_AWT_WM_NONREPARENTING=1
+
+  #export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+#+end_src
+
 * ENV Variables
 The following are the env variables which are valid over all shells. 
 They are included over =noweb= in the =profile= files for the specific shells.
@@ -924,7 +956,7 @@ alacritty
 
 * Bash
 ** profile
-#+begin_src sh :tangle ~/.profile :tangle-mode (identity #o555) :noweb yey
+#+begin_src sh :tangle ~/.profile :tangle-mode (identity #o555) :noweb yes
   <<ENV-VARS>>
 #+end_src
 ** bash_profile
@@ -1331,8 +1363,45 @@ dunst
 See [[file:system.org][system.org]]
 * fish
 ** config.fish
-*** interactive shell
 #+begin_src sh :tangle ~/.config/fish/config.fish
+  set PATH $PATH "$HOME/cargo/bin"
+  set PATH $PATH "$HOME/.local/bin"
+  set PATH $PATH "$HOME/dotnet/tools"
+  set PATH $PATH "$HOME/.ghcup/bin"
+  set PATH $PATH "$HOME/.cabal/bin"
+  set -gx PATH $PATH "$HOME/.bun/bin"
+
+  set -gx EDITOR "emacsclient -c -a emacs"
+  set -gx VISUAL "emacsclient -c -a emacs"
+
+  # Globals
+  set -gx TZ "Europe/Zurich"
+  set -gx LANG "en_US.UTF-8"
+
+  # Environment-local
+  set -gx CARGO_TARGET_DIR "$HOME/.cargo-target"
+  set -gx PATH $PATH "$HOME/.cargo-target/release/"
+
+  # Rust stuff
+  set -gx RUST_BACKTRACE 1
+
+  # .NET stuff
+  set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
+
+  # Java stuff
+  set -gx _JAVA_AWT_WM_NONREPARENTING 1
+
+  # SSH / GPG
+  gpgconf --launch gpg-agen
+  set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+
+
+  # Run sway on login
+  set TTY (tty)
+  if [ $TTY = "/dev/tty1" ]
+     exec sway
+  end
+
   if status is-interactive
      alias ls="eza"
      alias ll="eza -la"   # show long listing of all except ".."
@@ -1351,7 +1420,7 @@ See [[file:system.org][system.org]]
      alias cdo="cd ~/org/"
 
      starship init fish | source
-   end
+  end
 #+end_src
 ** funtions
 #+begin_src sh :tangle ~/.config/fish/functions/fish_user_key_bindings.fish
