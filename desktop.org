@@ -956,11 +956,11 @@ alacritty
 
 * Bash
 ** profile
-#+begin_src sh :tangle ~/.profile :tangle-mode (identity #o555) :noweb yes
+#+begin_src sh
   <<ENV-VARS>>
 #+end_src
 ** bash_profile
-#+begin_src sh :tangle ~/.bash_profile :tangle-mode (identity #o555) :noweb yes
+#+begin_src sh
   <<ENV-VARS>>
 
   [ -r "~/.bashrc" ] && source ~/.bashrc 
@@ -1558,6 +1558,12 @@ git
   !48ED9915566EAD80A32C2DAE3C6A23629ADC0BB4
 #+end_src
 
+* SSH
+** config
+#+begin_src conf :tangle ~/.ssh/config
+  Host liolin.ch
+    SetEnv TERM=xterm
+#+end_src
 * sway
 #+begin_src conf :tangle ~/.config/sway/config
   ### Set WM Name
