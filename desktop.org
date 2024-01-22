@@ -1392,7 +1392,7 @@ See [[file:system.org][system.org]]
   set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
   # SSH / GPG
-  gpgconf --launch gpg-agen
+  gpgconf --launch gpg-agent
   set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
 
@@ -1531,6 +1531,7 @@ git
 #+end_src
 ** gpg-agent.conf
 #+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
+  pinentry-program /usr/bin/pinentry-gtk-2
   ## Set timeout for passphrase unlock to 8 hours
   default-cache-ttl 28800
   max-cache-ttl 28800
