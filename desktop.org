@@ -1746,7 +1746,7 @@ set $base0F #d65d0e
   set $right l
   set $term alacritty
 
-  set $locker swaylock -k -l -i ~/Pictures/wallpapers/0008.png
+  set $locker swaylock -k -l -i ~/Pictures/wallpapers/0020.png
 
   # Note: pass the final command to swaymsg so that the resulting window can be opened
   # on the original workspace that the command was run on.
@@ -1772,7 +1772,7 @@ set $base0F #d65d0e
   exec ~/.config/autostart.sh
 
   ### Output configuration
-  output * bg ~/Pictures/wallpapers/0008.png fill
+  output * bg ~/Pictures/wallpapers/0020.png fill
   output $internal_mon resolution 1920x1080 position 2560,0
   output $external_mon resolution 2560x1440 position 0,0
   output $external_mon_home resolution 2560x1440 position 0,0
