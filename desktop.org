@@ -2597,6 +2597,8 @@ qt6-wayland
 waybar
 wofi
 nwg-look
+gruvbox-dark-gtk
+gruvbox-dark-icons-gtk
 wl-clipboard
 create dmenu-wl script (=wofi --dmenu "$@"=)
 #+end_example
