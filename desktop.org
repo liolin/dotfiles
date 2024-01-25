@@ -872,7 +872,7 @@ function are_we_going(attendee)
   URL=$(cat ~/.credentials/ost_calendar)
   curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_ost.org 
 #+end_src
-* Alacritty (problem with opengl in nix)
+* Alacritty
 :PROPERTIES:
 :header-args:toml: :tangle ~/.config/alacritty/alacritty.toml :tangle-mode (identity #o555)
 :END:
@@ -4575,82 +4575,63 @@ I do not use tmux at the moment (=~/.tmux.conf=)
 (tmux)
 #+end_example
 * vim
-#+begin_src sh :tangle ~/.vimrc
-  "  Default ~/.vimrc for vagrant user on Arch Linux.
-
-  " Vundle
-  " {{{
-  set nocompatible              " be iMproved, required
-  filetype off                  " required
+#+begin_src vimrc :tangle ~/.vimrc
+  set nocompatible
+  filetype off
   set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
 
-  " Let Vundle manage itself.
+  call vundle#begin()
   Plugin 'gmarik/Vundle.vim'
   Plugin 'vim-airline/vim-airline'
+
   " Color schemes
-  Plugin 'tomasr/molokai'
   Plugin 'chriskempson/base16-vim'
-  Plugin 'dracula/vim', { 'name': 'dracula' }
 
   " All of your Plugins must be added before the following line
-  call vundle#end()            " required
-  filetype plugin indent on    " required
-  " }}}
+  call vundle#end()
+
+
+  filetype plugin indent on
 
   " Airline
-  " {{{
   let g:airline_powerline_fonts = 1
   set laststatus=2
-  " }}}
 
-       " Colors
-  " {{{
-	 set t_Co=256
-	 colorscheme dracula
-	 syntax enable                   "syntax highlighting
-  " }}}
+  "" Colors
+  set t_Co=256
+  colorscheme base16-gruvbox-dark-hard
+  syntax enable
 
-       " UI
-  " {{{
-	 set ruler                       "show the cursor position all the time
+  " UI
+  set ruler                       "show the cursor position all the time
   set showcmd                     "display incomplete commands
-	 set nu                          "show line numbers
+  set nu                          "show line numbers
   set cmdheight=1                 "The commandbar height
-	 set splitbelow                  " Horizontal splits open below current file
+  set splitbelow                  " Horizontal splits open below current file
   set splitright                  " Vertical splits open to the right of the current file
-	 set wildmode=longest,list       " Pressing <Tab> shows command suggestions similar to pressing <Tab> in bash 
-  " }}}
+  set wildmode=longest,list       " Pressing <Tab> shows command suggestions similar to pressing <Tab> in bash 
 
-       " Moving
-  " {{{
-	 set backspace=indent,eol,start  "allow backspacing over everything in insert mode
-  " }}}
+  " Moving
+  set backspace=indent,eol,start  "allow backspacing over everything in insert mode
 
-       " Search
-  " {{{
-	 set incsearch                   "do incremental searching
+  " Search
+  set incsearch                   "do incremental searching
   set hlsearch                    "highlight search terms
-	 set ic                          "Ignore Case during searches
+  set ic                          "Ignore Case during searches
   set showmatch                   "Show matching bracets when text indicator is over them
-	 " }}}
 
   " Whitespaces
-	 " {{{
   set expandtab                   "use spaces instead of tabs
-	 set tabstop=4                   "insert 4 spaces whenever the tab key is pressed
+  set tabstop=4                   "insert 4 spaces whenever the tab key is pressed
   set shiftwidth=4                "set indentation to 4 spaces
-	 set autoindent                  "start new line at the same indentation level
-  " }}}
+  set autoindent                  "start new line at the same indentation level
 
 
-       " Misc
-  " {{{
-	 set history=50                  "keep 50 lines of command line history
+  " Misc
+  set history=50                  "keep 50 lines of command line history
   set nobackup                    " do not keep backup files, it's 70's style cluttering
-	 set noswapfile                  " do not write annoying intermediate swap files,
+  set noswapfile                  " do not write annoying intermediate swap files,
   set ttimeoutlen=50              "Solves: there is a pause when leaving insert mode
-  " }}}
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
