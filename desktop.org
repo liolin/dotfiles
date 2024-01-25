@@ -1403,6 +1403,7 @@ See [[file:system.org][system.org]]
   end
 
   if status is-interactive
+     alias l="eza"
      alias ls="eza"
      alias ll="eza -la"   # show long listing of all except ".."
      alias cp="cp -i"
