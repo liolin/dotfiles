@@ -879,7 +879,7 @@ function are_we_going(attendee)
 ** Window
 #+begin_src toml
   [window]
-  opacity = 0.85
+  opacity = 1
 #+end_src
 ** Font
 #+begin_src toml
@@ -902,46 +902,64 @@ function are_we_going(attendee)
 ** Colors
 I use a the dracula theme from [[https://draculatheme.com/alacritty][here]]. 
 #+begin_src toml
-  [colors]
-  indexed_colors = []
+  # Base16 Gruvbox dark, hard 256 - alacritty color config
+  # Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 
-  [colors.bright]
-  black = "0x4d4d4d"
-  blue = "0xcaa9fa"
-  cyan = "0x9aedfe"
-  green = "0x5af78e"
-  magenta = "0xff92d0"
-  red = "0xff6e67"
-  white = "0xe6e6e6"
-  yellow = "0xf4f99d"
-
-  [colors.cursor]
-  cursor = "0xf8f8f2"
-  text = "0x44475a"
-
-  [colors.dim]
-  black = "0x14151b"
-  blue = "0x4d5b86"
-  cyan = "0x59dffc"
-  green = "0x1ef956"
-  magenta = "0xff46b0"
-  red = "0xff2222"
-  white = "0xe6e6d1"
-  yellow = "0xebf85b"
-
-  [colors.normal]
-  black = "0x000000"
-  blue = "0xbd93f9"
-  cyan = "0x8be9fd"
-  green = "0x50fa7b"
-  magenta = "0xff79c6"
-  red = "0xff5555"
-  white = "0xbfbfbf"
-  yellow = "0xf1fa8c"
-
+  # Default colors
   [colors.primary]
-  background = "0x282a36"
-  foreground = "0xf8f8f2"
+  background = '0x1d2021'
+  foreground = '0xd5c4a1'
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  [colors.cursor]
+  text = '0x1d2021'
+  cursor = '0xd5c4a1'
+
+  # Normal colors
+  [colors.normal]
+  black = '0x1d2021'
+  red = '0xfb4934'
+  green = '0xb8bb26'
+  yellow = '0xfabd2f'
+  blue = '0x83a598'
+  magenta = '0xd3869b'
+  cyan = '0x8ec07c'
+  white = '0xd5c4a1'
+
+  # Bright colors
+  [colors.bright]
+  black = '0x665c54'
+  red = '0xfb4934'
+  green = '0xb8bb26'
+  yellow = '0xfabd2f'
+  blue = '0x83a598'
+  magenta = '0xd3869b'
+  cyan = '0x8ec07c'
+  white = '0xfbf1c7'
+
+  [[colors.indexed_colors]]
+  index = 16
+  color = "0xfe8019"
+
+  [[colors.indexed_colors]]
+  index = 17
+  color = "0xd65d0e"
+
+  [[colors.indexed_colors]]
+  index = 18
+  color = "0x3c3836"
+
+  [[colors.indexed_colors]]
+  index = 19
+  color = "0x504945"
+
+  [[colors.indexed_colors]]
+  index = 20
+  color = "0xbdae93"
+
+  [[colors.indexed_colors]]
+  index = 21
+  color = "0xebdbb2"
 #+end_src
 
 ** Shell
