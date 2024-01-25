@@ -1238,12 +1238,13 @@ conky
   transparency = 10
   notification_height = 0
   separator_height = 2
+  progress_bar = true
 
   # Padding between text and separator.
   padding = 8
   horizontal_padding = 8
   frame_width = 3
-  frame_color = "#6272a4"
+  frame_color = "#1d2021"
   separator_color = frame
 
   # Sort messages by urgency.
@@ -1270,11 +1271,12 @@ conky
   show_indicators = yes
 #+end_src
 
-*** Icons
+*** TODO Icons
 #+begin_src conf :tangle ~/.config/dunst/dunstrc
   icon_position = left
   max_icon_size = 64
-  icon_path = /usr/share/icons/Arc-X-D/status/:/usr/share/icons/Arc-X-D/devices/
+  icon_theme = Papirus-Dark
+  enable_recursive_icon_lookup=true
 #+end_src
 
 *** History
@@ -1326,32 +1328,24 @@ conky
 #+end_src
 
 ** Shortcuts
-The mod1 key is the alt key on the left side of the space bar.
+Configure your DE / WM to call =dunstctl=.
+** Urgency
 #+begin_src conf :tangle ~/.config/dunst/dunstrc
-  [shortcuts]
-  close = mod1+k
-  close_all = mod1+shift+k
-  history = mod1+shift+h
-  context = mod1+shift+o
-#+end_src
+  # vim: filetype=yaml
+  # dunst template
+  # Base16 Gruvbox dark, hard Dark, by Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 
-** Urgency style
-#+begin_src conf :tangle ~/.config/dunst/dunstrc
   [urgency_low]
-  background = "#222222"
-  foreground = "#888888"
-  timeout = 10
+      background = "#1d2021"
+      foreground = "#fbf1c7"
 
   [urgency_normal]
-  background = "#282a36"
-  foreground = "#ffffff"
-  timeout = 10
+      background = "#1d2021"
+      foreground = "#83a598"
 
   [urgency_critical]
-  background = "#900000"
-  foreground = "#ffffff"
-  frame_color = "#ff0000"
-  timeout = 0
+      background = "#1d2021"
+      foreground = "#fb4934"
 #+end_src
 
 ** Required Packages                                               :packages:
@@ -1764,7 +1758,6 @@ git
   }
 
   ### Launch Application
-
   bindsym Print exec grim -g "$(slurp)" - | ksnip -
   bindsym XF86AudioMute exec /usr/bin/pamixer --toggle-mute
   bindsym XF86AudioLowerVolume exec /usr/bin/pamixer --decrease 5
@@ -1776,6 +1769,17 @@ git
   bindsym XF86MonBrightnessUp exec /usr/bin/brightnessctl set 5%+
   bindsym XF86MonBrightnessDown exec /usr/bin/brightnessctl set 5%-
 
+  ### Dunstctl
+  set $dunst_mode "Dunst: [c]lose close_[a]ll [h]istory conte[x]"
+  mode $dunst_mode {
+      bindsym c exec dunstctl close; mode "default"
+      bindsym a exec dunstctl close-all; mode "default"
+      bindsym h exec dunstctl history-pop; mode "default"
+      bindsym x exec dunstctl context; mode "default"
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+  }
+  bindsym $mod+n mode $dunst_mode
 
   set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ired [m]u4e [s]hell [a]genda"
   mode $emacs_mode {
@@ -3453,6 +3457,7 @@ polybar
 
 * Autostart
 #+begin_src sh :tangle ~/.config/autostart.sh :tangle-mode (identity #o555)
+  /usr/bin/dunst &
   /usr/bin/nm-applet &
   /usr/bin/picom --backend glx --daemon --config ~/.config/picom.conf
   #/usr/bin/setxkbmap -layout ch,us -variant ",altgr-intl" -option grp:alt_space_toggle
@@ -3463,7 +3468,6 @@ polybar
   /sbin/udiskie --no-automount --tray &
   [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
   [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
-  [ -x ~/.screenlayout/static.sh ] && ~/.screenlayout/static.sh 
   [ -x ~/.local/share/applications/teams.desktop ] &&  cd ~/.local/share/applications/ && gtk-launch teams.desktop 
   #/bin/sh ~/bin/update-notif
   /usr/bin/owncloud &
