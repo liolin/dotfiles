@@ -2792,15 +2792,6 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
     opacity: 0.2;
   }
 
-  /*window#waybar.termite {
-    background-color: #3F3F3F;
-  }
-
-  window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-  }*/
-
   #workspaces button {
     padding: 0 5px;
     background-color: transparent;
@@ -2867,9 +2858,9 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
     margin-right: 0;
   }
 
-  #battery.charging, #battery.plugged {
+  #battery.charging {
     color: #ffffff;
-    background-color: #26A65B;
+    background-color: @base0C;
   }
 
   @keyframes blink {
@@ -2880,8 +2871,7 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
   }
 
   #battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
+    background-color: @base08;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -2896,23 +2886,6 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
   #tray > .needs-attention {
     -gtk-icon-effect: highlight;
     background-color: #eb4d4b;
-  }
-
-  #mpd {
-    background-color: #66cc99;
-    color: #2a5c45;
-  }
-
-  #mpd.disconnected {
-    background-color: #f53c3c;
-  }
-
-  #mpd.stopped {
-    background-color: #90b1b1;
-  }
-
-  #mpd.paused {
-    background-color: #51a37a;
   }
 
   #language {
