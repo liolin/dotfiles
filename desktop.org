@@ -1407,6 +1407,8 @@ See [[file:system.org][system.org]]
   gpgconf --launch gpg-agent
   set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
+  # hledger
+  set -gx LEDGER_FILE "$HOME/org/finance/current.journal"
 
   # Run sway on login
   set TTY (tty)
