@@ -1433,6 +1433,10 @@ See [[file:system.org][system.org]]
      alias ga="git add"
      alias cdr="cd ~/roam/"
      alias cdo="cd ~/org/"
+     alias hsc="hledger bs assets:cash:post:student -C"
+     alias hs="hledger bs assets:cash:post:student"
+     alias hrc="hledger bs assets:cash:revolut -C"
+     alias hr="hledger bs assets:cash:revolut"
 
      base16-gruvbox-dark-hard
      starship init fish | source
