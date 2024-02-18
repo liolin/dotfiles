@@ -1722,24 +1722,24 @@ git
 * sway
 #+begin_src conf :tangle ~/.config/sway/colortheme
   ## Base16 Gruvbox dark, hard
-# Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+  # Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 
-set $base00 #1d2021
-set $base01 #3c3836
-set $base02 #504945
-set $base03 #665c54
-set $base04 #bdae93
-set $base05 #d5c4a1
-set $base06 #ebdbb2
-set $base07 #fbf1c7
-set $base08 #fb4934
-set $base09 #fe8019
-set $base0A #fabd2f
-set $base0B #b8bb26
-set $base0C #8ec07c
-set $base0D #83a598
-set $base0E #d3869b
-set $base0F #d65d0e
+  set $base00 #1d2021
+  set $base01 #3c3836
+  set $base02 #504945
+  set $base03 #665c54
+  set $base04 #bdae93
+  set $base05 #d5c4a1
+  set $base06 #ebdbb2
+  set $base07 #fbf1c7
+  set $base08 #fb4934
+  set $base09 #fe8019
+  set $base0A #fabd2f
+  set $base0B #b8bb26
+  set $base0C #8ec07c
+  set $base0D #83a598
+  set $base0E #d3869b
+  set $base0F #d65d0e
   #+end_src
 #+begin_src conf :tangle ~/.config/sway/config
   ### Set WM Name
@@ -1776,7 +1776,7 @@ set $base0F #d65d0e
   client.background       $base07
 
   ### Autostart
-  exec ~/.config/autostart.sh
+  #exec ~/.config/autostart.sh
 
   ### Output configuration
   output * bg ~/Pictures/wallpapers/0020.png fill
@@ -2011,6 +2011,27 @@ set $base0F #d65d0e
   }
   bindsym $mod+BackSpace mode $system_mode
 
+  ## Start default services
+  exec dunst
+  exec nm-applet
+  exec playerctld daemon
+  exec udiskie --no-automount --tray
+  exec owncloud
+  exec gammastep -l 47.04896000:9.44103000 # Sargans
+
+  ## Start default applications
+  exec pavucontrol
+  exec alacritty
+  exec emacs
+  exec firefox-developer-edition
+  #exec keybase-gui &
+  # /sbin/ibus-daemon -drxR
+  # cd ~/.local/share/applications/ && gtk-launch teams.desktop
+
+  for_window [app_id="pavucontrol"] {
+      move scratchpad
+  }
+  bindsym $mod+Shift+p [app_id="pavucontrol"] scratchpad show
 
   include /etc/sway/config.d/*
 #+end_src
@@ -2027,290 +2048,6 @@ ksnip
 wofi
 #+end_example
 
-* i3
-** Variables
-#+begin_src conf :tangle ~/.config/i3/config
-  ### Variables
-  set $mod Mod4
-  set $left h
-  set $down j
-  set $up k
-  set $right l
-  set $term alacritty
-  set $menu rofi -show drun -icon-theme "ePapirus-Dark" -show-icons
-
-  set $ws1 "1: "
-  set $ws2 "2: "
-  set $ws3 "3: "
-  set $ws4 "4: stuff"
-  set $ws5 "5: "
-  set $ws6 "6: "
-  set $ws7 "7: "
-  set $ws8 "8: stuff"
-  set $ws9 "9: "
-  set $ws0 "10: stuff"
-#+end_src
-
-** Colors / Design
-#+begin_src conf :tangle ~/.config/i3/config
-  ### Colors
-  #client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
-  client.focused          #6272A4 #6272A4 #F8F8F2 #9AB973 #6272A4
-  client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-  client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
-  client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
-  client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
-  client.background       #F8F8F2
-
-  default_border pixel 3
-  for_window [class="^.*"] border pixel 3
-  for_window [window_role="pop-up"] floating enable
-  for_window [window_role="task_dialog"] floating enable
-#+end_src
-
-** Others
-#+begin_src conf :tangle ~/.config/i3/config
-  ### Set WM Name
-  exec wmname LG3D
-
-  ### Autostart
-  exec_always bash /home/liolin/.config/autostart.sh
-
-  ## Go back to previous workspace with the same keybinding
-  workspace_auto_back_and_forth yes
-
-  floating_modifier $mod
-#+end_src
-** assign
-#+begin_src conf :tangle ~/.config/i3/config
-  assign [class="Chromium"] $ws6
-#+end_src
-** Keybindings
-
-#+begin_src conf :tangle ~/.config/i3/config
-  bindsym $mod+Return exec $term
-  bindsym $mod+Shift+c kill
-  # Start your launcher
-  bindsym $mod+r exec $menu
-  bindsym $mod+Shift+r reload
-
-  bindsym $mod+$left focus left
-  bindsym $mod+$down focus down
-  bindsym $mod+$up focus up
-  bindsym $mod+$right focus right
-  bindsym $mod+w focus output left
-  bindsym $mod+e focus output right
-
-  bindsym $mod+Shift+$left move left
-  bindsym $mod+Shift+$down move down
-  bindsym $mod+Shift+$up move up
-  bindsym $mod+Shift+$right move right
-
-  bindsym $mod+1 workspace $ws1
-  bindsym $mod+2 workspace $ws2
-  bindsym $mod+3 workspace $ws3
-  bindsym $mod+4 workspace $ws4
-  bindsym $mod+5 workspace $ws5
-  bindsym $mod+6 workspace $ws6
-  bindsym $mod+7 workspace $ws7
-  bindsym $mod+8 workspace $ws8
-  bindsym $mod+9 workspace $ws9
-  bindsym $mod+0 workspace $ws0
-  bindsym $mod+Shift+1 move container to workspace $ws1
-  bindsym $mod+Shift+2 move container to workspace $ws2
-  bindsym $mod+Shift+3 move container to workspace $ws3
-  bindsym $mod+Shift+4 move container to workspace $ws4
-  bindsym $mod+Shift+5 move container to workspace $ws5
-  bindsym $mod+Shift+6 move container to workspace $ws6
-  bindsym $mod+Shift+7 move container to workspace $ws7
-  bindsym $mod+Shift+8 move container to workspace $ws8
-  bindsym $mod+Shift+9 move container to workspace $ws9
-  bindsym $mod+Shift+0 move container to workspace $ws0
-
-  bindsym $mod+Shift+w move workspace to output left
-  bindsym $mod+Shift+e move workspace to output right
-
-
-  bindsym $mod+b splith
-  bindsym $mod+v splitv
-
-  bindsym $mod+f fullscreen
-  bindsym $mod+Shift+space floating toggle
-  # Swap focus between the tiling area and the floating area
-  bindsym $mod+space focus mode_toggle
-  # Move focus to the parent container
-  bindsym $mod+a focus parent
-
-  #
-  # Scratchpad:
-  #
-  # Sway has a "scratchpad", which is a bag of holding for windows.
-  # You can send windows there and get them back later.
-
-  # Move the currently focused window to the scratchpad
-  #bindsym $mod+Shift+minus move scratchpad
-
-  # Show the next scratchpad window or hide the focused scratchpad window.
-  # If there are multiple scratchpad windows, this command cycles through them.
-  #bindsym $mod+minus scratchpad show
-
-  mode "resize" {
-      bindsym $left resize shrink width 10px
-      bindsym $down resize grow height 10px
-      bindsym $up resize shrink height 10px
-      bindsym $right resize grow width 10px
-
-      # Return to default mode
-      bindsym Return mode "default"
-      bindsym Escape mode "default"
-  }
-  bindsym $mod+Shift+s mode "resize"
-
-
-  bindsym Print exec /usr/bin/flameshot gui
-  bindsym XF86AudioMute exec /usr/bin/pamixer --toggle-mute
-  bindsym XF86AudioLowerVolume exec /usr/bin/pamixer --decrease 5
-  bindsym XF86AudioRaiseVolume exec /usr/bin/pamixer --increase 5
-  bindsym XF86AudioMicMute exec /usr/bin/pamixer --default-source --toggle-mute
-  bindsym XF86AudioPlay exec /usr/bin/playerctl play-pause
-  bindsym XF86AudioPrev exec /usr/bin/playerctl previous
-  bindsym XF86AudioNext exec /usr/bin/playerctl next
-  bindsym XF86MonBrightnessUp exec /usr/bin/brightnessctl set 5%+
-  bindsym XF86MonBrightnessDown exec /usr/bin/brightnessctl set 5%-
-
-
-  set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ired [m]u4e [s]hell [a]genda"
-  mode $emacs_mode {
-      bindsym e exec emacsclient -c -a ''; mode "default"
-      bindsym b exec emacsclient -c -a '' --eval '(ibuffer)'; mode "default"
-      bindsym d exec emacsclient -c -a '' --eval '(dired nil)'; mode "default"
-      bindsym m exec emacsclient -c -a '' --eval '(mu4e)'; mode "default"
-      bindsym s exec emacsclient -c -a '' --eval '(eshell)'; mode "default"
-      bindsym a exec emacsclient -c -a '' --eval '(org-agenda)'; mode "default"
-      bindsym Return mode "default"
-      bindsym Escape mode "default"
-  }
-  bindsym $mod+d mode $emacs_mode
-
-  set $software_mode "Software Options: [p]df"
-  mode $software_mode {
-      bindsym p exec /usr/bin/evince; mode "default"
-      bindsym Return mode "default"
-      bindsym Escape mode "default"
-  }
-  bindsym $mod+s mode $software_mode
-
-  set $prompt_mode "[p]ass [e]xit action"
-  mode $prompt_mode {
-      bindsym p exec /usr/bin/passmenu -i; mode "default"
-      bindsym e exec /home/liolin/.local/bin/exac; mode "default"
-      bindsym Return mode "default"
-      bindsym Escape mode "default"
-  }
-  bindsym $mod+p mode $prompt_mode
-
-  set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (CTRL+s) shutdown
-  mode "$mode_system" {
-      bindsym l exec --no-startup-id xsecurelock; mode "default"
-      bindsym e exec --no-startup-id i3-msg exit; mode "deafult"
-      bindsym s exec --no-startup-id xsecurelock -- systemctl suspend; mode "default"
-      bindsym h exec --no-startup-id xsecurelock -- systemctl hibernate; mode "default"
-      bindsym r exec --no-startup-id systemctl reboot; mode "default"
-      bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i; mode "default"
-
-      # back to normal: Enter or Escape
-      bindsym Return mode "default"
-      bindsym Escape mode "default"
-  }
-
-  bindsym $mod+BackSpace mode "$mode_system"
-
-  set $mode_display Monitor (h) home, (m) mobile
-  mode "$mode_display" {
-      bindsym h exec --no-startup-id xrandr --output eDP1 --mode 1280x720 --pos 2560x0 --rotate normal --output DP1 --off --output HDMI1 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output HDMI2 --off --output VIRTUAL1 --off; mode "default"
-      bindsym m exec --no-startup-id xrandr --output eDP1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP1 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off; mode "deafult"
-
-      # back to normal: Enter or Escape
-      bindsym Return mode "default"
-      bindsym Escape mode "default"
-  }
-  bindsym $mod+x mode "$mode_display"
-#+end_src
-	  
-** Bar
-#+begin_src conf :tangle ~/.config/i3/config
-  bar {
-      font pango:DejaVu Sans Mono, FontAwesome 12
-      position bottom
-      status_command /sbin/i3status-rs ~/.config/i3status-rust/config.toml
-      colors {
-	  separator #666666
-	  background #222222
-	  statusline #dddddd
-	  focused_workspace #0088CC #0088CC #ffffff
-	  active_workspace #333333 #333333 #ffffff
-	  inactive_workspace #333333 #333333 #888888
-	  urgent_workspace #2f343a #900000 #ffffff
-      }
-  }
-#+end_src
-
-** i3status-rust
-#+begin_src toml :tangle ~/.config/i3status-rust/config.toml
-  icons_format = "{icon}"
-
-  [theme]
-  theme = "nord-dark"
-
-  [icons]
-  icons = "awesome4"
-
-  [[block]]
-  block = "focused_window"
-
-  [[block]]
-  block = "disk_space"
-  path = "/"
-  info_type = "available"
-  alert_unit = "GB"
-  interval = 20
-  warning = 20.0
-  alert = 10.0
-
-  [[block]]
-  block = "memory"
-  format = " $icon $mem_used.eng(prefix:M)/$mem_total.eng(prefix:M)($mem_used_percents.eng(w:2)) "
-
-  [[block]]
-  block = "cpu"
-  interval = 1
-
-  [[block]]
-  block = "load"
-  interval = 1
-
-  [[block]]
-  block = "sound"
-  [[block.click]]
-  button = "left"
-  cmd = "/usr/bin/pamixer --toggle-mute"
-
-  [[block]]
-  block = "time"
-  interval = 5
-
-  [[block]]
-  block = "battery"
-  if_command = "test -e /sys/class/power_supply/BAT0"
-
-#+end_src
-** Required Packages                                               :packages:
-#+begin_example
-i3
-i3status-rust
-pamixer
-brightnessctl
-#+end_example
 * Hyprland
 #+begin_src conf :tangle ~/.config/hypr/hyprland.conf
   # See https://wiki.hyprland.org/Configuring/Monitors/
