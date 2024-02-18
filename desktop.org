@@ -4998,6 +4998,10 @@ ytdl-raw-options=yes-playlist=
 mpv, yt-dlp
 #+end_example
 
+* Chromium
+#+begin_src conf :tangle ~/.config/chromium-flags.conf
+  --ozone-platform-hint=auto
+#+end_src
 * .NET
 ** Required Packages                                               :packages:
 #+begin_example
