@@ -2028,6 +2028,10 @@ git
   # /sbin/ibus-daemon -drxR
   # cd ~/.local/share/applications/ && gtk-launch teams.desktop
 
+  exec gsettings set org.gnome.desktop.interface gtk-theme "gruvbox-dark-gtk"
+  exec gsettings set org.gnome.desktop.interface icon-theme "gruvbox-dark-icons"
+  exec gsettings set org.gnome.desktop.interface font-name "Cantarell 11"
+
   for_window [app_id="pavucontrol"] {
       move scratchpad
   }
@@ -2046,6 +2050,19 @@ grim
 slurp
 ksnip
 wofi
+pipewire
+wireplumber
+pipewire-alsa
+pipewire-pulse
+xdg-desktop-portal-wlr
+qt5-wayland
+qt6-wayland
+waybar
+nwg-look
+gruvbox-dark-gtk
+gruvbox-dark-icons-gtk
+wl-clipboard
+create dmenu-wl script (=wofi --dmenu "$@"=)
 #+end_example
 
 * Hyprland
