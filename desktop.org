@@ -4498,7 +4498,8 @@ hledger
   "Downloads" = " "
   "Music" = "󰝚 "
   "Pictures" = " "
-  "Developer" = "󰲋 "
+  "code" = "󰲋 "
+  "org" = ""
 
   [git_branch]
   symbol = ""
