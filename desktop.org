@@ -1710,6 +1710,7 @@ git
   # caching TTL in seconds, and another optional field for arbitrary
   # flags.   Prepend the keygrip with an '!' mark to disable it.
   90783C7BE49932998FB01359A3958092318E442A
+  AA5405839AA1F5CD202349D701D4F9697041ECA6
   !48ED9915566EAD80A32C2DAE3C6A23629ADC0BB4
 #+end_src
 
@@ -2340,10 +2341,64 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
 #+end_src
 
 ** dmenu-wl
-#+begin_src sh :tangle ~/.local/bin/dmenu-wl :tangle-mode (identity #o555)
+##+begin_src sh :tangle ~/.local/bin/dmenu-wl :tangle-mode (identity #o555)
+#+begin_src sh
   #!/usr/bin/env bash
   set -Eeu
   wofi --dmenu "$@"
+#+end_src
+
+** dmenu-fzf
+#+begin_src sh :tangle ~/.local/bin/dmenu-wl :tangle-mode (identity #o555)
+#!/usr/bin/bash
+
+SCRIPTNAME=$(basename $0)
+SCRIPTPATH="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P)"
+IFS=$'\n'
+
+prompt="> "
+header=""
+
+if [[ -n $DMENU_FZF_FIFO ]]; then
+    str=$(cat $DMENU_FZF_FIFO)
+
+    selection=$(printf $str | fzf --header=$header --prompt="$prompt")
+    echo $selection > $DMENU_FZF_FIFO
+    exit
+fi
+
+columns=0
+lines=0
+str=""
+
+while read -r line; do
+    if [[ ${#line} -gt $columns ]]; then
+        columns=${#line}
+    fi
+    lines=$((lines+1))
+    str="$str\n$line"
+done
+
+lines=$((lines+3))
+columns=$((columns+"${#header}"+5))
+
+if [[ lines -gt 50 ]]; then
+    lines=50
+fi
+if [[ columns -gt 100 ]]; then
+    columns=100
+fi
+
+fifo=/tmp/dmenu-fzf-$(date +%s)
+mkfifo $fifo
+DMENU_FZF_FIFO=$fifo $SHELL -c "foot --window-size-chars=${columns}x${lines} --title="fzf-switcher" $SCRIPTPATH/$SCRIPTNAME" &
+
+pid=$!
+
+echo -n $str > $fifo
+
+cat $fifo
+rm $fifo
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
@@ -4469,6 +4524,7 @@ hledger
   Amazon = ""
   Android = ""
   Arch = "󰣇"
+  EndeavourOS = ""
   Artix = "󰣇"
   CentOS = ""
   Debian = "󰣚"
