@@ -2030,8 +2030,9 @@ git
   # cd ~/.local/share/applications/ && gtk-launch teams.desktop
 
   exec gsettings set org.gnome.desktop.interface gtk-theme "gruvbox-dark-gtk"
-  exec gsettings set org.gnome.desktop.interface icon-theme "gruvbox-dark-icons"
-  exec gsettings set org.gnome.desktop.interface font-name "Cantarell 11"
+  exec gsettings set org.gnome.desktop.interface icon-theme "Yaru-dark"
+  exec gsettings set org.gnome.desktop.interface cursor-theme "Yaru"
+  exec gsettings set org.gnome.desktop.interface font-name "Ubuntu 11"
 
   for_window [app_id="pavucontrol"] {
       move scratchpad
