@@ -1401,6 +1401,9 @@ See [[file:system.org][system.org]]
   # Java stuff
   set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
+  # OCaml Stuff
+  eval (opam env)
+
   # SSH / GPG
   gpgconf --launch gpg-agent
   set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
