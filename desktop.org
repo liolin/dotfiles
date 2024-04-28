@@ -1417,6 +1417,10 @@ See [[file:system.org][system.org]]
      exec sway
   end
 
+  if [ $TTY = "/dev/tty2" ]
+     exec startx
+  end
+
   if status is-interactive
      alias l="eza"
      alias ls="eza"
@@ -1443,6 +1447,7 @@ See [[file:system.org][system.org]]
      base16-gruvbox-dark-hard
      starship init fish | source
      zoxide init --cmd cd fish | source
+     . $HOME/.nix-profile/etc/profile.d/nix.fish
   end
 #+end_src
 ** funtions
@@ -1721,6 +1726,10 @@ git
 ** config
 #+begin_src conf :tangle ~/.ssh/config
   Host liolin.ch
+    SetEnv TERM=xterm
+
+  Host smartkvp.ch
+    HostName 165.227.217.56
     SetEnv TERM=xterm
 #+end_src
 * i3
