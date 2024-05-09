@@ -1734,319 +1734,322 @@ git
 #+end_src
 * i3
 #+begin_src conf :tangle ~/.config/i3/config
-font Ubuntu:monospace 11
-### Set WM Name
-exec wmname LG3D
+  font Ubuntu:monospace 11
+  ### Set WM Name
+  exec wmname LG3D
 
-### Variables
-set $mod Mod4
-set $left h
-set $down j
-set $up k
-set $right l
-set $term alacritty
+  ### Variables
+  set $mod Mod4
+  set $left h
+  set $down j
+  set $up k
+  set $right l
+  set $term alacritty
 
-set $locker i3lock -i ~/.config/i3/lockscreen.png
+  set $locker i3lock -i ~/.config/i3/lockscreen.png
 
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu rofi -show-icons -show drun
+  # Note: pass the final command to swaymsg so that the resulting window can be opened
+  # on the original workspace that the command was run on.
+  set $menu rofi -show-icons -show drun
 
-set $external_mon HDMI-A-1
-set $external_mon_home HDMI-A-3
-set $internal_mon eDP-1
+  set $external_mon HDMI-A-1
+  set $external_mon_home HDMI-A-3
+  set $internal_mon eDP-1
 
-set $base00 #1d2021
-set $base01 #3c3836
-set $base02 #504945
-set $base03 #665c54
-set $base04 #bdae93
-set $base05 #d5c4a1
-set $base06 #ebdbb2
-set $base07 #fbf1c7
-set $base08 #fb4934
-set $base09 #fe8019
-set $base0A #fabd2f
-set $base0B #b8bb26
-set $base0C #8ec07c
-set $base0D #83a598
-set $base0E #d3869b
-set $base0F #d65d0e
+  set $base00 #1d2021
+  set $base01 #3c3836
+  set $base02 #504945
+  set $base03 #665c54
+  set $base04 #bdae93
+  set $base05 #d5c4a1
+  set $base06 #ebdbb2
+  set $base07 #fbf1c7
+  set $base08 #fb4934
+  set $base09 #fe8019
+  set $base0A #fabd2f
+  set $base0B #b8bb26
+  set $base0C #8ec07c
+  set $base0D #83a598
+  set $base0E #d3869b
+  set $base0F #d65d0e
 
-### Colors
-# Basic color configuration using the Base16 variables for windows and borders.
-# Property Name         Border  BG      Text    Indicator Child Border
-client.focused          $base05 $base0D $base00 $base0D $base0D
-client.focused_inactive $base01 $base01 $base05 $base03 $base01
-client.unfocused        $base01 $base00 $base05 $base01 $base01
-client.urgent           $base08 $base08 $base00 $base08 $base08
-client.placeholder      $base00 $base00 $base05 $base00 $base00
-client.background       $base07
+  ### Colors
+  # Basic color configuration using the Base16 variables for windows and borders.
+  # Property Name         Border  BG      Text    Indicator Child Border
+  client.focused          $base05 $base0D $base00 $base0D $base0D
+  client.focused_inactive $base01 $base01 $base05 $base03 $base01
+  client.unfocused        $base01 $base00 $base05 $base01 $base01
+  client.urgent           $base08 $base08 $base00 $base08 $base08
+  client.placeholder      $base00 $base00 $base05 $base00 $base00
+  client.background       $base07
 
-default_border pixel 3
+  default_border pixel 3
 
-### Idle configuration
-#exec swayidle -w \
-#     timeout 180 '$locker' \
-#     timeout 300 'swaymsg "output * dpms off"' \
-#     resume 'swaymsg "output * dpms on"' \
-#     before-sleep '$locker'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
+  ### Idle configuration
+  #exec swayidle -w \
+  #     timeout 180 '$locker' \
+  #     timeout 300 'swaymsg "output * dpms off"' \
+  #     resume 'swaymsg "output * dpms on"' \
+  #     before-sleep '$locker'
+  #
+  # This will lock your screen after 300 seconds of inactivity, then turn off
+  # your displays after another 300 seconds, and turn your screens back on when
+  # resumed. It will also lock your screen before your computer goes to sleep.
 
-### Key bindings
-#
-# Basics:
-#
-# Start a terminal
-bindsym $mod+Return exec $term
+  ### Key bindings
+  #
+  # Basics:
+  #
+  # Start a terminal
+  bindsym $mod+Return exec $term
 
-# Kill focused window
-bindsym $mod+Shift+c kill
+  # Kill focused window
+  bindsym $mod+Shift+c kill
 
-# Start your launcher
-bindsym $mod+r exec $menu
+  # Start your launcher
+  bindsym $mod+r exec $menu
 
-# Drag floating windows by holding down $mod and left mouse button.
-floating_modifier $mod
+  # Drag floating windows by holding down $mod and left mouse button.
+  floating_modifier $mod
 
-# Reload the configuration file
-bindsym $mod+Shift+r reload
+  # Reload the configuration file
+  bindsym $mod+Shift+r reload
 
-#
-# Moving around:
-#
-# Move your focus around
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
+  #
+  # Moving around:
+  #
+  # Move your focus around
+  bindsym $mod+$left focus left
+  bindsym $mod+$down focus down
+  bindsym $mod+$up focus up
+  bindsym $mod+$right focus right
 
-bindsym $mod+w focus output left
-bindsym $mod+e focus output right
+  bindsym $mod+w focus output left
+  bindsym $mod+e focus output right
 
-# Move the focused window with the same, but add Shift
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
+  # Move the focused window with the same, but add Shift
+  bindsym $mod+Shift+$left move left
+  bindsym $mod+Shift+$down move down
+  bindsym $mod+Shift+$up move up
+  bindsym $mod+Shift+$right move right
 
-#
-# Workspaces:
-#
-workspace_auto_back_and_forth yes
-# Switch to workspace
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 10
-# Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2
-bindsym $mod+Shift+3 move container to workspace number 3
-bindsym $mod+Shift+4 move container to workspace number 4
-bindsym $mod+Shift+5 move container to workspace number 5
-bindsym $mod+Shift+6 move container to workspace number 6
-bindsym $mod+Shift+7 move container to workspace number 7
-bindsym $mod+Shift+8 move container to workspace number 8
-bindsym $mod+Shift+9 move container to workspace number 9
-bindsym $mod+Shift+0 move container to workspace number 10
+  #
+  # Workspaces:
+  #
+  workspace_auto_back_and_forth yes
+  # Switch to workspace
+  bindsym $mod+1 workspace number 1
+  bindsym $mod+2 workspace number 2
+  bindsym $mod+3 workspace number 3
+  bindsym $mod+4 workspace number 4
+  bindsym $mod+5 workspace number 5
+  bindsym $mod+6 workspace number 6
+  bindsym $mod+7 workspace number 7
+  bindsym $mod+8 workspace number 8
+  bindsym $mod+9 workspace number 9
+  bindsym $mod+0 workspace number 10
+  # Move focused container to workspace
+  bindsym $mod+Shift+1 move container to workspace number 1
+  bindsym $mod+Shift+2 move container to workspace number 2
+  bindsym $mod+Shift+3 move container to workspace number 3
+  bindsym $mod+Shift+4 move container to workspace number 4
+  bindsym $mod+Shift+5 move container to workspace number 5
+  bindsym $mod+Shift+6 move container to workspace number 6
+  bindsym $mod+Shift+7 move container to workspace number 7
+  bindsym $mod+Shift+8 move container to workspace number 8
+  bindsym $mod+Shift+9 move container to workspace number 9
+  bindsym $mod+Shift+0 move container to workspace number 10
 
-bindsym $mod+Shift+w move workspace to output left
-bindsym $mod+Shift+e move workspace to output right
+  bindsym $mod+Shift+w move workspace to output left
+  bindsym $mod+Shift+e move workspace to output right
 
 
-#
-# Layout stuff:
-#
-# You can "split" the current object of your focus with
-# $mod+b or $mod+v, for horizontal and vertical splits
-# respectively.
-bindsym $mod+b splith
-bindsym $mod+v splitv
+  #
+  # Layout stuff:
+  #
+  # You can "split" the current object of your focus with
+  # $mod+b or $mod+v, for horizontal and vertical splits
+  # respectively.
+  bindsym $mod+b splith
+  bindsym $mod+v splitv
 
-# Make the current focus fullscreen
-bindsym $mod+f fullscreen
+  # Make the current focus fullscreen
+  bindsym $mod+f fullscreen
 
-# Toggle the current focus between tiling and floating mode
-bindsym $mod+Shift+space floating toggle
+  # Toggle the current focus between tiling and floating mode
+  bindsym $mod+Shift+space floating toggle
 
-# Swap focus between the tiling area and the floating area
-bindsym $mod+space focus mode_toggle
+  # Swap focus between the tiling area and the floating area
+  bindsym $mod+space focus mode_toggle
 
-# Move focus to the parent container
-bindsym $mod+a focus parent
+  # Move focus to the parent container
+  bindsym $mod+a focus parent
 
-#
-# Scratchpad:
-#
-# Move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
+  #
+  # Scratchpad:
+  #
+  # Move the currently focused window to the scratchpad
+  bindsym $mod+Shift+minus move scratchpad
 
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
+  # Show the next scratchpad window or hide the focused scratchpad window.
+  # If there are multiple scratchpad windows, this command cycles through them.
+  bindsym $mod+minus scratchpad show
 
-#
-# Resizing containers:
-#
-mode "resize" {
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+  #
+  # Resizing containers:
+  #
+  mode "resize" {
+      bindsym $left resize shrink width 10px
+      bindsym $down resize grow height 10px
+      bindsym $up resize shrink height 10px
+      bindsym $right resize grow width 10px
 
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+Shift+s mode "resize"
+      # Return to default mode
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+  }
+  bindsym $mod+Shift+s mode "resize"
 
-#
-# Status Bar:
-bar {
-    position bottom
-    font pango:DejaVu Sans Mono, FontAwesome 12
-    colors {
-        background  $base00
-    }
-    status_command i3status-rs
-}
+  #
+  # Status Bar:
+  bar {
+      position bottom
+      font pango:DejaVu Sans Mono, FontAwesome 12
+      colors {
+          background  $base00
+      }
+      status_command i3status-rs
+  }
 
-### Launch Application
-bindsym Print exec /usr/bin/flameshot gui
-bindsym XF86AudioMute exec /usr/bin/pamixer --toggle-mute
-bindsym XF86AudioLowerVolume exec /usr/bin/pamixer --decrease 5
-bindsym XF86AudioRaiseVolume exec /usr/bin/pamixer --increase 5
-bindsym XF86AudioMicMute exec /usr/bin/pamixer --default-source --toggle-mute
-bindsym XF86AudioPlay exec /usr/bin/playerctl play-pause
-bindsym XF86AudioPrev exec /usr/bin/playerctl previous
-bindsym XF86AudioNext exec /usr/bin/playerctl next
-bindsym XF86MonBrightnessUp exec /usr/bin/brightnessctl set 5%+
-bindsym XF86MonBrightnessDown exec /usr/bin/brightnessctl set 5%-
+  ### Launch Application
+  bindsym Print exec /usr/bin/flameshot gui
+  bindsym XF86AudioMute exec /usr/bin/pamixer --toggle-mute
+  bindsym XF86AudioLowerVolume exec /usr/bin/pamixer --decrease 5
+  bindsym XF86AudioRaiseVolume exec /usr/bin/pamixer --increase 5
+  bindsym XF86AudioMicMute exec /usr/bin/pamixer --default-source --toggle-mute
+  bindsym XF86AudioPlay exec /usr/bin/playerctl play-pause
+  bindsym XF86AudioPrev exec /usr/bin/playerctl previous
+  bindsym XF86AudioNext exec /usr/bin/playerctl next
+  bindsym XF86MonBrightnessUp exec /usr/bin/brightnessctl set 5%+
+  bindsym XF86MonBrightnessDown exec /usr/bin/brightnessctl set 5%-
 
-### Dunstctl
-set $dunst_mode "Dunst: [c]lose close_[a]ll [h]istory conte[x]"
-mode $dunst_mode {
-    bindsym c exec dunstctl close; mode "default"
-    bindsym a exec dunstctl close-all; mode "default"
-    bindsym h exec dunstctl history-pop; mode "default"
-    bindsym x exec dunstctl context; mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+n mode $dunst_mode
+  ### Dunstctl
+  set $dunst_mode "Dunst: [c]lose close_[a]ll [h]istory conte[x]"
+  mode $dunst_mode {
+      bindsym c exec dunstctl close; mode "default"
+      bindsym a exec dunstctl close-all; mode "default"
+      bindsym h exec dunstctl history-pop; mode "default"
+      bindsym x exec dunstctl context; mode "default"
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+  }
+  bindsym $mod+n mode $dunst_mode
 
-set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ired [m]u4e [s]hell [a]genda"
-mode $emacs_mode {
-    bindsym e exec emacsclient -c -a ''; mode "default"
-    bindsym b exec emacsclient -c -a '' --eval '(ibuffer)'; mode "default"
-    bindsym d exec emacsclient -c -a '' --eval '(dired nil)'; mode "default"
-    bindsym m exec emacsclient -c -a '' --eval '(mu4e)'; mode "default"
-    bindsym s exec emacsclient -c -a '' --eval '(eshell)'; mode "default"
-    bindsym a exec emacsclient -c -a '' --eval '(org-agenda)'; mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+d mode $emacs_mode
+  set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ired [m]u4e [s]hell [a]genda"
+  mode $emacs_mode {
+      bindsym e exec emacsclient -c -a ''; mode "default"
+      bindsym b exec emacsclient -c -a '' --eval '(ibuffer)'; mode "default"
+      bindsym d exec emacsclient -c -a '' --eval '(dired nil)'; mode "default"
+      bindsym m exec emacsclient -c -a '' --eval '(mu4e)'; mode "default"
+      bindsym s exec emacsclient -c -a '' --eval '(eshell)'; mode "default"
+      bindsym a exec emacsclient -c -a '' --eval '(org-agenda)'; mode "default"
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+  }
+  bindsym $mod+d mode $emacs_mode
 
-set $software_mode "Software Options: [p]df"
-mode $software_mode {
-    bindsym p exec /usr/bin/evince; mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+s mode $software_mode
+  set $software_mode "Software Options: [p]df"
+  mode $software_mode {
+      bindsym p exec /usr/bin/evince; mode "default"
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+  }
+  bindsym $mod+s mode $software_mode
 
-set $prompt_mode "[p]ass [e]xit action"
-mode $prompt_mode {
-    bindsym p exec /usr/bin/passmenu -i; mode "default"
-    bindsym e exec /home/liolin/.local/bin/exac; mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+p mode $prompt_mode
+  set $prompt_mode "[p]ass [e]xit action"
+  mode $prompt_mode {
+      bindsym p exec /usr/bin/passmenu -i; mode "default"
+      bindsym e exec /home/liolin/.local/bin/exac; mode "default"
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+  }
+  bindsym $mod+p mode $prompt_mode
 
-set $system_mode "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (CTRL+s) shutdown"
-mode $system_mode {
-     bindsym l exec --no-startup-id $locker; mode "default"
-     bindsym e exec --no-startup-id i3-msg exit; mode "deafult"
-     bindsym s exec --no-startup-id $locker -f && sleep 2 && systemctl suspend; mode "default"
-     bindsym h exec --no-startup-id $locker -f && sleep 2 && systemctl hibernate; mode "default"
-     bindsym r exec --no-startup-id systemctl reboot; mode "default"
-     bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i; mode "default"
+  set $system_mode "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (CTRL+s) shutdown"
+  mode $system_mode {
+       bindsym l exec --no-startup-id $locker; mode "default"
+       bindsym e exec --no-startup-id i3-msg exit; mode "deafult"
+       bindsym s exec --no-startup-id $locker -f && sleep 2 && systemctl suspend; mode "default"
+       bindsym h exec --no-startup-id $locker -f && sleep 2 && systemctl hibernate; mode "default"
+       bindsym r exec --no-startup-id systemctl reboot; mode "default"
+       bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i; mode "default"
 
-     # back to normal: Enter or Escape
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
-}
-bindsym $mod+BackSpace mode $system_mode
+       # back to normal: Enter or Escape
+       bindsym Return mode "default"
+       bindsym Escape mode "default"
+  }
+  bindsym $mod+BackSpace mode $system_mode
 
-## Start default services
-exec dunst
-exec nm-applet
-exec picom --backend glx --daemon --config ~/.config/picom.conf
-exec --no-startup-id feh --bg-scale ~/Pictures/wallpapers/0020.png 
-exec setxkbmap -layout us -variant "altgr-intl" -option ctrl:nocaps
-exec playerctld daemon
-exec udiskie --no-automount --tray
-exec owncloud
-exec redshift -l 47.04896000:9.44103000 # Sargans
+  ## Start default services
+  exec --no-startup-id dunst
+  exec --no-startup-id nm-applet
+  exec --no-startup-id picom --backend glx --daemon --config ~/.config/picom.conf
+  exec --no-startup-id feh --bg-scale ~/Pictures/wallpapers/0020.png 
+  exec --no-startup-id setxkbmap -layout us -variant "altgr-intl" -option ctrl:nocaps
+  exec --no-startup-id playerctld daemon
+  exec --no-startup-id udiskie --no-automount --tray
+  exec --no-startup-id owncloud
+  exec --no-startup-id redshift -l 47.04896000:9.44103000 # Sargans
 
-## Start default applications
-exec alacritty
-exec emacs
-exec firefox-developer-edition
+  ## Start default applications
+  exec --no-startup-id alacritty
+  exec --no-startup-id emacs
+  exec --no-startup-id firefox-developer-edition
 
-exec gsettings set org.gnome.desktop.interface gtk-theme "gruvbox-dark-gtk"
-exec gsettings set org.gnome.desktop.interface icon-theme "Yaru-dark"
-exec gsettings set org.gnome.desktop.interface cursor-theme "Yaru"
-exec gsettings set org.gnome.desktop.interface font-name "Ubuntu 11"
+  exec --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme "gruvbox-dark-gtk"
+  exec --no-startup-id gsettings set org.gnome.desktop.interface icon-theme "Yaru-dark"
+  exec --no-startup-id gsettings set org.gnome.desktop.interface cursor-theme "Yaru"
+  exec --no-startup-id gsettings set org.gnome.desktop.interface font-name "Ubuntu 11"
 
 #+end_src
 * i3status-rs
 #+begin_src toml :tangle ~/.config/i3status-rust/config.toml
 
-icons_format = "{icon}"
+  icons_format = "{icon}"
 
-[theme]
-theme = "gruvbox-dark"
+  [theme]
+  theme = "gruvbox-dark"
 
-[icons]
-icons = "awesome4"
+  [icons]
+  icons = "awesome4"
 
-[[block]]
-block = "focused_window"
-[block.theme_overrides]
-idle_bg = "#458588"
-idle_fg = "#ebdbb2"
+  [[block]]
+  block = "focused_window"
+  [block.theme_overrides]
+  idle_bg = "#458588"
+  idle_fg = "#ebdbb2"
 
-[[block]]
-block = "sound"
-[[block.click]]
-button = "left"
-cmd = "/usr/bin/pamixer --toggle-mute"
+  [[block]]
+  block = "sound"
+  [[block.click]]
+  button = "left"
+  cmd = "/usr/bin/pamixer --toggle-mute"
 
 
-[[block]]
-block = "net"
-format = "$icon {$ssid}"
-format_alt = "$icon {$ip}"
-[block.theme_overrides]
-idle_bg = "#458588"
-idle_fg = "#ebdbb2"
+  [[block]]
+  block = "net"
+  format = "$icon {$ssid}"
+  format_alt = "$icon {$ip}"
+  [block.theme_overrides]
+  idle_bg = "#458588"
+  idle_fg = "#ebdbb2"
 
-[[block]]
-block = "time"
-interval = 5
+  [[block]]
+  block = "time"
+  interval = 5
+  [block.format]
+  full = " $icon $timestamp.datetime(f:'%a %Y-%m-%d %R', l:en_GB) "
+  short = " $icon $timestamp.datetime(f:%R) "
 #+end_src
 * sway
 #+begin_src conf :tangle ~/.config/sway/colortheme
