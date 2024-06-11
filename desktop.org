@@ -1609,12 +1609,23 @@ Installation of the fonts
 #+RESULTS:
 
 * Git
+General settings
 #+begin_src conf :tangle ~/.gitconfig
   [user]
   name = Olivier Lischer
-  email = olivier.lischer@liolin.ch
-  signingKey = 6B52B67EDA21CAF6
-  username = liolin
+  useConfigOnly = true
+
+  [include]
+    path = ~/.gitconfig.personal
+
+  [includeIf "gitdir:~/code/private/"]
+    path = ~/.gitconfig.personal
+
+  [includeIf "gitdir:~/code/work/"]
+    path = ~/.gitconfig.work
+
+  [includeIf "gitdir:~/code/school/"]
+    path = ~/.gitconfig.school
 
   [pull]
   rebase = false
@@ -1626,6 +1637,26 @@ Installation of the fonts
   gpgsign = true
 #+end_src
 
+Private settings
+#+begin_src conf :tangle ~/.gitconfig.personal
+  [user]
+  email = olivier.lischer@liolin.ch
+  signingKey = 6B52B67EDA21CAF6
+#+end_src
+
+Settings for work
+#+begin_src conf :tangle ~/.gitconfig.work
+  [user]
+  email = olivier.lischer@ost.ch
+  signingKey = DC67BB979C90E477
+#+end_src
+
+Settings for school
+#+begin_src conf :tangle ~/.gitconfig.school
+  [user]
+  email = olivier.lischer@ost.ch
+  signingKey = DC67BB979C90E477
+#+end_src
 ** Required Packages                                               :packages:
 #+begin_example
 git
@@ -1731,6 +1762,20 @@ git
   Host smartkvp.ch
     HostName 165.227.217.56
     SetEnv TERM=xterm
+
+  Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/olivier.lischer@liolin.ch
+
+  Host gitlab.ost.ch:45022
+    User git
+    IdentityFile ~/.ssh/olivier.lischer@ost.ch
+
+  Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/olivier.lischer@ost.ch
 #+end_src
 * i3
 #+begin_src conf :tangle ~/.config/i3/config
