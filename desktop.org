@@ -2039,7 +2039,15 @@ git
   }
   bindsym $mod+Shift+p [app_id="pavucontrol"] scratchpad show
 
+
+  bindswitch tablet:on exec 'swaymsg input 1386:20925:Wacom_Pen_and_multitouch_sensor_Finger map_to_output eDP-1', \
+      exec 'swaymsg input 1386:20925:Wacom_Pen_and_multitouch_sensor_Pen map_to_output eDP-1'
+  bindswitch tablet:off exec 'swaymsg input 1386:20925:Wacom_Pen_and_multitouch_sensor_Finger map_to_output eDP-1', \
+      exec 'swaymsg input 1386:20925:Wacom_Pen_and_multitouch_sensor_Pen map_to_output eDP-1'
+
   include /etc/sway/config.d/*
+
+  exec rot8 &
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
@@ -2064,6 +2072,7 @@ nwg-look
 gruvbox-dark-gtk
 gruvbox-dark-icons-gtk
 wl-clipboard
+rot8
 create dmenu-wl script (=wofi --dmenu "$@"=)
 #+end_example
 
