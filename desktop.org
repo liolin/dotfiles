@@ -1725,7 +1725,7 @@ git
 #+end_src
 ** gpg-agent.conf
 #+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
-  pinentry-program /usr/bin/pinentry-gtk-2
+  pinentry-program /usr/bin/pinentry-gtk
   ## Set timeout for passphrase unlock to 8 hours
   default-cache-ttl 28800
   max-cache-ttl 28800
@@ -1761,6 +1761,10 @@ git
 
   Host smartkvp.ch
     HostName 165.227.217.56
+    SetEnv TERM=xterm
+
+  Host smartkvp-openshift.ch
+    HostName 165.22.34.246
     SetEnv TERM=xterm
 
   Host github.com
