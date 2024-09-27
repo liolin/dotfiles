@@ -1407,6 +1407,7 @@ See [[file:system.org][system.org]]
   # SSH / GPG
   gpgconf --launch gpg-agent
   set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+  gpg-connect-agent updatestartuptty /bye >> /dev/null
 
   # hledger
   set -gx LEDGER_FILE "$HOME/org/finance/current.journal"
@@ -1443,6 +1444,7 @@ See [[file:system.org][system.org]]
      alias hrc="hledger bs assets:cash:revolut -C"
      alias hr="hledger bs assets:cash:revolut"
      alias tree="eza --tree"
+     alias em="emacsclient -nw"
 
      base16-gruvbox-dark-hard
      starship init fish | source
