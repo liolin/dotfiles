@@ -1866,14 +1866,16 @@ git
   critical_mem = 90
 
   [[block]]
+  block = "battery"
+
+  [[block]]
+  block = "temperature"
+
+  [[block]]
   block = "sound"
   [[block.click]]
   button = "left"
   cmd = "/usr/bin/pamixer --toggle-mute"
-  [block.theme_overrides]
-  idle_bg = "#458588"
-  idle_fg = "#ebdbb2"
-
 
   [[block]]
   block = "net"
@@ -1886,9 +1888,6 @@ git
   [block.format]
   full = " $icon $timestamp.datetime(f:'%a %Y-%m-%d %R', l:en_GB) "
   short = " $icon $timestamp.datetime(f:%R) "
-  [block.theme_overrides]
-  idle_bg = "#458588"
-  idle_fg = "#ebdbb2"
 #+end_src
 * sway
 #+begin_src conf :tangle ~/.config/sway/colortheme
@@ -3748,7 +3747,7 @@ wol a8:5e:45:56:5c:66
 #+end_src
 ** Required Packages                                               :packages:
 #+begin_example
-sxiv
+nsxiv
 flameshot
 hledger
 #+end_example
