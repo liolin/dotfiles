@@ -1555,7 +1555,7 @@ git
     SetEnv TERM=xterm
 
   Host smartkvp.ch
-    HostName 165.227.217.56
+    HostName 104.236.200.192
     SetEnv TERM=xterm
 
   Host smartkvp-openshift.ch
@@ -1927,7 +1927,7 @@ git
 
   # Note: pass the final command to swaymsg so that the resulting window can be opened
   # on the original workspace that the command was run on.
-  set $menu wofi --allow-images --show drun
+  set $menu rofi -show-icons -show drun
 
   set $external_mon HDMI-A-1
   set $external_mon_home HDMI-A-3
@@ -3070,6 +3070,37 @@ lxsession
   Create Both
   Expunge Both
   SyncState *
+  CopyArrivalDate yes
+#+end_src
+
+** olivier.lischer@ost.ch
+#+begin_src conf :tangle ~/.mbsyncrc
+  IMAPAccount olivier.lischer@ost.ch
+  # Address to connect to
+  Host localhost
+  Port 1143
+  User olivier.lischer@ost.ch
+  # To store the password in an encrypted file use PassCmd instead of Pass
+  PassCmd "pass show Privat/School/HSR/Ost.ch/olivier.lischer@ost.ch | head -n1"
+  TLSType None
+  AuthMechs LOGIN
+
+  IMAPStore olivier.lischer@ost.ch-remote
+  Account olivier.lischer@ost.ch
+
+  MaildirStore olivier.lischer@ost.ch-local
+  Subfolders Verbatim
+  # The trailing "/" is important
+  Path ~/.mail/ost/
+  Inbox ~/.mail/ost/Inbox
+
+  Channel olivier.lischer@ost.ch
+  Far :olivier.lischer@ost.ch-remote:
+  Near :olivier.lischer@ost.ch-local:
+  Patterns *
+  Create Both
+  SyncState *
+  #Expunge Both
   CopyArrivalDate yes
 #+end_src
 
