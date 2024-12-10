@@ -190,7 +190,7 @@ fi
 
   [Timer]
   OnBootSec=0s
-  OnUnitActiveSec=15m
+  OnUnitActiveSec=5m
 
   [Install]
   WantedBy=timers.target
@@ -866,11 +866,21 @@ fi
   # End:
 #+end_src
 #+begin_src sh :tangle ~/.local/bin/ical2org :tangle-mode (identity #o555)
-  #!/usr/bin/env bash
   set -Eeu
 
   URL=$(cat ~/.credentials/ost_calendar)
+  export EMAIL="olivier.lischer@ost.ch"
+  export TITLE="OST Calendar"
+  export CALENDAR="OST"
+  export FILETAGS="WORK"
   curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_ost.org 
+
+  URL=$(cat ~/.credentials/gmail_calendar)
+  export EMAIL="olivier.lischer.blon@gmail.com"
+  export TITLE="Google Calendar"
+  export CALENDAR="Google"
+  export FILETAGS="PERSONAL"
+  curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_gmail.org 
 #+end_src
 * Alacritty
 :PROPERTIES:
