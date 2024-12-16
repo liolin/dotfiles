@@ -1177,12 +1177,12 @@ See [[file:system.org][system.org]]
 * fish
 ** config.fish
 #+begin_src sh :tangle ~/.config/fish/config.fish
-  set PATH $PATH "$HOME/.cargo/bin"
-  set PATH $PATH "$HOME/.local/bin"
-  set PATH $PATH "$HOME/dotnet/tools"
-  set PATH $PATH "$HOME/.ghcup/bin"
-  set PATH $PATH "$HOME/.cabal/bin"
-  set -gx PATH $PATH "$HOME/.bun/bin"
+  set PATH "$HOME/.cargo/bin" $PATH
+  set PATH "$HOME/.local/bin" $PATH
+  set PATH "$HOME/dotnet/tools" $PATH
+  set PATH "$HOME/.ghcup/bin" $PATH
+  set PATH "$HOME/.cabal/bin" $PATH
+  set -gx PATH "$HOME/.bun/bin" $PATH
 
   set -gx EDITOR "emacsclient -c -a emacs"
   set -gx VISUAL "emacsclient -c -a emacs"
@@ -1193,7 +1193,7 @@ See [[file:system.org][system.org]]
 
   # Environment-local
   set -gx CARGO_TARGET_DIR "$HOME/.cargo-target"
-  set -gx PATH $PATH "$HOME/.cargo-target/release/"
+  set -gx PATH "$HOME/.cargo-target/release/" $PATH
 
   # Rust stuff
   set -gx RUST_BACKTRACE 1
