@@ -48,7 +48,7 @@ tangle-mode:
 #+end_src
 
 * ENV Variables
-The following are the env variables which are valid over all shells. 
+The following are the env variables which are valid over all shells.
 They are included over =noweb= in the =profile= files for the specific shells.
 
 #+NAME: ENV-VARS
@@ -873,14 +873,14 @@ fi
   export TITLE="OST Calendar"
   export CALENDAR="OST"
   export FILETAGS="WORK"
-  curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_ost.org 
+  curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_ost.org
 
   URL=$(cat ~/.credentials/gmail_calendar)
   export EMAIL="olivier.lischer.blon@gmail.com"
   export TITLE="Google Calendar"
   export CALENDAR="Google"
   export FILETAGS="PERSONAL"
-  curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_gmail.org 
+  curl -sL "${URL}" | awk -f /home/liolin/.local/bin/ical2org.awk > /home/liolin/org/Agenda/calendar_gmail.org
 #+end_src
 * Alacritty
 :PROPERTIES:
@@ -910,7 +910,7 @@ fi
   style = "Regular"
 #+end_src
 ** Colors
-I use a the dracula theme from [[https://draculatheme.com/alacritty][here]]. 
+I use a the dracula theme from [[https://draculatheme.com/alacritty][here]].
 #+begin_src toml
   # Base16 Gruvbox dark, hard 256 - alacritty color config
   # Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
@@ -989,7 +989,7 @@ alacritty
 #+begin_src sh
   <<ENV-VARS>>
 
-  [ -r "~/.bashrc" ] && source ~/.bashrc 
+  [ -r "~/.bashrc" ] && source ~/.bashrc
 #+end_src
 ** Guard
 #+begin_src sh :tangle ~/.bashrc :tangle-mode (identity #o555)
@@ -1037,7 +1037,7 @@ upower
 rsync
 starship
 fzf
-bash-completion 
+bash-completion
 (miniconda)
 #+end_example
 
@@ -1172,7 +1172,7 @@ Configure your DE / WM to call =dunstctl=.
 dunst
 #+end_example
 
-* Etc 
+* Etc
 See [[file:system.org][system.org]]
 * fish
 ** config.fish
@@ -1834,7 +1834,7 @@ git
   exec --no-startup-id dunst
   exec --no-startup-id nm-applet
   exec --no-startup-id picom --backend glx --daemon --config ~/.config/picom.conf
-  exec --no-startup-id feh --bg-scale ~/Pictures/wallpapers/0020.png 
+  exec --no-startup-id feh --bg-scale ~/Pictures/wallpapers/0020.png
   exec --no-startup-id setxkbmap -layout us -variant "altgr-intl" -option ctrl:nocaps
   exec --no-startup-id playerctld daemon
   exec --no-startup-id udiskie --no-automount --tray
@@ -2381,9 +2381,9 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
 
   ## General keybindings
   bind = $mainMod, RETURN, exec, alacritty
-  bind = $mainMod SHIFT, C, killactive, 
+  bind = $mainMod SHIFT, C, killactive,
   bind = $mainMod, R, exec, wofi --allow-images --show drun
-  bind = $mainMod SHIFT, Q, exit, 
+  bind = $mainMod SHIFT, Q, exit,
   bind = $mainMod, SPACE, togglefloating,
   bind = $mainMod, F, fullscreen
   #bind = $mainMod, P, pseudo, # dwindle
@@ -2429,7 +2429,7 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
   bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
 
   # Move active workspace to monitor
-  bind = $mainMod SHIFT, W, movecurrentworkspacetomonitor, -1 
+  bind = $mainMod SHIFT, W, movecurrentworkspacetomonitor, -1
   bind = $mainMod SHIFT, E, movecurrentworkspacetomonitor, +1
 
   # Mouse Bindings
@@ -2624,7 +2624,7 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
     "modules-center": ["sway/mode", "sway/window"],
     "modules-right": ["idle_inhibitor", "wireplumber", "network", "sway/language", "battery", "clock", "tray"],
 
-    
+
     "sway/workspaces": {
       "sort-by-number": true,
       "format": "{name}: {icon}",
@@ -2932,8 +2932,8 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
 
 ** Required Packages                                               :packages:
 #+begin_example
-polkit 
-lxsession 
+polkit
+lxsession
 #+end_example
 
 * mailsignature
@@ -2975,7 +2975,7 @@ lxsession
   Channel olivier.lischer@liolin.ch
   Far :olivier.lischer@liolin.ch-remote:
   Near :olivier.lischer@liolin.ch-local:
-  Patterns * 
+  Patterns *
   Create Both
   SyncState *
   Expunge Both
@@ -3042,7 +3042,7 @@ lxsession
   Channel notes@liolin.ch
   Far :notes@liolin.ch-remote:
   Near :notes@liolin.ch-local:
-  Patterns * 
+  Patterns *
   Create Both
   SyncState *
   Expunge Both
@@ -3248,10 +3248,10 @@ ninja
   shadow-opacity = .3;
   shadow-ignore-shaped = false;
   shadow-exclude = [
-  "name = 'Notification'", 
+  "name = 'Notification'",
   # workaround for conky until it provides window properties:
-  "override_redirect = 1 && !WM_CLASS@:s", 
-  #	"class_g ?= 'Dunst'", 
+  "override_redirect = 1 && !WM_CLASS@:s",
+  #	"class_g ?= 'Dunst'",
   # disable shadows for hidden windows:
   "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
   "_GTK_FRAME_EXTENTS@:c",
@@ -3294,54 +3294,54 @@ ninja
   #glx-swap-method = "undefined";
   use-damage = true
 
-  opacity-rule = [ 
-  "99:name *?= 'Call'", 
-  "99:class_g = 'Chromium'", 
-  "99:name *?= 'Conky'", 
-  "99:class_g = 'Darktable'", 
-  "50:class_g = 'Dmenu'", 
-  "99:name *?= 'Event'", 
+  opacity-rule = [
+  "99:name *?= 'Call'",
+  "99:class_g = 'Chromium'",
+  "99:name *?= 'Conky'",
+  "99:class_g = 'Darktable'",
+  "50:class_g = 'Dmenu'",
+  "99:name *?= 'Event'",
   "99:class_g = 'Firefox' && focused",
   "99:name *?= 'Firefox' && focused",
   "99:class_g = 'Firefox' && !focused",
   "99:name *?= 'Firefox' && !focused",
-  "99:class_g = 'GIMP'", 
+  "99:class_g = 'GIMP'",
   "99:name *?= 'Image'",
-  "99:class_g = 'Lazpaint'", 
-  "99:class_g = 'Midori'", 
-  "99:name *?= 'Minitube'", 
+  "99:class_g = 'Lazpaint'",
+  "99:class_g = 'Midori'",
+  "99:name *?= 'Minitube'",
   "99:class_g = 'Mousepad'",
-  "99:name *?= 'MuseScore'", 
-  "90:name *?= 'Page Info'", 
-  "99:name *?= 'Pale Moon'", 
-  "90:name *?= 'Panel'", 
-  "99:class_g = 'Pinta'", 
-  "90:name *?= 'Restart'", 
-  "99:name *?= 'sudo'", 
-  "99:name *?= 'Screenshot'", 
-  "99:class_g = 'Viewnior'", 
-  "99:class_g = 'VirtualBox'", 
-  "99:name *?= 'VLC'", 
+  "99:name *?= 'MuseScore'",
+  "90:name *?= 'Page Info'",
+  "99:name *?= 'Pale Moon'",
+  "90:name *?= 'Panel'",
+  "99:class_g = 'Pinta'",
+  "90:name *?= 'Restart'",
+  "99:name *?= 'sudo'",
+  "99:name *?= 'Screenshot'",
+  "99:class_g = 'Viewnior'",
+  "99:class_g = 'VirtualBox'",
+  "99:name *?= 'VLC'",
   "99:name *?= 'mpv",
-  "99:name *?= 'Write'", 
+  "99:name *?= 'Write'",
   "99:class_g = 'teams-for-linux'",
   "99:class_g = 'teams'",
   "99:class_g = 'jetbrains-idea'",
   "93:class_g = 'URxvt' && !_NET_WM_STATE@:32a",
-  "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'", 
-  "96:_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'" 
+  "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+  "96:_NET_WM_STATE@:32a *= '_NET_WM_STATE_STICKY'"
   ];
 
-  wintypes : 
+  wintypes :
   {
-  tooltip : 
+  tooltip :
   {
   fade = true;
   shadow = false;
   opacity = 0.85;
   focus = true;
   };
-  fullscreen : 
+  fullscreen :
   {
   fade = true;
   shadow = false;
@@ -3678,7 +3678,7 @@ picom
   echo "Bars launched..."
 #+end_src
 
-** Systemd 
+** Systemd
 #+begin_src conf :tangle ~/.config/systemd/user/polybar.service
   [Unit]
   Description=Polybar Panel
@@ -3726,7 +3726,7 @@ polybar
   /sbin/udiskie --no-automount --tray &
   [ -x /usr/bin/redshift ] && /usr/bin/redshift -l 46.70041:9.45404 & #sils
   [ -x /usr/bin/keybase-gui ] && /usr/bin/keybase-gui &
-  [ -x ~/.local/share/applications/teams.desktop ] &&  cd ~/.local/share/applications/ && gtk-launch teams.desktop 
+  [ -x ~/.local/share/applications/teams.desktop ] &&  cd ~/.local/share/applications/ && gtk-launch teams.desktop
   #/bin/sh ~/bin/update-notif
   /usr/bin/owncloud &
 #+end_src
@@ -3807,7 +3807,7 @@ trap does not work. Why?
 #+begin_example
 rofi
 lightdm
-xsecurelock 
+xsecurelock
 #+end_example
 
 * scripts
@@ -4149,7 +4149,7 @@ I do not use tmux at the moment (=~/.tmux.conf=)
   set cmdheight=1                 "The commandbar height
   set splitbelow                  " Horizontal splits open below current file
   set splitright                  " Vertical splits open to the right of the current file
-  set wildmode=longest,list       " Pressing <Tab> shows command suggestions similar to pressing <Tab> in bash 
+  set wildmode=longest,list       " Pressing <Tab> shows command suggestions similar to pressing <Tab> in bash
 
   " Moving
   set backspace=indent,eol,start  "allow backspacing over everything in insert mode
@@ -4277,6 +4277,6 @@ tilp
 
 
 * Local Variables
-;; Local Variables: 
-;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t) 
+;; Local Variables:
+;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
 ;; End:
