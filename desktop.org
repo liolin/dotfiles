@@ -3110,7 +3110,7 @@ lxsession
   Patterns *
   Create Both
   SyncState *
-  #Expunge Both
+  Expunge None
   CopyArrivalDate yes
 #+end_src
 
