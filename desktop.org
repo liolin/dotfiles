@@ -1572,6 +1572,17 @@ git
     HostName 165.22.34.246
     SetEnv TERM=xterm
 #+end_src
+* X11
+** starx / .xinitrc
+#+begin_src sh :tangle ~/.xinitrc
+  systemctl --user import-environment DISPLAY XAUTHORITY
+
+  if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+      dbus-update-activation-environment DISPLAY XAUTHORITY
+  fi
+
+  exec i3
+#+end_src
 * i3
 #+begin_src conf :tangle ~/.config/i3/config
   font Ubuntu:monospace 11
