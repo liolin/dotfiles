@@ -1602,6 +1602,7 @@ git
   # Note: pass the final command to swaymsg so that the resulting window can be opened
   # on the original workspace that the command was run on.
   set $menu rofi -show-icons -show drun
+  set $calc rofi -show calc -modi calc -no-show-match -no-sort
 
   set $external_mon HDMI-A-1
   set $external_mon_home HDMI-A-3
@@ -1636,17 +1637,6 @@ git
 
   default_border pixel 3
 
-  ### Idle configuration
-  #exec swayidle -w \
-  #     timeout 180 '$locker' \
-  #     timeout 300 'swaymsg "output * dpms off"' \
-  #     resume 'swaymsg "output * dpms on"' \
-  #     before-sleep '$locker'
-  #
-  # This will lock your screen after 300 seconds of inactivity, then turn off
-  # your displays after another 300 seconds, and turn your screens back on when
-  # resumed. It will also lock your screen before your computer goes to sleep.
-
   ### Key bindings
   #
   # Basics:
@@ -1659,6 +1649,7 @@ git
 
   # Start your launcher
   bindsym $mod+r exec $menu
+  bindsym $mod+c exec $calc
 
   # Drag floating windows by holding down $mod and left mouse button.
   floating_modifier $mod
@@ -1863,6 +1854,21 @@ git
   exec --no-startup-id gsettings set org.gnome.desktop.interface font-name "Ubuntu 11"
 
 #+end_src
+** Required Packages                                               :packages:
+#+begin_example
+i3
+rofi
+rofi-calc
+picom
+pipewire
+wireplumber
+pipewire-alsa
+pipewire-pulse
+gruvbox-dark-gtk
+gruvbox-dark-icons-gtk
+#+end_example
+
+
 * i3status-rs
 #+begin_src toml :tangle ~/.config/i3status-rust/config.toml
 
