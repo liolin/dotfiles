@@ -1268,6 +1268,12 @@ See [[file:system.org][system.org]]
   end
 #+end_src
 
+#+begin_src sh :tangle ~/.config/fish/functions/opn.fish
+  function opn
+    xdg-open "$argv" &
+  end
+#+end_src
+
 #+begin_src sh :tangle ~/.config/fish/functions/base16-gruvbox-dark-hard.fish
   # base16-fish (https://github.com/tomyun/base16-fish)
   # based on base16-shell (https://github.com/chriskempson/base16-shell)
