@@ -1849,11 +1849,6 @@ git
   exec --no-startup-id owncloud
   exec --no-startup-id redshift -l 47.04896000:9.44103000 # Sargans
 
-  ## Start default applications
-  exec --no-startup-id alacritty
-  exec --no-startup-id emacs
-  exec --no-startup-id firefox-developer-edition
-
   exec --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme "gruvbox-dark-gtk"
   exec --no-startup-id gsettings set org.gnome.desktop.interface icon-theme "Yaru-dark"
   exec --no-startup-id gsettings set org.gnome.desktop.interface cursor-theme "Yaru"
@@ -2221,15 +2216,6 @@ gruvbox-dark-icons-gtk
   exec udiskie --no-automount --tray
   exec owncloud
   exec gammastep -l 47.04896000:9.44103000 # Sargans
-
-  ## Start default applications
-  exec pavucontrol
-  exec alacritty
-  exec emacs
-  exec firefox-developer-edition
-  #exec keybase-gui &
-  # /sbin/ibus-daemon -drxR
-  # cd ~/.local/share/applications/ && gtk-launch teams.desktop
 
   exec gsettings set org.gnome.desktop.interface gtk-theme "gruvbox-dark-gtk"
   exec gsettings set org.gnome.desktop.interface icon-theme "Yaru-dark"
