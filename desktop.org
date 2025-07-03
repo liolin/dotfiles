@@ -1218,7 +1218,7 @@ See [[file:system.org][system.org]]
   # Run sway on login
   set TTY (tty)
   if [ $TTY = "/dev/tty1" ]
-     exec sway
+     exec sway --unsupported-gpu
   end
 
   if [ $TTY = "/dev/tty2" ]
