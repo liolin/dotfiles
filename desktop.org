@@ -2172,7 +2172,7 @@ gruvbox-dark-icons-gtk
       bindsym m exec emacsclient -c -a '' --eval '(mu4e)'; mode "default"
       bindsym s exec emacsclient -c -a '' --eval '(eshell)'; mode "default"
       bindsym a exec emacsclient -c -a '' --eval '(org-agenda)'; mode "default"
-      bindsym a exec emacsclient -c -a '' --eval '(full-calc)'; mode "default"
+      bindsym c exec emacsclient -c -a '' --eval '(full-calc)'; mode "default"
       bindsym Return mode "default"
       bindsym Escape mode "default"
   }
