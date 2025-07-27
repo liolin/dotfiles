@@ -1255,6 +1255,12 @@ See [[file:system.org][system.org]]
      . $HOME/.nix-profile/etc/profile.d/nix.fish
   end
 #+end_src
+** nix.fish
+#+begin_src sh :tangle ~/.config/fish/conf.d/nix.fish
+  if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
+    . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
+  end
+#+end_src
 ** funtions
 #+begin_src sh :tangle ~/.config/fish/functions/fish_user_key_bindings.fish
   function fish_user_key_bindings
