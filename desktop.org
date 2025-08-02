@@ -1252,13 +1252,18 @@ See [[file:system.org][system.org]]
      base16-gruvbox-dark-hard
      starship init fish | source
      zoxide init --cmd cd fish | source
-     . $HOME/.nix-profile/etc/profile.d/nix.fish
   end
 #+end_src
 ** nix.fish
 #+begin_src sh :tangle ~/.config/fish/conf.d/nix.fish
   if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
     . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
+  end
+#+end_src
+** direnv.fish
+#+begin_src sh :tangle ~/.config/fish/conf.d/direnv.fish
+  if test -x (which direnv)
+     direnv hook fish | source
   end
 #+end_src
 ** funtions
