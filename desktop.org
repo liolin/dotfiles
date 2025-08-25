@@ -2177,13 +2177,13 @@ gruvbox-dark-icons-gtk
 
   set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ired [m]u4e [s]hell [a]genda [c]alc"
   mode $emacs_mode {
-      bindsym e exec emacsclient -c -a ''; mode "default"
-      bindsym b exec emacsclient -c -a '' --eval '(ibuffer)'; mode "default"
-      bindsym d exec emacsclient -c -a '' --eval '(dired nil)'; mode "default"
-      bindsym m exec emacsclient -c -a '' --eval '(mu4e)'; mode "default"
-      bindsym s exec emacsclient -c -a '' --eval '(eshell)'; mode "default"
-      bindsym a exec emacsclient -c -a '' --eval '(org-agenda)'; mode "default"
-      bindsym c exec emacsclient -c -a '' --eval '(full-calc)'; mode "default"
+      bindsym e exec alacritty --command emacsclient -nw -c -a ''; mode "default"
+      bindsym b exec alacritty --command emacsclient -nw -c -a '' --eval '(ibuffer)'; mode "default"
+      bindsym d exec alacritty --command emacsclient -nw -c -a '' --eval '(dired nil)'; mode "default"
+      bindsym m exec alacritty --command emacsclient -nw -c -a '' --eval '(mu4e)'; mode "default"
+      bindsym s exec alacritty --command emacsclient -nw -c -a '' --eval '(eshell)'; mode "default"
+      bindsym a exec alacritty --command emacsclient -nw -c -a '' --eval '(org-agenda)'; mode "default"
+      bindsym c exec alacritty --command emacsclient -nw -c -a '' --eval '(full-calc)'; mode "default"
       bindsym Return mode "default"
       bindsym Escape mode "default"
   }
