@@ -1369,62 +1369,62 @@ See [[file:system.org][system.org]]
   # Converted from bash to fish
   # https://opensource.com/article/22/1/linux-desktop-notifications
   function remind
-  	set COUNT (count $argv)
-  	set COMMAND $argv[1]
-  	set MESSAGE $argv[1]
-  	set OPERATION $argv[2]
-  	set WHEN $argv[3..]
+	set COUNT (count $argv)
+	set COMMAND $argv[1]
+	set MESSAGE $argv[1]
+	set OPERATION $argv[2]
+	set WHEN $argv[3..]
 
-  	if test $COUNT = 0; or test $COMMAND = "help";
-  	  echo "COMMAND"
-  	  echo "    remind <message> <time>"
-  	  echo "    remind <command>"
-  	  echo
-  	  echo "DESCRIPTION"
-  	  echo "    Displays notification at specified time"
-  	  echo
-  	  echo "EXAMPLES"
-  	  echo '    remind "Hi there" now'
-  	  echo '    remind "Time to wake up" in 5 minutes'
-  	  echo '    remind "Dinner" in 1 hour'
-  	  echo '    remind "Take a break" at noon'
-  	  echo '    remind "Are you ready?" at 13:00'
-  	  echo '    remind list'
-  	  echo '    remind clear'
-  	  echo '    remind help'
-  	  echo
-  	  return
-  	end
+	if test $COUNT = 0; or test $COMMAND = "help";
+	  echo "COMMAND"
+	  echo "    remind <message> <time>"
+	  echo "    remind <command>"
+	  echo
+	  echo "DESCRIPTION"
+	  echo "    Displays notification at specified time"
+	  echo
+	  echo "EXAMPLES"
+	  echo '    remind "Hi there" now'
+	  echo '    remind "Time to wake up" in 5 minutes'
+	  echo '    remind "Dinner" in 1 hour'
+	  echo '    remind "Take a break" at noon'
+	  echo '    remind "Are you ready?" at 13:00'
+	  echo '    remind list'
+	  echo '    remind clear'
+	  echo '    remind help'
+	  echo
+	  return
+	end
 
-  	if not test -x (which at)
-  	  echo "remind: AT utility is required but not installed on your system. Install it with your package manager of choice, for example 'sudo apt install at'."
-  	  return
-  	end
+	if not test -x (which at)
+	  echo "remind: AT utility is required but not installed on your system. Install it with your package manager of choice, for example 'sudo apt install at'."
+	  return
+	end
 
-  	if test $COUNT = 1
-  	   if test $COMMAND = "list"
-  	    at -l
-  	   else if test $COMMAND = "clear"
-  	     at -r (atq | cut -f1)
-  	   else
-  	     echo "remind: unknown command $COMMAND. Type 'remind' without any parameters to see syntax."
-  	   end
-  	   return
-  	end
+	if test $COUNT = 1
+	   if test $COMMAND = "list"
+	    at -l
+	   else if test $COMMAND = "clear"
+	     at -r (atq | cut -f1)
+	   else
+	     echo "remind: unknown command $COMMAND. Type 'remind' without any parameters to see syntax."
+	   end
+	   return
+	end
 
-  	if test $OPERATION = "in"
-  	   set TIME "now + $WHEN"
-  	else if test $OPERATION = "at"
-  	   set TIME "$WHEN"
-  	else if test $OPERATION = "now"
-  	   set TIME "now"
-  	else
-  	 echo "remind: invalid time operator $OP"
-  	 return
-  	end
+	if test $OPERATION = "in"
+	   set TIME "now + $WHEN"
+	else if test $OPERATION = "at"
+	   set TIME "$WHEN"
+	else if test $OPERATION = "now"
+	   set TIME "now"
+	else
+	 echo "remind: invalid time operator $OP"
+	 return
+	end
 
-  	echo "dunstify '$MESSAGE' 'Reminder' -u critical" | at $TIME 2>/dev/null
-  	echo "Notification scheduled at $TIME"
+	echo "dunstify '$MESSAGE' 'Reminder' -u critical" | at $TIME 2>/dev/null
+	echo "Notification scheduled at $TIME"
   end
 #+end_src
 
