@@ -327,15 +327,15 @@ fi
       max_age_seconds = max_age*24*60*60
 
       if (header) {
-	  print "#+TITLE:      ", title
-	  print "#+AUTHOR:     ", author
-	  print "#+EMAIL:      ", emailaddress
-	  print "#+DESCRIPTION: converted using the ical2org awk script"
-	  print "#+CATEGORY:   ", calendarname
-	  print "#+STARTUP:     hidestars"
-	  print "#+STARTUP:     overview"
-	  print "#+FILETAGS:   ", filetags
-	  print ""
+          print "#+TITLE:      ", title
+          print "#+AUTHOR:     ", author
+          print "#+EMAIL:      ", emailaddress
+          print "#+DESCRIPTION: converted using the ical2org awk script"
+          print "#+CATEGORY:   ", calendarname
+          print "#+STARTUP:     hidestars"
+          print "#+STARTUP:     overview"
+          print "#+FILETAGS:   ", filetags
+          print ""
       }
   }
 
@@ -344,22 +344,22 @@ fi
   # etc.) append the entry to the respective variable
   /^[ ]/ {
       if (indescription) {
-	  entry = entry gensub("\r", "", "g", gensub("^[ ]", "", 1, $0));
-	  # print "entry continuation: " entry
+          entry = entry gensub("\r", "", "g", gensub("^[ ]", "", 1, $0));
+          # print "entry continuation: " entry
       } else if (insummary) {
-	  summary = summary gensub("\r", "", "g", gensub("^[ ]", "", 1, $0))
-	  # print "summary continuation: " summary
+          summary = summary gensub("\r", "", "g", gensub("^[ ]", "", 1, $0))
+          # print "summary continuation: " summary
       } else if (inattendee) {
-	  attendee = attendee gensub("\r", "", "g", gensub("^[ ]", "", 1, $0))
-	  # print "attendee continuation: " attendee
-	  are_we_going(attendee)
-	  add_attendee(attendee)
+          attendee = attendee gensub("\r", "", "g", gensub("^[ ]", "", 1, $0))
+          # print "attendee continuation: " attendee
+          are_we_going(attendee)
+          add_attendee(attendee)
       } else if (inlocation) {
-	  location = location unescape(gensub("\r", "", "g", $0), 0);
+          location = location unescape(gensub("\r", "", "g", $0), 0);
 
       }
       if (preserve)
-	  icalentry = icalentry "\n" $0
+          icalentry = icalentry "\n" $0
   }
 
   /^BEGIN:VEVENT/ {
@@ -388,13 +388,13 @@ fi
 
       # if this is the first event, output the preamble from the iCal file
       if (first) {
-	  if(preamble) {
-	      print "* COMMENT original iCal preamble"
-	      print gensub("\r", "", "g", icalentry)
-	  }
-	  if (preserve)
-	      icalentry = ""
-	  first = 0;
+          if(preamble) {
+              print "* COMMENT original iCal preamble"
+              print gensub("\r", "", "g", icalentry)
+          }
+          if (preserve)
+              icalentry = ""
+          first = 0;
       }
   }
 
@@ -416,8 +416,8 @@ fi
       # really content free, makes a revision control system update the
       # repository and confuses.
       if (preserve)
-	  if (! index("DTSTAMP", $1))
-	      icalentry = icalentry "\n" $0
+          if (! index("DTSTAMP", $1))
+              icalentry = icalentry "\n" $0
       # this line terminates the collection of description and summary entries
       indescription = 0;
       insummary = 0;
@@ -434,7 +434,7 @@ fi
       got_end_date = 1
       end_date = datestring($2, 1);
       if ( issameday )
-	  end_date = ""
+          end_date = ""
   }
 
 
@@ -444,7 +444,7 @@ fi
       tz = "";
       match($0, /TZID=([^:]*)/, a)
       {
-	  tz = a[1];
+          tz = a[1];
       }
       offset = tz_offsets[tz]
 
@@ -452,7 +452,7 @@ fi
       # print date;
 
       if (date != "" && got_end_date) {
-	  fix_date_time()
+          fix_date_time()
       }
   }
 
@@ -463,7 +463,7 @@ fi
       tz = "";
       match($0, /TZID=([^:]*)/, a)
       {
-	  tz = a[1];
+          tz = a[1];
       }
       offset = tz_offsets[tz]
 
@@ -471,8 +471,8 @@ fi
       got_end_date = 1
 
       if (date != "" && got_end_date) {
-	  # We got start and end date/time, let's munge as appropriate
-	  fix_date_time()
+          # We got start and end date/time, let's munge as appropriate
+          fix_date_time()
       }
   }
 
@@ -487,7 +487,7 @@ fi
       # print date;
 
       if (date != "" && got_end_date) {
-	  fix_date_time()
+          fix_date_time()
       }
   }
 
@@ -502,8 +502,8 @@ fi
       got_end_date = 1
 
       if (date != "" && got_end_date) {
-	  # We got start and end date/time, let's munge as appropriate
-	  fix_date_time()
+          # We got start and end date/time, let's munge as appropriate
+          fix_date_time()
       }
   }
 
@@ -527,12 +527,12 @@ fi
       # if the repetition is daily, and there is an end date, drop the repetitor
       # as that is the default
       if (intfreq == " +1d" && end_date == "" && rrend != "")
-	  intfreq = ""
+          intfreq = ""
       now = strftime("%Y%m%dT%H%M%SZ")
       if (rrend_raw != "" && rrend_raw < now)
-	  intfreq = ""
+          intfreq = ""
       if (repeat_count != "")      # TODO: count repeats correctly
-	  intfreq = ""
+          intfreq = ""
   }
 
   # The description will the contents of the entry in org-mode.
@@ -540,11 +540,11 @@ fi
 
   /^DESCRIPTION/ {
       if (!in_alarm) {
-	  # Setting $1 to "" clears colons from items like "1:1 with Marc", so we
-	  # strip "DESCRIPTION:" off of the front instead
-	  # $1 = "";
-	  entry = entry gensub("\r", "", "g", gensub(/^DESCRIPTION:/, "", 1, $0));
-	  indescription = 1;
+          # Setting $1 to "" clears colons from items like "1:1 with Marc", so we
+          # strip "DESCRIPTION:" off of the front instead
+          # $1 = "";
+          entry = entry gensub("\r", "", "g", gensub(/^DESCRIPTION:/, "", 1, $0));
+          indescription = 1;
       }
   }
 
@@ -554,13 +554,13 @@ fi
       # Setting $1 to "" clears colons from items like "1:1 with Marc", so we
       # strip "SUMMARY:" off of the front instead
       if (!in_alarm) {
-	 summary = gensub("\r", "", "g", gensub(/^SUMMARY:/, "", 1, $0));
+         summary = gensub("\r", "", "g", gensub(/^SUMMARY:/, "", 1, $0));
 
-	 # trim trailing dots if requested by config option
-	 if(trimdots && summary ~ /\.\.\.$/)
-	     sub(/\.\.\.$/, "", summary)
-	 insummary = 1;
-	 # print "Summary: " summary
+         # trim trailing dots if requested by config option
+         if(trimdots && summary ~ /\.\.\.$/)
+             sub(/\.\.\.$/, "", summary)
+         insummary = 1;
+         # print "Summary: " summary
       }
   }
 
@@ -568,7 +568,7 @@ fi
 
   /^UID/ {
       if (!in_alarm) {
-	  id = gensub("\r", "", "g", $2);
+          id = gensub("\r", "", "g", $2);
       }
   }
 
@@ -603,55 +603,55 @@ fi
       is_duplicate = (id in UIDS);
       if(is_duplicate == 0 && (max_age<0 || intfreq != "" || ( lasttimestamp>0 && systime()<lasttimestamp+max_age_seconds )) )
       {
-	  if (attending != attending_types["NOT_ATTENDING"]) {
-	      # build org timestamp
-	      if (intfreq != "")
-		  date = date intfreq
-	      # TODO: http://orgmode.org/worg/org-faq.html#org-diary-class
-	      else if (end_date != "")
-		  date = date ">--<" end_date
-	      else if (rrend != "")
-		  date = date ">--<" rrend
+          if (attending != attending_types["NOT_ATTENDING"]) {
+              # build org timestamp
+              if (intfreq != "")
+                  date = date intfreq
+              # TODO: http://orgmode.org/worg/org-faq.html#org-diary-class
+              else if (end_date != "")
+                  date = date ">--<" end_date
+              else if (rrend != "")
+                  date = date ">--<" rrend
 
-	      # translate \n sequences to actual newlines and unprotect commas (,)
-	      if (condense)
-		  print "* <" date "> " gensub("^[ ]+", "", "", unescape(summary, 0))
-	      else
-		  print "* " gensub("^[ ]+", "", "g", unescape(summary, 0))
-	      print "  :PROPERTIES:"
-	      print     "  :ID:        " id
-	      if(length(location))
-		  print "  :LOCATION:  " location
-	      if(length(status))
-		  print "  :STATUS:    " status
-	      attending_string = attending_types[attending]
-	      if(attending_string == "UNSET")
-		  # No attending info at all -- assume this is an event we
-		  # created to block off our calendar, with no attendees, and
-		  # mark it as attending
-		  attending_string = "ATTENDING"
-	      print "  :ATTENDING: " attending_string
-	      print "  :ATTENDEES: " join_keys(people_attending)
-	      print "  :END:"
-	      if (date2 != "")
-	      {
-		  # Fake some logbook entries so we can generate a clock report
-		  print "  :LOGBOOK:"
-		  print "  CLOCK: [" date1 "]--[" date2 "] =>  " "0:00"
-		  print "  :END"
-	      }
-	      if (!condense)
-		   print "<" date ">"
+              # translate \n sequences to actual newlines and unprotect commas (,)
+              if (condense)
+                  print "* <" date "> " gensub("^[ ]+", "", "", unescape(summary, 0))
+              else
+                  print "* " gensub("^[ ]+", "", "g", unescape(summary, 0))
+              print "  :PROPERTIES:"
+              print     "  :ID:        " id
+              if(length(location))
+                  print "  :LOCATION:  " location
+              if(length(status))
+                  print "  :STATUS:    " status
+              attending_string = attending_types[attending]
+              if(attending_string == "UNSET")
+                  # No attending info at all -- assume this is an event we
+                  # created to block off our calendar, with no attendees, and
+                  # mark it as attending
+                  attending_string = "ATTENDING"
+              print "  :ATTENDING: " attending_string
+              print "  :ATTENDEES: " join_keys(people_attending)
+              print "  :END:"
+              if (date2 != "")
+              {
+                  # Fake some logbook entries so we can generate a clock report
+                  print "  :LOGBOOK:"
+                  print "  CLOCK: [" date1 "]--[" date2 "] =>  " "0:00"
+                  print "  :END"
+              }
+              if (!condense)
+                   print "<" date ">"
 
-	      print ""
-	      if(length(entry)>1)
-		  print gensub("^[ ]+", "", "g", unescape(entry, 1));
+              print ""
+              if(length(entry)>1)
+                  print gensub("^[ ]+", "", "g", unescape(entry, 1));
 
-	      # output original entry if requested by 'original' config option
-	      if (original)
-		  print "** COMMENT original iCal entry\n", gensub("\r", "", "g", icalentry)
-	  }
-	  UIDS[id] = 1;
+              # output original entry if requested by 'original' config option
+              if (original)
+                  print "** COMMENT original iCal entry\n", gensub("\r", "", "g", icalentry)
+          }
+          UIDS[id] = 1;
       }
   }
 
@@ -663,10 +663,10 @@ fi
       first_key = 1;
       for (key in input)
       {
-	  if (first_key != 1)
-	      joined = joined ", "
-	  joined = joined key
-	  first_key = 0;
+          if (first_key != 1)
+              joined = joined ", "
+          joined = joined key
+          first_key = 0;
       }
       return joined;
   }
@@ -679,11 +679,11 @@ fi
   function unescape(input, preserve_newlines)
   {
       ret = gensub("\\\\,", ",", "g",
-		   gensub("\\\\;", ";", "g", input))
+                   gensub("\\\\;", ";", "g", input))
       if (preserve_newlines)
-	  ret = gensub("\\\\n", "\n", "g", ret)
+          ret = gensub("\\\\n", "\n", "g", ret)
       else
-	  ret = gensub("\\\\n", " ", "g", ret)
+          ret = gensub("\\\\n", " ", "g", ret)
       return ret
       # return gensub("\\\\,", ",", "g",
       #               gensub("\\\\n", " ", "g",
@@ -712,7 +712,7 @@ fi
 
       if (offset > 0)
       {
-	  hour -= offset
+          hour -= offset
       }
 
       # print "input: " input
@@ -721,25 +721,25 @@ fi
       lasttimestamp = stamp;
 
       if (stamp <= 0) {
-	  # this is a date before the start of the epoch, so we cannot
-	  # use strftime and will deliver a 'yyyy-mm-dd hh:mm' string
-	  # without day of week; this assumes local time, and does not
-	  # attempt UTC offset correction
-	  spec = gensub("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2}).*[\r]*", "\\1-\\2-\\3 \\4:\\5", "g", input);
-	  # print "==> spec:" spec;
-	  return spec;
+          # this is a date before the start of the epoch, so we cannot
+          # use strftime and will deliver a 'yyyy-mm-dd hh:mm' string
+          # without day of week; this assumes local time, and does not
+          # attempt UTC offset correction
+          spec = gensub("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2}).*[\r]*", "\\1-\\2-\\3 \\4:\\5", "g", input);
+          # print "==> spec:" spec;
+          return spec;
       }
 
       if (input ~ /[0-9]{8}T[0-9]{6}Z/ ) {
-	  # this is an utc time;
-	  # we need to correct the timestamp by the utc offset for this time
-	  offset = strftime("%z", stamp)
-	  pm = substr(offset,1,1) 1 # define multiplier +1 or -1
-	  hh = substr(offset,2,2) * 3600 * pm
-	  mm = substr(offset,4,2) * 60 * pm
+          # this is an utc time;
+          # we need to correct the timestamp by the utc offset for this time
+          offset = strftime("%z", stamp)
+          pm = substr(offset,1,1) 1 # define multiplier +1 or -1
+          hh = substr(offset,2,2) * 3600 * pm
+          mm = substr(offset,4,2) * 60 * pm
 
-	  # adjust the timestamp
-	  stamp = stamp + hh + mm
+          # adjust the timestamp
+          stamp = stamp + hh + mm
       }
 
       return strftime("%Y-%m-%d %a %H:%M", stamp);
@@ -763,32 +763,32 @@ fi
       stamp = mktime(spec);
 
       if (isenddate) {
-	  # subtract 1 day from the timestamp
-	  # note that this also works for dates before the epoch
-	  stamp = stamp - 86400;
+          # subtract 1 day from the timestamp
+          # note that this also works for dates before the epoch
+          stamp = stamp - 86400;
 
-	  # register whether the end date is same as the start date
-	  issameday = lasttimestamp == stamp
+          # register whether the end date is same as the start date
+          issameday = lasttimestamp == stamp
       }
       # save timestamp to allow for check of max_age
       lasttimestamp = stamp
 
       if (stamp < 0) {
-	  # this date is before the epoch;
-	  # the returned datestring will not have the short day of week string
-	  # as strftime does not handle negative times;
-	  # we have to construct the datestring directly from the input
-	  if (isenddate) {
-	      # we really should return the date before the input date, but strftime
-	      # does not work with negative timestamp values; so we can not use it
-	      # to obtain the string representation of the corrected timestamp;
-	      # we have to return the date specified in the iCal input and we
-	      # add time 00:00 to clarify this
-	      return spec = gensub("([0-9]{4})([0-9]{2})([0-9]{2}).*[\r]*", "\\1-\\2-\\3 00:00", "g", input);
-	  } else {
-	      # just generate the desired representation of the input date, without time;
-	      return gensub("([0-9]{4})([0-9]{2})([0-9]{2}).*[\r]*", "\\1-\\2-\\3", "g", input);
-	  }
+          # this date is before the epoch;
+          # the returned datestring will not have the short day of week string
+          # as strftime does not handle negative times;
+          # we have to construct the datestring directly from the input
+          if (isenddate) {
+              # we really should return the date before the input date, but strftime
+              # does not work with negative timestamp values; so we can not use it
+              # to obtain the string representation of the corrected timestamp;
+              # we have to return the date specified in the iCal input and we
+              # add time 00:00 to clarify this
+              return spec = gensub("([0-9]{4})([0-9]{2})([0-9]{2}).*[\r]*", "\\1-\\2-\\3 00:00", "g", input);
+          } else {
+              # just generate the desired representation of the input date, without time;
+              return gensub("([0-9]{4})([0-9]{2})([0-9]{2}).*[\r]*", "\\1-\\2-\\3", "g", input);
+          }
       }
 
       # return the date and day of week
@@ -801,21 +801,21 @@ fi
   {
       match(attendee, /CN=([^;]+)/, m)
       {
-	  CN = tolower(m[1]);
-	  people_attending[CN] = 1;
+          CN = tolower(m[1]);
+          people_attending[CN] = 1;
       }
   }
 
   function fix_date_time()
   {
       if (substr(date,1,10) == substr(end_date,1,10)) {
-	  # timespan within same date, use one date with a time range, but preserve
-	  # original dates for org-clocktable
-	  date1 = date
-	  date2 = end_date
+          # timespan within same date, use one date with a time range, but preserve
+          # original dates for org-clocktable
+          date1 = date
+          date2 = end_date
 
-	  date = date "-" substr(end_date, length(end_date)-4)
-	  end_date = ""
+          date = date "-" substr(end_date, length(end_date)-4)
+          end_date = ""
       }
   }
 
@@ -828,31 +828,31 @@ fi
   {
       if (attending != attending_types["UNSET"])
       {
-	  # print "Bailing out early, attending is " attending
-	  return;
+          # print "Bailing out early, attending is " attending
+          return;
       }
 
       match(attendee, /CN=([^;]+)/, m)
       {
-	  # CN's can optionally be surrounded by quotes (google calendar download
-	  # omits, apple calendar export includes them)
-	  CN = gensub("\"", "", "g", tolower(m[1]));
-	  # TODO: no hardcoding
-	  if (CN == tolower(author) || CN == tolower(emailaddress))
-	  {
-	      # This is us -- did we accept the meeting?
-	      if (attendee ~ /PARTSTAT=ACCEPTED/)
-	      {
-		  attending = attending_types["ATTENDING"];
-	      }
-	      else if (attendee ~ /PARTSTAT=NEEDS-ACTION/)
-	      {
-		  attending = attending_types["NEEDS_ACTION"];
-	      }
-	      else {
-		  attending = attending_types["NOT_ATTENDING"];
-	      }
-	  }
+          # CN's can optionally be surrounded by quotes (google calendar download
+          # omits, apple calendar export includes them)
+          CN = gensub("\"", "", "g", tolower(m[1]));
+          # TODO: no hardcoding
+          if (CN == tolower(author) || CN == tolower(emailaddress))
+          {
+              # This is us -- did we accept the meeting?
+              if (attendee ~ /PARTSTAT=ACCEPTED/)
+              {
+                  attending = attending_types["ATTENDING"];
+              }
+              else if (attendee ~ /PARTSTAT=NEEDS-ACTION/)
+              {
+                  attending = attending_types["NEEDS_ACTION"];
+              }
+              else {
+                  attending = attending_types["NOT_ATTENDING"];
+              }
+          }
       }
       # print "are_we_going: " attending
   }
@@ -1369,62 +1369,62 @@ See [[file:system.org][system.org]]
   # Converted from bash to fish
   # https://opensource.com/article/22/1/linux-desktop-notifications
   function remind
-	set COUNT (count $argv)
-	set COMMAND $argv[1]
-	set MESSAGE $argv[1]
-	set OPERATION $argv[2]
-	set WHEN $argv[3..]
+        set COUNT (count $argv)
+        set COMMAND $argv[1]
+        set MESSAGE $argv[1]
+        set OPERATION $argv[2]
+        set WHEN $argv[3..]
 
-	if test $COUNT = 0; or test $COMMAND = "help";
-	  echo "COMMAND"
-	  echo "    remind <message> <time>"
-	  echo "    remind <command>"
-	  echo
-	  echo "DESCRIPTION"
-	  echo "    Displays notification at specified time"
-	  echo
-	  echo "EXAMPLES"
-	  echo '    remind "Hi there" now'
-	  echo '    remind "Time to wake up" in 5 minutes'
-	  echo '    remind "Dinner" in 1 hour'
-	  echo '    remind "Take a break" at noon'
-	  echo '    remind "Are you ready?" at 13:00'
-	  echo '    remind list'
-	  echo '    remind clear'
-	  echo '    remind help'
-	  echo
-	  return
-	end
+        if test $COUNT = 0; or test $COMMAND = "help";
+          echo "COMMAND"
+          echo "    remind <message> <time>"
+          echo "    remind <command>"
+          echo
+          echo "DESCRIPTION"
+          echo "    Displays notification at specified time"
+          echo
+          echo "EXAMPLES"
+          echo '    remind "Hi there" now'
+          echo '    remind "Time to wake up" in 5 minutes'
+          echo '    remind "Dinner" in 1 hour'
+          echo '    remind "Take a break" at noon'
+          echo '    remind "Are you ready?" at 13:00'
+          echo '    remind list'
+          echo '    remind clear'
+          echo '    remind help'
+          echo
+          return
+        end
 
-	if not test -x (which at)
-	  echo "remind: AT utility is required but not installed on your system. Install it with your package manager of choice, for example 'sudo apt install at'."
-	  return
-	end
+        if not test -x (which at)
+          echo "remind: AT utility is required but not installed on your system. Install it with your package manager of choice, for example 'sudo apt install at'."
+          return
+        end
 
-	if test $COUNT = 1
-	   if test $COMMAND = "list"
-	    at -l
-	   else if test $COMMAND = "clear"
-	     at -r (atq | cut -f1)
-	   else
-	     echo "remind: unknown command $COMMAND. Type 'remind' without any parameters to see syntax."
-	   end
-	   return
-	end
+        if test $COUNT = 1
+           if test $COMMAND = "list"
+            at -l
+           else if test $COMMAND = "clear"
+             at -r (atq | cut -f1)
+           else
+             echo "remind: unknown command $COMMAND. Type 'remind' without any parameters to see syntax."
+           end
+           return
+        end
 
-	if test $OPERATION = "in"
-	   set TIME "now + $WHEN"
-	else if test $OPERATION = "at"
-	   set TIME "$WHEN"
-	else if test $OPERATION = "now"
-	   set TIME "now"
-	else
-	 echo "remind: invalid time operator $OP"
-	 return
-	end
+        if test $OPERATION = "in"
+           set TIME "now + $WHEN"
+        else if test $OPERATION = "at"
+           set TIME "$WHEN"
+        else if test $OPERATION = "now"
+           set TIME "now"
+        else
+         echo "remind: invalid time operator $OP"
+         return
+        end
 
-	echo "dunstify '$MESSAGE' 'Reminder' -u critical" | at $TIME 2>/dev/null
-	echo "Notification scheduled at $TIME"
+        echo "dunstify '$MESSAGE' 'Reminder' -u critical" | at $TIME 2>/dev/null
+        echo "Notification scheduled at $TIME"
   end
 #+end_src
 
@@ -1519,10 +1519,10 @@ See [[file:system.org][system.org]]
     else
       put_template_var 10 $colorfg
       if [ "$BASE16_SHELL_SET_BACKGROUND" != false ]
-	put_template_var 11 $colorbg
-	if string match 'rxvt*' $TERM # [ "${TERM%%-*}" = "rxvt" ]
-	  put_template_var 708 $colorbg # internal border (rxvt)
-	end
+        put_template_var 11 $colorbg
+        if string match 'rxvt*' $TERM # [ "${TERM%%-*}" = "rxvt" ]
+          put_template_var 708 $colorbg # internal border (rxvt)
+        end
       end
       put_template_custom 12 ";7" # cursor (reverse video)
     end
@@ -1918,7 +1918,7 @@ git
       position bottom
       font pango:DejaVu Sans Mono, FontAwesome 12
       colors {
-	  background  $base00
+          background  $base00
       }
       status_command i3status-rs
   }
@@ -2156,9 +2156,9 @@ gruvbox-dark-icons-gtk
   ### Input configuration
   #
   input "type:keyboard" {
-  	# for more information see man setxkbmap
-  	xkb_layout us(altgr-intl),ch
-  	xkb_options grp:alt_space_toggle,ctrl:nocaps
+        # for more information see man setxkbmap
+        xkb_layout us(altgr-intl),ch
+        xkb_options grp:alt_space_toggle,ctrl:nocaps
   }
   # You can get the names of your inputs by running: swaymsg -t get_inputs
   # Read `man 5 sway-input` for more information about this section.
@@ -2452,7 +2452,7 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
       follow_mouse = 1
 
       touchpad {
-	  natural_scroll = no
+          natural_scroll = no
       }
 
       sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
@@ -2476,10 +2476,10 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
       rounding = 0
 
       blur {
-	 enabled = yes
-	 size = 3
-	 passes = 1
-	 new_optimizations = on
+         enabled = yes
+         size = 3
+         passes = 1
+         new_optimizations = on
       }
 
       drop_shadow = yes
@@ -2726,7 +2726,7 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
 
   while read -r line; do
       if [[ ${#line} -gt $columns ]]; then
-  	  columns=${#line}
+          columns=${#line}
       fi
       lines=$((lines+1))
       str="$str\n$line"
@@ -2777,104 +2777,104 @@ create dmenu-wl script (=wofi --dmenu "$@"=)
 ** Config
 #+begin_src json :tangle ~/.config/waybar/config
   {
-	"height": 30, // Waybar height (to be removed for auto height)
-	"position": "bottom",
-	"layer": "top",
-	"modules-left": ["sway/workspaces"],
-	"modules-center": ["sway/mode", "sway/window"],
-	"modules-right": ["idle_inhibitor", "wireplumber", "memory", "disk", "network", "sway/language", "battery", "clock", "tray"],
+        "height": 30, // Waybar height (to be removed for auto height)
+        "position": "bottom",
+        "layer": "top",
+        "modules-left": ["sway/workspaces"],
+        "modules-center": ["sway/mode", "sway/window"],
+        "modules-right": ["idle_inhibitor", "wireplumber", "memory", "disk", "network", "sway/language", "battery", "clock", "tray"],
 
 
-	"sway/workspaces": {
-	  "sort-by-number": true,
-	  "format": "{name}: {icon}",
-	  "format-icons": {
-	      "1": "",
-	      "2": "",
-	      "3": " ",
-	      "4": "",
-	      "5": "",
-	      "6": "",
-	      "7": "",
-	      "8": "",
-	      "9": "",
-	      "10": "",
-	      "urgent": "",
-	      "default": ""
-	  },
-	  "on-click": "activate"
-	},
-	"sway/mode": {
-	  "format": "<span style=\"italic\">{}</span>",
-	  "tooltip": false
-	},
-	"keyboard-state": {
-	  "numlock": true,
-	  "capslock": true,
-	  "format": "{name} {icon}",
-	  "format-icons": {
-	      "locked": "",
-	      "unlocked": ""
-	  }
-	},
-	"idle_inhibitor": {
-	  "format": "{icon}",
-	  "format-icons": {
-	      "activated": "",
-	      "deactivated": ""
-	  }
-	},
-	"tray": {
-	  // "icon-size": 21,
-	  "spacing": 10
-	},
-	"clock": {
-	  "timezone": "Europe/Zurich",
-	  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-	  "format": "{:%Y-%m-%d %H:%M}",
-	},
-	"battery": {
-	  "states": {
-	      // "good": 95,
-	      "warning": 30,
-	      "critical": 15
-	  },
-	  "format": "{capacity}% {icon}",
-	  "format-charging": "{capacity}% ",
-	  "format-plugged": "{capacity}% ",
-	  "format-alt": "{time} {icon}",
-	  "format-icons": ["", "", "", "", ""]
-	},
-	"network": {
-	  "format-wifi": "{essid} ({signalStrength}%) ",
-	  "format-ethernet": "{ipaddr}/{cidr} ",
-	  "tooltip-format": "{ifname} via {gwaddr} ",
-	  "format-linked": "{ifname} (No IP) ",
-	  "format-disconnected": "Disconnected ⚠",
-	  "format-alt": "{ifname}: {ipaddr}/{cidr}"
-	},
-	"wireplumber": {
-	  "format": "{volume}% {icon}",
-	  "format-muted": "",
-	  "format-icons": ["", "", ""]
-	},
-	"memory": {
-	  "interval": 30,
-	  "format": "\uf2db {used:0.1f}G/{total:0.1f}G",
-	  "states": {
-	      "warning": 70,
-	      "critical": 90
-	  }
-	},
-	"disk": {
-	  "interval": 30,
-	  "format": " {used}/{total}",
-	  "unit": "GB",
-	  "states": {
-	      "warning": 70,
-	      "critical": 90
-	  }
-	}
+        "sway/workspaces": {
+          "sort-by-number": true,
+          "format": "{name}: {icon}",
+          "format-icons": {
+              "1": "",
+              "2": "",
+              "3": " ",
+              "4": "",
+              "5": "",
+              "6": "",
+              "7": "",
+              "8": "",
+              "9": "",
+              "10": "",
+              "urgent": "",
+              "default": ""
+          },
+          "on-click": "activate"
+        },
+        "sway/mode": {
+          "format": "<span style=\"italic\">{}</span>",
+          "tooltip": false
+        },
+        "keyboard-state": {
+          "numlock": true,
+          "capslock": true,
+          "format": "{name} {icon}",
+          "format-icons": {
+              "locked": "",
+              "unlocked": ""
+          }
+        },
+        "idle_inhibitor": {
+          "format": "{icon}",
+          "format-icons": {
+              "activated": "",
+              "deactivated": ""
+          }
+        },
+        "tray": {
+          // "icon-size": 21,
+          "spacing": 10
+        },
+        "clock": {
+          "timezone": "Europe/Zurich",
+          "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+          "format": "{:%Y-%m-%d %H:%M}",
+        },
+        "battery": {
+          "states": {
+              // "good": 95,
+              "warning": 30,
+              "critical": 15
+          },
+          "format": "{capacity}% {icon}",
+          "format-charging": "{capacity}% ",
+          "format-plugged": "{capacity}% ",
+          "format-alt": "{time} {icon}",
+          "format-icons": ["", "", "", "", ""]
+        },
+        "network": {
+          "format-wifi": "{essid} ({signalStrength}%) ",
+          "format-ethernet": "{ipaddr}/{cidr} ",
+          "tooltip-format": "{ifname} via {gwaddr} ",
+          "format-linked": "{ifname} (No IP) ",
+          "format-disconnected": "Disconnected ⚠",
+          "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        },
+        "wireplumber": {
+          "format": "{volume}% {icon}",
+          "format-muted": "",
+          "format-icons": ["", "", ""]
+        },
+        "memory": {
+          "interval": 30,
+          "format": "\uf2db {used:0.1f}G/{total:0.1f}G",
+          "states": {
+              "warning": 70,
+              "critical": 90
+          }
+        },
+        "disk": {
+          "interval": 30,
+          "format": " {used}/{total}",
+          "unit": "GB",
+          "states": {
+              "warning": 70,
+              "critical": 90
+          }
+        }
   }
 
 
@@ -3562,9 +3562,9 @@ picom
 #+NAME: mount-points
 #+begin_src emacs-lisp :noweb yes
   (let ((devices '(("COLA" . ("mount-0 = /"))
-		   ("SPRITE" . ("mount-0 = /"
-				"mount-1 = /"))
-		   ("BERGAMOTTE" . ("mount-0 = /")))))
+                   ("SPRITE" . ("mount-0 = /"
+                                "mount-1 = /"))
+                   ("BERGAMOTTE" . ("mount-0 = /")))))
     (string-join (cdr (assoc (system-name) devices)) "\n"))
 #+end_src
 
@@ -3851,31 +3851,31 @@ trap does not work. Why?
   options="lock\nswitch_user\nsuspend\nhibernate\nreboot\npoweroff"
   action=$(
       echo -e $options | \
-	  rofi -dmenu -p "Which action?")
+          rofi -dmenu -p "Which action?")
 
   case "$action" in
       lock)
-	  xsecurelock
-	  ;;
+          xsecurelock
+          ;;
       switch_user)
-	  dm-tool switch-to-greeter
-	  ;;
+          dm-tool switch-to-greeter
+          ;;
       suspend)
-	  xsecurelock -- systemctl suspend
-	  ;;
+          xsecurelock -- systemctl suspend
+          ;;
       hibernate)
-	  xsecurelock -- systemctl hibernate
-	  ;;
+          xsecurelock -- systemctl hibernate
+          ;;
       reboot)
-	  systemctl reboot
-	  ;;
+          systemctl reboot
+          ;;
       poweroff)
-	  systemctl poweroff
-	  ;;
+          systemctl poweroff
+          ;;
       ,*)
-	  onError "== ! wrong argument ! ==
+          onError "== ! wrong argument ! ==
   Try again with: lock | switch_user | suspend | hibernate | reboot | shutdown"
-	  exit 2
+          exit 2
   esac
 
   exit 0
@@ -3896,8 +3896,8 @@ xsecurelock
 
   getDefaultSinkVol() {
       pacmd list-sinks |
-	  awk '/^\s+name: /{indefault = $2 == "<'$(getdefaultsinkname)'>"}
-	      /^\s+volume: / && indefault {print $5; exit}'
+          awk '/^\s+name: /{indefault = $2 == "<'$(getdefaultsinkname)'>"}
+              /^\s+volume: / && indefault {print $5; exit}'
   }
 
   toggleMuteDefaultSink() {
@@ -3914,21 +3914,21 @@ xsecurelock
 
   for i in "$@"; do
       case $i in
-	  -m|--mute=*)
-	      toggleMuteDefaultSink
-	      shift # past argument=value
-	      ;;
-	  -r|--raise)
-	      raiseDefaultSinkVol
-	      shift # past argument=value
-	      ;;
-	  -l|--lower)
-	      lowerDefaultSinkVol
-	      shift # past argument=value
-	      ;;
-	  ,*)
-	      # unknown option
-	      ;;
+          -m|--mute=*)
+              toggleMuteDefaultSink
+              shift # past argument=value
+              ;;
+          -r|--raise)
+              raiseDefaultSinkVol
+              shift # past argument=value
+              ;;
+          -l|--lower)
+              lowerDefaultSinkVol
+              shift # past argument=value
+              ;;
+          ,*)
+              # unknown option
+              ;;
       esac
   done
 #+end_src
