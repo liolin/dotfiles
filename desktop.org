@@ -2318,11 +2318,11 @@ gruvbox-dark-icons-gtk
   }
   bindsym $mod+n mode $dunst_mode
 
-  set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ired [m]u4e [s]hell [a]genda [c]alc"
+  set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ispatcher [m]u4e [s]hell [a]genda [c]alc"
   mode $emacs_mode {
       bindsym e exec emacsclient -c -a ''; mode "default"
       bindsym b exec emacsclient -c -a '' --eval '(ibuffer)'; mode "default"
-      bindsym d exec emacsclient -c -a '' --eval '(dired nil)'; mode "default"
+      bindsym d exec emacsclient -c -a '' --eval '(liomacs/dispatch-entry)'; mode "default"
       bindsym m exec emacsclient -c -a '' --eval '(mu4e)'; mode "default"
       bindsym s exec emacsclient -c -a '' --eval '(eshell)'; mode "default"
       bindsym a exec emacsclient -c -a '' --eval '(org-agenda)'; mode "default"
