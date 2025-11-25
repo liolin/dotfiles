@@ -4257,6 +4257,11 @@ vim
 #+end_example
 
 * owncloud for OST
+** sync-exclude.lst
+#+begin_src conf :tangle ~/.config/ownCloud/sync-exclude.lst
+calendar_gmail.org
+calendar_ost.org
+#+end_src
 ** Required Packages                                               :packages:
 #+begin_example
 owncloud-client
