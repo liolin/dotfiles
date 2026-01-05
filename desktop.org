@@ -889,7 +889,7 @@ fi
 ** Window
 #+begin_src toml
   [window]
-  opacity = 1
+  opacity = 0.9
 #+end_src
 ** Font
 #+begin_src toml
