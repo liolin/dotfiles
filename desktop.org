@@ -1298,6 +1298,7 @@ See [[file:system.org][system.org]]
   # Run sway on login
   set TTY (tty)
   if [ $TTY = "/dev/tty1" ]
+     bass source /etc/profile.d/flatpak.sh
      exec sway --unsupported-gpu
   end
 
