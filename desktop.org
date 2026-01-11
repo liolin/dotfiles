@@ -2319,7 +2319,7 @@ gruvbox-dark-icons-gtk
   }
   bindsym $mod+n mode $dunst_mode
 
-  set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ispatcher [m]u4e [s]hell [a]genda [c]alc"
+  set $emacs_mode "Emacs Options: [e]macs [b]uffers [d]ispatcher [m]u4e [s]hell [a]genda [c]alc [t]ype"
   mode $emacs_mode {
       bindsym e exec emacsclient -c -a ''; mode "default"
       bindsym b exec emacsclient -c -a '' --eval '(ibuffer)'; mode "default"
@@ -2328,10 +2328,23 @@ gruvbox-dark-icons-gtk
       bindsym s exec emacsclient -c -a '' --eval '(eshell)'; mode "default"
       bindsym a exec emacsclient -c -a '' --eval '(org-agenda)'; mode "default"
       bindsym c exec emacsclient -c -a '' --eval '(full-calc)'; mode "default"
+      bindsym t exec emacsclient -a '' --eval '(thanos/type)'; mode "default"
       bindsym Return mode "default"
       bindsym Escape mode "default"
   }
   bindsym $mod+d mode $emacs_mode
+
+
+  set $rmpc_mode "[b]reak, [u]npause, [n]ext, [p]rev"
+  mode $rmpc_mode {
+      bindsym b exec rmpc pause; mode "default"
+      bindsym u exec rmpc unpause; mode "default"
+      bindsym n exec rmpc next; mode "default"
+      bindsym p exec rmpc prev; mode "default"
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+  }
+  bindsym $mod+m mode $rmpc_mode
 
   set $software_mode "Software Options: [p]df"
   mode $software_mode {
