@@ -4350,6 +4350,22 @@ mpv, yt-dlp
 #+begin_src conf :tangle ~/.config/chromium-flags.conf
   --ozone-platform-hint=auto
 #+end_src
+* eca
+#+begin_src conf :tangle ~/.config/eca/config.json
+  {
+    "providers": {
+      "llmhub": {
+        "api": "openai-chat",
+        "url": "https://api.llmhub.infs.ai/v1",
+        "key": "",
+        "models": {
+            "qwen/qwen3-coder-30b": {}
+         }
+      }
+    }
+  }
+#+end_src
+
 * .NET
 ** Required Packages                                               :packages:
 #+begin_example
